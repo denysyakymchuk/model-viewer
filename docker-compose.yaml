@@ -23,7 +23,6 @@ services:
       context: ./vue
       dockerfile: Dockerfile
     volumes:
-      - /app/node_modules
       - ./vue:/app
     networks:
       - app-network
