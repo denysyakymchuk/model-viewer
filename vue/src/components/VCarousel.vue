@@ -2,7 +2,7 @@
   <div class="hello">
     <carousel :items-to-show="1.5">
       <slide v-for="slide in 10" :key="slide">
-        {{ slide }}
+        <model-viewer src="free__bread_pack_cs2.glb" shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
       </slide>
 
       <template #addons>
@@ -13,12 +13,14 @@
   </div>
 </template>
 
+
 <script>
+import '@google/model-viewer'
 import 'vue3-carousel/dist/carousel.css';
 import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
 
 export default {
-  name: 'HelloWorld',
+  name: 'VCarousel',
   props: {
     msg: String
   },
@@ -33,18 +35,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>
