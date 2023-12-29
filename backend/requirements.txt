@@ -57,3 +57,5 @@ zipp==3.11.0
 flower
 fastapi
 gunicorn
+pymysql
+cryptography
