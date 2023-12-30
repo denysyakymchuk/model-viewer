@@ -1,9 +1,30 @@
 version: "2.0"
 services:
+  mysql:
+    image: mysql
+    container_name: databaseMysql
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "33062:3306"
+    environment:
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: viewerDb
+    command: --init-file /docker-entrypoint-initdb.d/init.sql
+    volumes:
+      - mysql:/var/lib/mysql
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - app-network
+
   backend-fast-api:
     build:
       context: backend
       dockerfile: Dockerfile
+    depends_on:
+      - mysql
     container_name: backend-fast-api
     restart: unless-stopped
     ports:
@@ -25,24 +46,6 @@ services:
     volumes:
       - ./vue:/app
       - /app/node_modules
-    networks:
-      - app-network
-
-  #Mysql DB
-  mysql:
-    image: mysql:8.0
-    container_name: databaseMysql
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "33062:3306"
-    environment:
-      MYSQL_USER: www-data
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: viewerDb
-    volumes:
-      - mysql:/var/lib/mysql
     networks:
       - app-network
 
