@@ -6,7 +6,7 @@
 
 ---
 
-- frontend jest dostępny po `http://localhost:8080/`
-- backend jest dostępny po `http://0.0.0.0:80`
+- frontend jest dostępny po `http://localhost:90/`
+- backend jest dostępny po `http://localhost:90/api/`
 
 

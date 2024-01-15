@@ -2,6 +2,7 @@ from typing import Union
 
 from fastapi import Depends, FastAPI, HTTPException
 from sqlalchemy.orm import Session
+from starlette.responses import FileResponse
 
 from database import crud, models, schemas
 from database.database import SessionLocal, engine
@@ -14,8 +15,9 @@ app = FastAPI()
 
 @app.get("/api/")
 def read_root():
-    return {"Hello": "weafwea"}
+    return {"Hello": "World"}
 
+    
 
 @app.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
@@ -28,8 +30,12 @@ def get_db():
     finally:
         db.close()
 
+@app.get("/file/download")
+def download_file():
+  return FileResponse(path='storage', filename='test.glb', media_type='multipart/form-data')
 
-@app.post("/users/", response_model=schemas.User)
+
+@app.post("/api/users/", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user = crud.get_user_by_email(db, email=user.email)
     if db_user:
@@ -37,7 +43,7 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db=db, user=user)
 
 
-@app.get("/users/", response_model=list[schemas.User])
+@app.get("/api/users/", response_model=list[schemas.User])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     users = crud.get_users(db, skip=skip, limit=limit)
     return users

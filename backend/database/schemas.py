@@ -1,10 +1,14 @@
 from pydantic import BaseModel
 
 
+class Path(BaseModel):
+    path: object
+
+
 class ItemBase(BaseModel):
     title: str
     description: str
-
+# https://drive.google.com/uc?export=download&id=1YDtdlEIAYNUPIA9lklOYD0J4qcjLZ56i
 
 class ItemCreate(ItemBase):
     pass
