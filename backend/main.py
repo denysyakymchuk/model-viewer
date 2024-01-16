@@ -1,28 +1,29 @@
-from typing import Union
+import shutil
 
-from fastapi import Depends, FastAPI, HTTPException
+from fastapi import FastAPI, Request, UploadFile, File, Depends
 from sqlalchemy.orm import Session
-from starlette.responses import FileResponse
+from starlette.middleware.cors import CORSMiddleware
+from starlette.staticfiles import StaticFiles
 
-from database import crud, models, schemas
-from database.database import SessionLocal, engine
+from database import models
+from database.database import engine, SessionLocal
 
 models.Base.metadata.create_all(bind=engine)
 
 
-app = FastAPI()
+app = FastAPI(docs_url="/api/docs")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+app.mount("/storage", StaticFiles(directory="storage"), name="storage")
 
 
-@app.get("/api/")
-def read_root():
-    return {"Hello": "World"}
-
-    
-
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
-# Dependency
 def get_db():
     db = SessionLocal()
     try:
@@ -30,41 +31,30 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/file/download")
-def download_file():
-  return FileResponse(path='storage', filename='test.glb', media_type='multipart/form-data')
+
+@app.get("/api/")
+def read_root():
+    return {"Hello": "World"}
 
 
-@app.post("/api/users/", response_model=schemas.User)
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    db_user = crud.get_user_by_email(db, email=user.email)
-    if db_user:
-        raise HTTPException(status_code=400, detail="Email already registered")
-    return crud.create_user(db=db, user=user)
+@app.post("/api/upload/")
+async def upload_file(request: Request, file: UploadFile = File(...),  db: Session = Depends(get_db)):
+    file_location = f"storage/{file.filename}"
+
+    with open(file_location, "wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    from database.crud_path import create_path
+
+    url = f"{str(request.url)[:-len(request.url.path)]}/{file_location}"
+
+    create_path(db=db, schem_path=url)
+
+    return {"path": url}
 
 
-@app.get("/api/users/", response_model=list[schemas.User])
-def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    users = crud.get_users(db, skip=skip, limit=limit)
-    return users
+@app.get("/api/models")
+async def get_models(db: Session = Depends(get_db)):
+    from database.crud_path import get_paths
 
-
-@app.get("/users/{user_id}", response_model=schemas.User)
-def read_user(user_id: int, db: Session = Depends(get_db)):
-    db_user = crud.get_user(db, user_id=user_id)
-    if db_user is None:
-        raise HTTPException(status_code=404, detail="User not found")
-    return db_user
-
-
-@app.post("/users/{user_id}/items/", response_model=schemas.Item)
-def create_item_for_user(
-    user_id: int, item: schemas.ItemCreate, db: Session = Depends(get_db)
-):
-    return crud.create_user_item(db=db, item=item, user_id=user_id)
-
-
-@app.get("/items/", response_model=list[schemas.Item])
-def read_items(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
-    items = crud.get_items(db, skip=skip, limit=limit)
-    return items
+    return {"models": get_paths(db)}

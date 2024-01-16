@@ -1,6 +1,6 @@
 <template>
   <div>
-    <model-viewer src="free__bread_pack_cs2.glb" shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+    <model-viewer src="http://localhost/storage/free_1975_porsche_911_930_turbo.glb" shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
   </div>
 </template>
 
