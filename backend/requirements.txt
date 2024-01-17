@@ -60,3 +60,4 @@ gunicorn
 pymysql
 cryptography
 fastapi-users[sqlalchemy]
+aiomysql

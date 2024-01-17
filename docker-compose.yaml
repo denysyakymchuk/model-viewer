@@ -38,8 +38,6 @@ services:
   frontend-vue-js:
     stdin_open: true
     container_name: frontend-vue-js
-    ports:
-      - "8080:8080"
     build:
       context: ./vue
       dockerfile: Dockerfile
