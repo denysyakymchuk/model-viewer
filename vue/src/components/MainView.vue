@@ -1,12 +1,20 @@
 <template>
   <div>
-    <model-viewer src="http://localhost/storage/free_1975_porsche_911_930_turbo.glb" shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+    <model-viewer :src="this.MAIN_MODEL" shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters } from "vuex";
+
 export default {
-  name: "MainView"
+  name: "MainView",
+  methods: {
+    ...mapActions(["GET_MAIN_MODEL"]),
+  },
+  computed: {
+    ...mapGetters(["MAIN_MODEL"]),
+  },
 }
 </script>
 

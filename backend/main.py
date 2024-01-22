@@ -1,6 +1,6 @@
 import shutil
 
-from fastapi import FastAPI, Request, UploadFile, File, Depends
+from fastapi import FastAPI, Request, UploadFile, File, Depends, HTTPException
 from sqlalchemy.orm import Session
 from starlette.middleware.cors import CORSMiddleware
 from starlette.staticfiles import StaticFiles
@@ -67,6 +67,9 @@ def read_root():
 
 @app.post("/api/upload-model")
 async def upload_file(request: Request, file: UploadFile = File(...),  db: Session = Depends(get_db)):
+    if not file.filename.endswith('.glb'):
+        raise HTTPException(status_code=422, detail="No valid file format")
+
     file_location = f"storage/{file.filename}"
 
     with open(file_location, "wb") as buffer:
