@@ -66,7 +66,7 @@ def read_root():
 
 
 @app.post("/api/upload-model")
-async def upload_file(request: Request, file: UploadFile = File(...),  db: Session = Depends(get_db)):
+async def upload_file(request: Request, file: UploadFile = File(...),  db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     if not file.filename.endswith('.glb'):
         raise HTTPException(status_code=422, detail="No valid file format")
 
@@ -91,7 +91,7 @@ async def get_models(db: Session = Depends(get_db)):
 
 
 @app.get('/api/delete-model')
-async def delete_model(path_id: int, db: Session = Depends(get_db)):
+async def delete_model(path_id: int, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     from database.crud_path import delete_path, get_paths
     delete_path(db, path_id)
     return get_paths(db)

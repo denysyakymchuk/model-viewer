@@ -1,8 +1,9 @@
 <template>
-  <div class="hello" @click="console.log(this.MODELS)">
-    <carousel :items-to-show="1.5">
+  <div>
+    <carousel :items-to-show="3">
+
       <slide v-for="slide in MODELS" :key="slide.path">
-        <model-viewer @click="setMainModel(slide.path)" :src="slide.path" shadow-intensity="1" camera-controls touch-action="pan-y"></model-viewer>
+        <model-viewer @click="setMainModel(slide.path)" :src="slide.path"></model-viewer>
       </slide>
 
       <template #addons>
