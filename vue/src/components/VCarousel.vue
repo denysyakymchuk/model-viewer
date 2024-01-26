@@ -1,6 +1,7 @@
 <template>
-  <div class="hello" @click="console.log(this.MODELS)">
+  <div>
     <carousel :items-to-show="3">
+
       <slide v-for="slide in MODELS" :key="slide.path">
         <model-viewer @click="setMainModel(slide.path)" :src="slide.path"></model-viewer>
       </slide>

@@ -1,25 +1,21 @@
 <template>
   <div>
     <div>
-      <model-viewer  :src="this.MAIN_MODEL" shadow-intensity="1" camera-controls touch-action="pan-y">
+      <model-viewer  :src="this.MAIN_MODEL"
+                     :shadow-intensity="this.shadowIntensity"
+                     :shadow-softness="this.shadowSoftness"
+                     camera-controls
+                     touch-action="pan-y">
+
+      <effect-composer render-mode="quality" msaa="8">
+
         <!--   ВСЕ ДЕЛАЕТ ПИКСЕЛЯМИ   -->
-      <effect-composer v-if="pixar">
-        <pixelate-effect></pixelate-effect>
-      </effect-composer>
-        <!--   ВСЕ ДЕЛАЕТ ПИКСЕЛЯМИ   -->
+        <pixelate-effect v-if="pixar"></pixelate-effect>
 
         <!--   OPACITY     -->
-        <effect-composer render-mode="quality" msaa="8">
           <color-grade-effect :contrast="this.contrast" saturation="-1" :opacity="this.opacity" :blend-mode="this.blendMode"></color-grade-effect>
-        </effect-composer>
-        <!--   OPACITY     -->
 
-        <!--   COLOR GRADING     -->
-<!--        <effect-composer render-mode="quality" msaa="8">-->
-<!--          <bloom-effect></bloom-effect>-->
-<!--          <color-grade-effect></color-grade-effect>-->
-<!--        </effect-composer>-->
-        <!--   COLOR GRADING     -->
+        </effect-composer>
 
       </model-viewer>
     </div>
@@ -49,6 +45,17 @@
                 </select>
               </div>
             </fieldset>
+
+        <fieldset>
+          <legend>Shadow intensity</legend>
+          <label>Shadow intensity<input  v-model="this.shadowIntensity" type="range" min="0" max="2" step="0.01"></label>
+        </fieldset>
+
+        <fieldset>
+          <legend>Shadow softness</legend>
+          <label>Shadow softness<input  v-model="this.shadowSoftness" type="range" min="0" max="1" step="0.01"></label>
+        </fieldset>
+
       </div>
     <!--  BOCZNA PANEL   -->
   </div>
@@ -67,7 +74,9 @@ export default {
       pixar: false,
       contrast: 0,
       opacity: 1,
-      blendMode: 'default',
+      shadowIntensity: 0,
+      shadowSoftness: 0,
+      blendMode: 'skip',
 
     }
   },
@@ -89,8 +98,8 @@ model-viewer {
   transform: translate(-50%, -50%);
 }
 .sidePanelSetting {
-  position: absolute;
-  right: 20px; /* або будь-яке інше значення, щоб змістити вправо */
+  position: fixed;
+  right: 20px;
   top: 20px;
 }
 </style>

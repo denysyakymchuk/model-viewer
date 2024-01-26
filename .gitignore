@@ -24,4 +24,5 @@ pnpm-debug.log*
 *.sw?
 
 #addition files
+/backend/storage/
 warning.txt
