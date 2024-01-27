@@ -29,22 +29,29 @@
 
             <fieldset>
               <legend>Opacity</legend>
-              <div class="controls">
-                <label>Opacity<input  v-model="this.opacity" type="range" min="0" max="1" step="0.01"></label>
-                <label>Contrast<input  v-model="this.contrast" type="range" min="0" max="1" step="0.01"></label>
-
-
-                <label for="blend-mode">Blend Mode:</label>
-                <select id="blend-mode" v-model="this.blendMode">
-                  <option value="default">Default</option>
-                  <option value="skip">Skip</option>
-                  <option value="add">Add</option>
-                  <option value="subtract">Subtract</option>
-                  <option value="divide">Divide</option>
-                  <option value="negation">Negation</option>
-                </select>
-              </div>
+              <label>Opacity<input  v-model="this.opacity" type="range" min="0" max="1" step="0.01"></label>
             </fieldset>
+
+            <fieldset>
+              <legend>Contrast</legend>
+                  <label>Contrast<input  v-model="this.contrast" type="range" min="0" max="1" step="0.01"></label>
+            </fieldset>
+
+              <fieldset>
+                <legend>Blend Mode:</legend>
+                <div>
+                  <label for="blend-mode">Blend Mode:</label>
+                  <select id="blend-mode" v-model="this.blendMode">
+                    <option value="default">Default</option>
+                    <option value="skip">Skip</option>
+                    <option value="add">Add</option>
+                    <option value="subtract">Subtract</option>
+                    <option value="divide">Divide</option>
+                    <option value="negation">Negation</option>
+                  </select>
+                </div>
+              </fieldset>
+
 
         <fieldset>
           <legend>Shadow intensity</legend>
@@ -77,7 +84,6 @@ export default {
       shadowIntensity: 0,
       shadowSoftness: 0,
       blendMode: 'skip',
-
     }
   },
   methods: {
