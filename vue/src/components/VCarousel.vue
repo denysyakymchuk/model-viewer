@@ -52,5 +52,7 @@ export default {
 </script>
 
 <style scoped>
-
+model-viewer {
+  background-image: url('../assets/bg.png');
+}
 </style>

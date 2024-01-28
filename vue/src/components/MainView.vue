@@ -97,13 +97,21 @@ export default {
 
 <style scoped>
 model-viewer {
+  background-image: url('../assets/bg.png');
+  border-radius: 10px;
   margin-left: 50%;
   margin-top: 10%;
-  width: 300px;
-  height: 300px;
+  width: 500px;
+  height: 350px;
   transform: translate(-50%, -50%);
 }
 .sidePanelSetting {
+  background-color: #212121;
+  color: white;
+  font-family: "Cantarell Light";
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px 3px black;
   position: fixed;
   right: 20px;
   top: 20px;
