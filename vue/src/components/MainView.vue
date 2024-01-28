@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div>
+  <div class="container">
+    <div class="model-viewer-container">
       <model-viewer  :src="this.MAIN_MODEL"
                      :shadow-intensity="this.shadowIntensity"
                      :shadow-softness="this.shadowSoftness"
@@ -96,24 +96,62 @@ export default {
 </script>
 
 <style scoped>
-model-viewer {
-  background-image: url('../assets/bg.png');
-  border-radius: 10px;
-  margin-left: 50%;
-  margin-top: 10%;
-  width: 500px;
-  height: 350px;
-  transform: translate(-50%, -50%);
+@media only screen and (max-width: 600px) {
+  .model-viewer-container {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    height: auto;
+  }
 }
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+model-viewer {
+  max-width: 500px;
+  width: 100%;
+  height: 350px;
+  aspect-ratio: 16/9;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-image: url('../assets/bg.png'); /* Consider using a higher resolution background */
+  background-size: cover;
+}
+
 .sidePanelSetting {
-  background-color: #212121;
+  background-color: #2C2C2C; /* Slightly lighter for better contrast */
   color: white;
-  font-family: "Cantarell Light";
-  padding: 10px;
+  font-family: "Cantarell Light", sans-serif;
+  padding: 20px;
   border-radius: 5px;
-  box-shadow: 3px 3px 3px 3px black;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: fixed;
   right: 20px;
   top: 20px;
+  width: 250px;
+}
+
+input[type="range"] {
+  width: 100%;
+}
+
+/* Additional styles */
+button, select {
+  background-color: #333;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover, select:hover {
+  background-color: #444;
 }
 </style>
