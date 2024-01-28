@@ -25,4 +25,4 @@ pnpm-debug.log*
 
 #addition files
 /backend/storage/
-warning.txt
+warning.txt__pycache__/
