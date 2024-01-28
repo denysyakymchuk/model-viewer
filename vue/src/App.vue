@@ -62,6 +62,7 @@ export default {
 
 <style>
 body {
+  background-image: url("./assets/background2.webp");
   margin: 0;
   display: flex;
   justify-content: center;
