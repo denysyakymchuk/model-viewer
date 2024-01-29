@@ -6,7 +6,9 @@ from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.ext.declarative import DeclarativeMeta, declarative_base
 from sqlalchemy.orm import sessionmaker
 
-SQLALCHEMY_DATABASE_URL = 'mysql+aiomysql://root:root@databaseMysql:3306/viewerDb'
+from utils.vars import variables
+
+SQLALCHEMY_DATABASE_URL = f'mysql+aiomysql://{variables["USERNAME"]}:{variables["PASSWORD"]}@{variables["HOSTDBNAME"]}:{variables["PORT"]}/{variables["DBNAME"]}'
 Base: DeclarativeMeta = declarative_base()
 
 
