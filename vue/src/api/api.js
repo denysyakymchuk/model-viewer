@@ -5,7 +5,11 @@ const api = axios.create({
 
 api.interceptors.request.use(
     (config) => {
-        config.headers["Content-Type"] = "application/json";
+        if (config.url.endsWith('/login') || config.url.match('/login/[0-9]')) {
+        config.headers["Content-Type"] = 'application/x-www-form-urlencoded'
+        } else {
+            config.headers["Content-Type"] = 'application/json'
+        }
         config.headers["Accept"] = "application/json";
         return config;
     },
