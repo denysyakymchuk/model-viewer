@@ -2,6 +2,7 @@
   <div class="container">
     <div class="model-viewer-container">
       <model-viewer  :src="this.MAIN_MODEL"
+                     style="margin-bottom: 5%"
                      :shadow-intensity="this.shadowIntensity"
                      :shadow-softness="this.shadowSoftness"
                      camera-controls
@@ -115,11 +116,12 @@ export default {
 model-viewer {
   max-width: 500px;
   width: 100%;
-  height: 350px;
+  height: 450px;
   aspect-ratio: 16/9;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-image: url('../assets/bg.png'); /* Consider using a higher resolution background */
+  /*background-image: url('../assets/bg.png'); !* Consider using a higher resolution background *!*/
+  background-color: #2C2C2C;
   background-size: cover;
 }
 
@@ -133,7 +135,7 @@ model-viewer {
   position: fixed;
   right: 20px;
   top: 20px;
-  width: 250px;
+  width: 270px;
 }
 
 input[type="range"] {
@@ -153,5 +155,9 @@ button, select {
 
 button:hover, select:hover {
   background-color: #444;
+}
+fieldset {
+  padding: 2px;
+  padding-left: 5px;
 }
 </style>

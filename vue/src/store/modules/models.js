@@ -18,6 +18,10 @@ const actions = {
         const data = await api.get(`/models`);
         await context.commit("SET_MODELS", data.data.models);
     },
+    DELETE_MODELS: async (context, payload) => {
+        const data = await api.get(`/delete-model?path_id=${payload}`);
+        await context.commit("SET_MODELS", data.data.models);
+    },
 };
 
 export default {
