@@ -1,24 +1,102 @@
 <template>
-  <div style="width: 100%">
-    <v-data-table
-        style="position: absolute; top: 0; left: 0"
-        :headers="headers"
-        :loading="loading"
-        :items="this.MODELS"
-        density="compact"
-        item-key="name"
-    >
-      <template v-slot:item="{ item }">
-        <tr>
-          <td>{{ item.id }}</td>
-          <td>{{ item.path }}</td>
-          <td><model-viewer :src="item.path"></model-viewer></td>
-          <td class="delete-button" @click="deleteModel(item.id)">Delete</td>
-        </tr>
-      </template>
-    </v-data-table>
-  </div>
+  <v-container fluid fill-height class="pa-0 ma-0 tblp">
+    <v-row class="fill-height">
+      <v-col cols="12" class="pa-0 ma-0">
+        <v-toolbar color="black" dark>
+          <v-toolbar-title>Models</v-toolbar-title>
+          <v-btn
+              @click="this.dialog = !this.dialog"
+              style="background-color: #2C2C2C;
+                        margin-right: 2%;
+                         margin-top: 1%;
+                         background-color: #2bc0d5;">
+            New model
+          </v-btn>
+          <v-dialog
+              v-model="this.dialog"
+              style="position: fixed;"
+              max-width="500px"
+          >
+            <v-card>
+              <v-card-title>
+                <span class="text-h5">New model</span>
+              </v-card-title>
+
+              <v-card-text>
+                <v-container>
+                  <v-row>
+                    <v-col
+                        cols="12"
+                        sm="12"
+                        md="12"
+                    >
+                      <v-file-input
+                          accept=".glb"
+                          placeholder="Pick a 3D model file"
+                          prepend-inner-icon="mdi-camera"
+                          prepend-icon=""
+                          @change="(e) => {this.selectedFile = e.target.files}"
+                          label="Image"
+                      ></v-file-input>
+                    </v-col>
+                    <v-col
+                        cols="12"
+                        sm="12"
+                        md="12"
+                    >
+                    </v-col>
+
+                  </v-row>
+                </v-container>
+              </v-card-text>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn
+                    color="blue-darken-1"
+                    variant="text"
+                    @click="this.dialog = false"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                    color="blue-darken-1"
+                    variant="text"
+                    @click="sendModel()"
+                >
+                  Save
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
+        </v-toolbar>
+        <v-data-table
+            :headers="headers"
+            :items="this.MODELS"
+            :loading="loading"
+            class="elevation-1"
+            dense
+            fixed-header
+            style="height: 100%; padding: 10px"
+        >
+          <template v-slot:item="{ item }">
+            <tr>
+              <td>{{ item.id }}</td>
+              <td>{{ item.path }}</td>
+              <td><model-viewer :src="item.path"></model-viewer></td>
+              <td>
+                <v-btn color="red" @click="deleteModel(item.id)" text>
+                  Delete
+                </v-btn>
+              </td>
+            </tr>
+          </template>
+        </v-data-table>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
+
 
 <script>
 import '@google/model-viewer'
@@ -31,15 +109,14 @@ export default {
   data() {
     return {
       headers: [
-        { title: 'Id', key: 'id', align: 'left' },
-        { title: 'Path', key: 'path', align: 'left' },
-        { title: 'Model', key: 'path', align: 'center' },
-        { title: 'Action', key: 'path', align: 'center' },
+        { title: 'Id', key: 'id'},
+        { title: 'Path', key: 'path'},
+        { title: 'Model', key: 'path'},
+        { title: 'Action', key: 'path'},
       ],
-      itemsPerPage: 5,
-      serverItems: [],
       loading: false,
-      totalItems: 0,
+      dialog: false,
+      selectedFile: '',
     }
   },
   computed: {
@@ -52,7 +129,15 @@ export default {
       await this.GET_MODELS()
       this.loading = false
     },
-    ...mapActions(["GET_MODELS", "DELETE_MODELS"]),
+    async sendModel() {
+      this.loading = true
+      await this.CREATE_MODELS(this.selectedFile)
+      await this.GET_MODELS()
+      this.dialog = false
+      this.loading = false
+      this.selectedFile = ''
+    },
+    ...mapActions(["GET_MODELS", "DELETE_MODELS", "CREATE_MODELS"]),
   },
   async mounted() {
     await this.GET_MODELS()
@@ -61,41 +146,18 @@ export default {
 </script>
 
 <style scoped>
-html, body, #app {
-  height: 100%;
-  margin: 0;
-}
-
-.table-container {
-  height: 100%;
-}
-
-::v-deep .v-data-table {
+.tblp {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
   height: 100%;
 }
-::v-deep .v-data-table {
-  background-color: #f5f5f5; /* Сірий фон таблиці */
-  border-radius: 16px; /* Заокруглені кути */
-  width: 100%; /* Ширина на всю сторінку */
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1); /* Тінь для ефекту відділення */
+.pa-0 {
+  padding: 0 !important;
 }
 
-::v-deep .v-data-table th {
-  background-color: #312f2f; /* Сірий фон для заголовків */
-}
-
-::v-deep .v-data-table td {
-  background-color: #f9f9f9; /* Світло-сірий для комірок */
-}
-
-::v-deep .v-data-table tbody tr:hover {
-  background-color: #eeeeee; /* Трохи темніший сірий при наведенні */
-}
-
-/* Стилізація кнопки видалення */
-::v-deep .delete-button {
-  color: #ff5252; /* Червоний колір для тексту */
-  cursor: pointer; /* Курсор у вигляді руки для вказівки на можливість кліку */
-  font-weight: bold; /* Жирний текст */
+.ma-0 {
+  margin: 0 !important;
 }
 </style>

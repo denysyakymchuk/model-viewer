@@ -1,8 +1,8 @@
 <template>
-  <div>
-    <carousel :items-to-show="3">
+  <div class="pos">
+    <carousel :items-to-show="4">
 
-      <slide v-for="slide in MODELS" :key="slide.path">
+      <slide v-for="slide in MODELS" :key="slide.path" class="slide">
         <model-viewer @click="setMainModel(slide.path)" :src="slide.path"></model-viewer>
       </slide>
 
@@ -53,6 +53,23 @@ export default {
 
 <style scoped>
 model-viewer {
+  width: 100%; /* Занимает всю ширину слайда */
+  height: 100%;
   background-image: url('../assets/bg.png');
+}
+.slide {
+  height: 250px; /* Задайте нужную высоту для слайдов */
+  margin: 1%;
+}
+
+.pos {
+  width: 100%; /* Занимает всю ширину экрана */
+  max-width: 1400px; /* Максимальная ширина карусели */
+  margin: auto;
+  position: fixed;
+  bottom: 5%; /* Позиционирует карусель в самом низу экрана */
+  left: 50%;
+  transform: translateX(-50%); /* Центрирование по горизонтали */
+  z-index: 1000;
 }
 </style>

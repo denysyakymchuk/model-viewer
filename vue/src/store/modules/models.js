@@ -22,6 +22,12 @@ const actions = {
         const data = await api.get(`/delete-model?path_id=${payload}`);
         await context.commit("SET_MODELS", data.data.models);
     },
+    CREATE_MODELS: async (context, payload) => {
+        let formData = new FormData();
+        formData.append('file', payload[0]);
+        const data = await api.post(`/upload-model`, formData);
+        await context.commit("SET_MODELS", data.data.models);
+    },
 };
 
 export default {

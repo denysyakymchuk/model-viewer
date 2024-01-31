@@ -2,7 +2,6 @@
   <div class="container">
     <div class="model-viewer-container">
       <model-viewer  :src="this.MAIN_MODEL"
-                     style="margin-bottom: 5%"
                      :shadow-intensity="this.shadowIntensity"
                      :shadow-softness="this.shadowSoftness"
                      camera-controls
@@ -114,14 +113,14 @@ export default {
 }
 
 model-viewer {
-  max-width: 500px;
+  margin-bottom: 60%;
+  max-width: 600px;
   width: 100%;
   height: 450px;
   aspect-ratio: 16/9;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  /*background-image: url('../assets/bg.png'); !* Consider using a higher resolution background *!*/
-  background-color: #2C2C2C;
+  background-image: url('../assets/bg.png'); /* Consider using a higher resolution background */
   background-size: cover;
 }
 

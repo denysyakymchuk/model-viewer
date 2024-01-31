@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@mdi/font": "7.0.96",
     "@google/model-viewer": "^3.3.0",
     "@google/model-viewer-effects": "^1.2.0",
     "axios": "^1.6.5",

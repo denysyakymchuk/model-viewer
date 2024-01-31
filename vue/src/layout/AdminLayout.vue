@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <v-theme-provider theme="dark" with-background >
     <router-view />
-  </div>
+  </v-theme-provider>
 </template>
 
 <script>

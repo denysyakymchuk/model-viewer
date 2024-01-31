@@ -1,21 +1,23 @@
 <template>
-<div>
-  <div class="container">
-    <h2>Login</h2>
-    <form>
-      <div class="form-group">
-        <label for="username">Username:</label>
-        <input v-model="username" type="text" id="username" name="username" required>
-      </div>
-      <div class="form-group">
-        <label for="password">Password:</label>
-        <input v-model="password" type="password" id="password" name="password" required>
-      </div>
-      <input @click="sendCredentials" type="button" class="btn" value="Login">
-    </form>
-  </div>
-</div>
+  <v-sheet class="mx-auto form">
+    <v-form fast-fail @submit.prevent>
+      <v-text-field
+          v-model="this.username"
+          label="Username"
+          class="field"
+      ></v-text-field>
+
+      <v-text-field
+          v-model="this.password"
+          label="Password"
+          class="field"
+      ></v-text-field>
+
+      <v-btn @click="sendCredentials" block class="submit-btn mt-2">Submit</v-btn>
+    </v-form>
+  </v-sheet>
 </template>
+
 
 <script>
 import {mapActions} from "vuex";
@@ -48,47 +50,35 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  width: 300px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #201f1f;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  color: white;
+.form {
+  background-color: #0e0e0e; /* Основной цвет фона */
+  border-radius: 4px; /* Если необходимы скругленные углы */
+  padding: 16px; /* Отступы внутри формы */
+  width: 400px; /* Удвоенная ширина */
+  max-width: 100%; /* Убедитесь, что форма не выходит за пределы экрана на устройствах с маленьким экраном */
+  box-sizing: border-box; /* Гарантирует, что padding и border включены в ширину */
 }
 
-.form-group {
-  margin-bottom: 15px;
-  margin-right: 15px;
+.field {
+  background-color: #0e0e0e; /* Цвет фона для полей ввода */
+  border: none; /* Убрать стандартные границы */
+  color: #DDD; /* Цвет текста в полях ввода */
 }
 
-label {
-  display: block;
-  font-weight: bold;
-  margin-bottom: 5px;
+.field::placeholder {
+  color: #BBB; /* Цвет текста placeholder */
 }
 
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.field .v-label {
+  color: #BBB; /* Цвет метки поля ввода */
 }
 
-.btn {
-  width: 100%;
-  padding: 10px;
-  background-color: #444;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+.submit-btn {
+  background-color: #666; /* Цвет кнопки */
+  color: #FFF; /* Цвет текста кнопки */
 }
 
-.btn:hover {
-  background-color: #666;
+.submit-btn:hover {
+  background-color: #777; /* Цвет кнопки при наведении */
 }
 </style>

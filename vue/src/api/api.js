@@ -11,6 +11,8 @@ api.interceptors.request.use(
         }
         if (config.url.endsWith('/login') || config.url.match('/login/[0-9]')) {
         config.headers["Content-Type"] = 'application/x-www-form-urlencoded'
+        } else if (config.url.endsWith('/upload-model') || config.url.match('/upload-model/[0-9]')){
+            config.headers["Content-Type"] = 'application/multipart-data'
         } else {
             config.headers["Content-Type"] = 'application/json'
         }

@@ -27,7 +27,6 @@ export default {
 <style>
 body {
   background-image: url("./assets/background2.webp");
-  z-index: 99999;
   background-size: cover; /* Resize the background image to cover the entire container */
   display: flex;
   justify-content: center;
