@@ -1,11 +1,21 @@
 import axios from "axios";
+import store from "@/store";
 const api = axios.create({
     baseURL: `http://localhost:90/api`,
 });
 
 api.interceptors.request.use(
     (config) => {
-        config.headers["Content-Type"] = "application/json";
+        if (store.getters.TOKEN) {
+            config.headers['Authorization'] = 'Bearer ' + store.getters.TOKEN;
+        }
+        if (config.url.endsWith('/login') || config.url.match('/login/[0-9]')) {
+        config.headers["Content-Type"] = 'application/x-www-form-urlencoded'
+        } else if (config.url.endsWith('/upload-model') || config.url.match('/upload-model/[0-9]')){
+            config.headers["Content-Type"] = 'application/multipart-data'
+        } else {
+            config.headers["Content-Type"] = 'application/json'
+        }
         config.headers["Accept"] = "application/json";
         return config;
     },

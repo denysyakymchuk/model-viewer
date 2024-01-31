@@ -1,0 +1,103 @@
+<template>
+  <v-sheet class="mx-auto form">
+    <v-form ref="form" v-model="this.valid" fast-fail @submit.prevent>
+      <v-text-field
+          v-model="this.username"
+          label="Username"
+          :rules="usernameRules"
+          class="field"
+      ></v-text-field>
+
+      <v-text-field
+          v-model="this.password"
+          label="Password"
+          type="password"
+          :rules="passwordRules"
+          class="field"
+      ></v-text-field>
+
+      <v-btn @click="sendCredentials" :disabled="!this.valid" block class="submit-btn mt-2">Submit</v-btn>
+    </v-form>
+  </v-sheet>
+</template>
+
+
+<script>
+import {mapActions} from "vuex";
+
+export default {
+  name: "LoginView",
+  data() {
+    return {
+      valid: false,
+      password: '',
+      username: '',
+      usernameRules:  [
+        value => {
+          if (value) return true
+          return 'Pole nie może być puste.'
+        },
+      ],
+      passwordRules:  [
+        value => {
+          if (value) return true
+          return 'Pole nie może być puste.'
+        },
+      ],
+    }
+  },
+  methods: {
+    async sendCredentials() {
+      try {
+        const response = await this.GET_LOGIN({
+          username: this.username,
+          password: this.password
+        });
+
+        if (response === 200) {
+          this.$router.push({ name: 'admin' });
+        } else {
+          console.error('Login failed:', response.status);
+        }
+      } catch (error) {
+        console.error('Error sending credentials');
+      }
+    },
+    ...mapActions(["GET_LOGIN"]),
+  },
+}
+</script>
+
+<style scoped>
+.form {
+  background-color: #0e0e0e; /* Основной цвет фона */
+  border-radius: 4px; /* Если необходимы скругленные углы */
+  padding: 16px; /* Отступы внутри формы */
+  width: 400px; /* Удвоенная ширина */
+  max-width: 100%; /* Убедитесь, что форма не выходит за пределы экрана на устройствах с маленьким экраном */
+  box-sizing: border-box; /* Гарантирует, что padding и border включены в ширину */
+}
+
+.field {
+  background-color: #0e0e0e; /* Цвет фона для полей ввода */
+  border: none; /* Убрать стандартные границы */
+  color: #DDD; /* Цвет текста в полях ввода */
+}
+
+.field::placeholder {
+  color: #BBB; /* Цвет текста placeholder */
+}
+
+.field .v-label {
+  color: #BBB; /* Цвет метки поля ввода */
+}
+
+.submit-btn {
+  background-color: #666; /* Цвет кнопки */
+  color: #FFF; /* Цвет текста кнопки */
+}
+
+.submit-btn:hover {
+  background-color: #777; /* Цвет кнопки при наведении */
+}
+</style>

@@ -22,47 +22,68 @@
 
       <!--  BOCZNA PANEL   -->
       <div class="sidePanelSetting">
-        <fieldset>
-          <legend>Pixel</legend>
-            <label>Pikselem<input type="checkbox" v-model="pixar"/></label>
-        </fieldset>
+        <v-row>
+          <v-col cols="12">
+            <v-checkbox label="Pixelem" v-model="this.pixar"></v-checkbox>
+          </v-col>
 
-            <fieldset>
-              <legend>Opacity</legend>
-              <label>Opacity<input  v-model="this.opacity" type="range" min="0" max="1" step="0.01"></label>
-            </fieldset>
+          <v-col cols="12">
+              <v-slider
+                  class="wd-all"
+                  v-model="this.opacity"
+                  label="Opacity"
+                  color="orange"
+                  min="0"
+                  max="1"
+                  step="0.01"
+                  thumb-label="true"></v-slider>
+          </v-col>
 
-            <fieldset>
-              <legend>Contrast</legend>
-                  <label>Contrast<input  v-model="this.contrast" type="range" min="0" max="1" step="0.01"></label>
-            </fieldset>
+          <v-col cols="12">
+                  <v-slider
+                      class="wd-all"
+                      v-model="this.contrast"
+                      label="Contrast"
+                      color="orange"
+                    min="0"
+                    max="1"
+                    step="0.01"
+                    thumb-label="true"></v-slider>
+          </v-col>
 
-              <fieldset>
-                <legend>Blend Mode:</legend>
-                <div>
-                  <label for="blend-mode">Blend Mode:</label>
-                  <select id="blend-mode" v-model="this.blendMode">
-                    <option value="default">Default</option>
-                    <option value="skip">Skip</option>
-                    <option value="add">Add</option>
-                    <option value="subtract">Subtract</option>
-                    <option value="divide">Divide</option>
-                    <option value="negation">Negation</option>
-                  </select>
-                </div>
-              </fieldset>
+          <v-col cols="12">
+          <v-slider
+              v-model="this.shadowSoftness"
+              class="wd-all"
+                           label="Shadow softness"
+                            color="orange"
+                                          min="0"
+                                          max="1"
+                                          step="0.01"
+                                          thumb-label="true"></v-slider>
+          </v-col>
 
+          <v-col cols="12">
+          <v-slider
+              class="wd-all"
+              v-model="this.shadowIntensity"
+              label="Shadow intensity"
+              min="0"
+              max="4"
+              step="0.01"
+              color="orange"
+              thumb-label="true"></v-slider>
+          </v-col>
 
-        <fieldset>
-          <legend>Shadow intensity</legend>
-          <label>Shadow intensity<input  v-model="this.shadowIntensity" type="range" min="0" max="2" step="0.01"></label>
-        </fieldset>
+          <v-col cols="12">
+          <v-select
+            v-model="this.blendMode"
+            :items="['Default', 'Skip', 'Add', 'Subtract', 'Divide', 'Negation']"
+            variant="primary"
+        ></v-select>
+          </v-col>
 
-        <fieldset>
-          <legend>Shadow softness</legend>
-          <label>Shadow softness<input  v-model="this.shadowSoftness" type="range" min="0" max="1" step="0.01"></label>
-        </fieldset>
-
+        </v-row>
       </div>
     <!--  BOCZNA PANEL   -->
   </div>
@@ -113,9 +134,10 @@ export default {
 }
 
 model-viewer {
-  max-width: 500px;
+  margin-bottom: 60%;
+  max-width: 600px;
   width: 100%;
-  height: 350px;
+  height: 450px;
   aspect-ratio: 16/9;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -124,34 +146,18 @@ model-viewer {
 }
 
 .sidePanelSetting {
-  background-color: #2C2C2C; /* Slightly lighter for better contrast */
+  background-color: #202020; /* Slightly lighter for better contrast */
   color: white;
-  font-family: "Cantarell Light", sans-serif;
   padding: 20px;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   position: fixed;
   right: 20px;
   top: 20px;
-  width: 250px;
+  width: 370px;
+}
+.wd-all {
+  width: 270px;
 }
 
-input[type="range"] {
-  width: 100%;
-}
-
-/* Additional styles */
-button, select {
-  background-color: #333;
-  color: white;
-  border: none;
-  padding: 10px 15px;
-  margin: 5px;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-button:hover, select:hover {
-  background-color: #444;
-}
 </style>
