@@ -15,7 +15,7 @@
               @click="this.$router.push('/logout')"
               style="margin-right: 2%;
                          margin-top: 1%;
-                         background-color: #2bc0d5;">
+                         background-color: #f6b329;">
             Logout
           </v-btn>
           <v-dialog

@@ -3,7 +3,7 @@
     <carousel :items-to-show="4">
 
       <slide v-for="slide in MODELS" :key="slide.path" class="slide">
-        <model-viewer @click="setMainModel(slide.path)" :src="slide.path"></model-viewer>
+        <model-viewer class="ww" @click="setMainModel(slide.path)" :src="slide.path"></model-viewer>
       </slide>
 
       <template #addons>
@@ -52,6 +52,11 @@ export default {
 </script>
 
 <style scoped>
+@media only screen and (max-width: 672px) {
+  .ww {
+    height: 150px;
+  }
+}
 model-viewer {
   width: 100%; /* Занимает всю ширину слайда */
   height: 100%;
