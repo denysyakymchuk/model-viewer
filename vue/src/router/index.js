@@ -20,7 +20,7 @@ const routes = [
             if (store.getters.TOKEN) {
                 next();
             } else {
-                next('/login');
+                next({ name: 'login' });
             }
         },
     },
@@ -33,7 +33,7 @@ const routes = [
             if (!store.getters.TOKEN) {
                 next();
             } else {
-                next('/admin');
+                next({ name: 'admin' });
             }
         },
     },
@@ -42,7 +42,7 @@ const routes = [
         name: "logout",
         beforeEnter: (to, from, next) => {
             localStorage.removeItem('token');
-            next('/');
+            next({ name: 'home' });
         },
     },
 ];
