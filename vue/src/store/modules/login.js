@@ -17,8 +17,8 @@ const mutations = {
 const actions = {
   GET_LOGIN: async (context, payload) => {
     const data = await api.post(`/auth/jwt/login`, payload);
-    console.log(data.data)
     await context.commit("SET_LOGIN", data.data);
+    return data.status
   },
 };
 

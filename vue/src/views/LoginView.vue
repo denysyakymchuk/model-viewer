@@ -33,15 +33,18 @@ export default {
   methods: {
     async sendCredentials() {
       try {
-        await this.GET_LOGIN({
+        const response = await this.GET_LOGIN({
           username: this.username,
           password: this.password
         });
-        this.$nextTick(() => {
-          this.$router.push('/');
-        })
+
+        if (response === 200) {
+          this.$router.push('/admin');
+        } else {
+          console.error('Login failed:', response.status);
+        }
       } catch (error) {
-        console.log(error)
+        console.error('Error sending credentials');
       }
     },
     ...mapActions(["GET_LOGIN"]),

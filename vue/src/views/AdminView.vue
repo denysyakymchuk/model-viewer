@@ -6,11 +6,17 @@
           <v-toolbar-title>Models</v-toolbar-title>
           <v-btn
               @click="this.dialog = !this.dialog"
-              style="background-color: #2C2C2C;
-                        margin-right: 2%;
+              style="   margin-right: 2%;
                          margin-top: 1%;
                          background-color: #2bc0d5;">
             New model
+          </v-btn>
+          <v-btn
+              @click="this.$router.push('/logout')"
+              style="margin-right: 2%;
+                         margin-top: 1%;
+                         background-color: #2bc0d5;">
+            Logout
           </v-btn>
           <v-dialog
               v-model="this.dialog"
