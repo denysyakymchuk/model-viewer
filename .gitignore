@@ -5,6 +5,7 @@ vue/node_modules
 
 
 # local env files
+.env
 .env.local
 .env.*.local
 
@@ -24,9 +25,9 @@ pnpm-debug.log*
 *.sw?
 
 #addition files
-/backend/storage/
+/backend/storage
 warning.txt
-__pycache__/
-backend/logs/logs.log
+__pycache__
+backend/logs/logs.csv
 backend/tests/.pytest_cache
 backend/tests/.env
