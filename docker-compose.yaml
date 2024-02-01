@@ -54,9 +54,10 @@ services:
       PMA_HOST: mysql-viewer
       PMA_PORT: 3306
     ports:
-      - 1111:80
+      - "1111:80"
     networks:
       - app-network
+
 
   nginx:
     image: nginx:latest

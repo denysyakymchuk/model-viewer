@@ -1,22 +1,32 @@
+from loguru import logger
 from sqlalchemy.orm import Session
 
 from . import models, schemas
 
 
 def get_path(db: Session, path_id: int):
-    return db.query(models.Path).filter(models.Path.id == path_id).first()
+    try:
+        return db.query(models.Path).filter(models.Path.id == path_id).first()
+    except Exception as error:
+        logger.critical(f'{error}')
 
 
 def get_paths(db: Session):
-    return db.query(models.Path).all()
+    try:
+        return db.query(models.Path).all()
+    except Exception as error:
+        logger.critical(f'{error}')
 
 
 def delete_path(db: Session, path_id):
-    path = db.query(models.Path).filter(models.Path.id == path_id).first()
+    try:
+        path = db.query(models.Path).filter(models.Path.id == path_id).first()
 
-    if path:
-        db.delete(path)
-        db.commit()
+        if path:
+            db.delete(path)
+            db.commit()
+    except Exception as error:
+        logger.critical(f'{error}')
 
 
 def create_path(db: Session, schem_path: schemas.Path):
@@ -25,5 +35,5 @@ def create_path(db: Session, schem_path: schemas.Path):
         db.add(db_path)
         db.commit()
         db.refresh(db_path)
-    except Exception:
-        return None
+    except Exception as error:
+        logger.critical(f'{error}')

@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div>
     <div class="model-viewer-container">
       <model-viewer  :src="this.MAIN_MODEL"
                      :shadow-intensity="this.shadowIntensity"
@@ -21,9 +21,9 @@
     </div>
 
       <!--  BOCZNA PANEL   -->
-      <div class="sidePanelSetting">
-
-        <div class="text-center">
+      <div>
+        <div class="btn"
+        >
           <v-menu
               v-model="menu"
               :close-on-content-click="false"
@@ -143,14 +143,6 @@ export default {
 
 <style scoped>
 @media only screen and (max-width: 672px) {
-  .container {
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    height: 100vh; /* Use the full height of the viewport */
-    justify-content: space-around; /* Distribute space around items */
-  }
-
-  .model-viewer-container,
   model-viewer {
     margin-top: 10%;
     width: 100%; /* Full width of its container */
@@ -159,19 +151,14 @@ export default {
     aspect-ratio: unset; /* If aspect-ratio is set, unset it for this viewport size */
     position: relative; /* Position set to relative */
   }
-
-  .sidePanelSetting {
-    overflow-y: auto; /* Enable scrolling if content is taller than the space */
-    position: relative; /* Position set to relative */
-  }
 }
-.container {
-  display: flex;
-  flex-direction: row; /* Елементи в рядок */
-  justify-content: space-between; /* Рівномірний розподіл простору між елементами */
-  align-items: flex-start; /* Вирівнювання елементів по початку контейнера */
+.btn {
+  margin-top: 1%;
+  margin-right: 2%;
+  position: fixed;
+  top: 0;
+  right: 0;
 }
-
 model-viewer {
   margin-bottom: 60%;
   max-width: 600px;
@@ -180,22 +167,8 @@ model-viewer {
   aspect-ratio: 16/9;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-image: url('../assets/bg.png'); /* Consider using a higher resolution background */
+  background-image: url('../assets/bg.png');
   background-size: cover;
-}
-
-.sidePanelSetting {
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  position: fixed;
-  right: 20px;
-  top: 20px;
-}
-.coloredBlockFilter{
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .wd-all {
   width: 270px;

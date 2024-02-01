@@ -25,4 +25,8 @@ pnpm-debug.log*
 
 #addition files
 /backend/storage/
-warning.txt__pycache__/
+warning.txt
+__pycache__/
+backend/logs/logs.log
+backend/tests/.pytest_cache
+backend/tests/.env

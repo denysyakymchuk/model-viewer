@@ -10,9 +10,16 @@ from users.schemas import UserRead, UserCreate, UserUpdate
 from users.users import fastapi_users, auth_backend, current_active_user
 from database import models
 from database.database import engine, SessionLocal
+from loguru import logger
 
 models.Base.metadata.create_all(bind=engine)
 
+# logs
+logger.add("logs/logs.csv",
+           format="{time:YYYY-MM-DD HH:mm:ss} | {level} | {message}",
+           level="INFO",
+           rotation="200 MB",
+           compression="zip")
 
 app = FastAPI(docs_url="/api/docs", openapi_url='/api/openapi.json')
 
@@ -60,14 +67,23 @@ def get_db():
         db.close()
 
 
+@app.middleware("http")
+async def add_process_time_header(request: Request, call_next):
+    response = await call_next(request)
+    logger.info(f'{request.url, request.headers}')
+    return response
+
+
 @app.get("/api/")
 def read_root():
+    logger.info(f'Hello world')
     return {"Hello": "World"}
 
 
 @app.post("/api/upload-model")
 async def upload_file(request: Request, file: UploadFile = File(...),  db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     if not file.filename.endswith('.glb'):
+        logger.warning("No valid format")
         raise HTTPException(status_code=422, detail="No valid file format")
 
     file_location = f"storage/{file.filename}"
@@ -80,13 +96,14 @@ async def upload_file(request: Request, file: UploadFile = File(...),  db: Sessi
     url = f"{str(request.url)[:-len(request.url.path)]}/{file_location}"
 
     create_path(db=db, schem_path=url)
-
+    logger.info(f"Create new model with path {url}")
     return {"path": url}
 
 
 @app.get("/api/models")
 async def get_models(db: Session = Depends(get_db)):
     from database.crud_path import get_paths
+    logger.info("Get models")
     return {"models": get_paths(db)}
 
 
@@ -94,12 +111,14 @@ async def get_models(db: Session = Depends(get_db)):
 async def delete_model(path_id: int, db: Session = Depends(get_db), user: User = Depends(current_active_user)):
     from database.crud_path import delete_path, get_paths
     delete_path(db, path_id)
+    logger.info(f"Delete model with id {path_id}")
     return get_paths(db)
 
 
 @app.get('/api/model')
 async def delete_model(path_id: int, db: Session = Depends(get_db)):
     from database.crud_path import get_path
+    logger.info(f"Get model with id {path_id}")
     return get_path(db, path_id)
 
 
