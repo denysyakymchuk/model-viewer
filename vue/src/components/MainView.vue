@@ -7,13 +7,15 @@
                      camera-controls
                      touch-action="pan-y">
 
-      <effect-composer render-mode="quality" msaa="8">
+      <effect-composer  render-mode="quality" msaa="8">
 
         <!--   ВСЕ ДЕЛАЕТ ПИКСЕЛЯМИ   -->
         <pixelate-effect v-if="pixar"></pixelate-effect>
 
+<!--        <outline-effect color="red"></outline-effect>-->
+
         <!--   OPACITY     -->
-          <color-grade-effect :contrast="this.contrast" saturation="-1" :opacity="this.opacity" :blend-mode="this.blendMode"></color-grade-effect>
+          <color-grade-effect :contrast="this.contrast" saturation="-1" :opacity="this.opacity" :blend-mode="this.blendMode" :brightness="this.brightness"></color-grade-effect>
 
         </effect-composer>
 
@@ -43,6 +45,18 @@
                 <v-row>
                   <v-col cols="12">
                     <v-checkbox label="Pixelem" v-model="this.pixar"></v-checkbox>
+                  </v-col>
+
+                  <v-col cols="12">
+                    <v-slider
+                        class="wd-all"
+                        v-model="this.brightness"
+                        label="Brightness"
+                        color="orange"
+                        min="-1"
+                        max="1"
+                        step="0.01"
+                        thumb-label="true"></v-slider>
                   </v-col>
 
                   <v-col cols="12">
@@ -111,8 +125,8 @@
 </template>
 
 <script>
-import '@google/model-viewer'
-import '@google/model-viewer-effects'
+import '@google/model-viewer';
+import '@google/model-viewer-effects';
 import { mapActions, mapGetters } from "vuex";
 
 
@@ -120,16 +134,18 @@ export default {
   name: "MainView",
   data() {
     return {
-      pixar: false,
-      contrast: 0,
-      opacity: 1,
       shadowIntensity: 0,
       shadowSoftness: 0,
+      brightness: 0,
+      contrast: 0,
+      opacity: 0,
+      grid: 0,
       blendMode: 'skip',
-      fav: true,
-      menu: false,
       message: false,
+      pixar: false,
+      menu: false,
       hints: true,
+      fav: true,
     }
   },
   methods: {
