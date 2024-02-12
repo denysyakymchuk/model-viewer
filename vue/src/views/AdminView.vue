@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <v-container fluid fill-height class="pa-0 ma-0 tblp">
     <v-row class="fill-height">
       <v-col cols="12" class="pa-0 ma-0">

@@ -1,13 +1,13 @@
 <template>
   <div>
     <!--  LEFT PANEL  -->
-    <div class="openLeft"  @animationend="onAnimationEnd('left')">
-      <img src="../assets/panel-left.png">
+    <div class="openLeft" @animationend="onAnimationEnd('left')">
+      <img src="../assets/panel-left.png" class="panelImage">
     </div>
 
     <!--  RIGHT PANEL  -->
     <div class="openRight" @animationend="onAnimationEnd('right')">
-      <img src="../assets/panel-right.png">
+      <img src="../assets/panel-right.png" class="panelImageR">
     </div>
 
     <!--  COMPONENTS  -->
@@ -17,14 +17,14 @@
     </div>
 
     <!--  BOTTOM PANEL  -->
-    <div class="openBottom"  @animationend="onAnimationEnd('bottom')">
+    <div class="openBottom" @animationend="onAnimationEnd('bottom')">
       <img src="../assets/panel-bottom.png">
     </div>
   </div>
 </template>
 
 <script>
-import VCarousel from '../components/VCarousel.vue'
+import VCarousel from '../components/VCarousel.vue';
 import MainView from "@/components/MainView.vue";
 
 export default {
@@ -46,7 +46,6 @@ export default {
     }
   },
   methods: {
-    // Dopiero jak wszystkie wartosci beda `true` wtedy zaczynaja ladowac sie 3d modele
     onAnimationEnd(position) {
       if (position === 'left') {
         this.animationLeftDone = true;
@@ -61,7 +60,11 @@ export default {
 </script>
 
 <style>
-/*Animowana lewa panel*/
+img {
+  width: 100%;
+}
+
+/* Animowana lewa panel */
 .openLeft {
   top: 0;
   left: -200px;
@@ -78,10 +81,10 @@ export default {
   }
 }
 
-/*Animowana prawa panel*/
+/* Animowana prawa panel */
 .openRight {
   top: 0;
-  right: -200px; /* Начальное положение за пределами экрана */
+  right: -200px;
   position: fixed;
   animation: slideRight 2s ease-in-out forwards;
 }
@@ -95,10 +98,10 @@ export default {
   }
 }
 
-/*Animowana dolna panel*/
+/* Animowana dolna panel */
 .openBottom {
   left: 0;
-  bottom: -200px; /* Начальное положение за пределами экрана */
+  bottom: -200px;
   position: fixed;
   animation: slideUp 2s ease-in-out forwards;
 }
@@ -112,4 +115,17 @@ export default {
   }
 }
 
+/* Media query for screens with a minimum width of 672px */
+@media only screen and (max-width: 672px) {
+  .panelImage {
+    width: 80px;
+    height: 900px;
+  }
+  .panelImageR {
+    width: 60px;
+    height: 950px;
+  }
+
+
+}
 </style>
