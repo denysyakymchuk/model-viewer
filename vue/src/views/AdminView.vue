@@ -9,14 +9,14 @@
               style="   margin-right: 2%;
                          margin-top: 1%;
                          background-color: #2bc0d5;">
-            New model
+            <v-icon icon="mdi-plus"></v-icon>New model
           </v-btn>
           <v-btn
-              @click="this.$router.push('/logout')"
+              @click="logout()"
               style="margin-right: 2%;
                          margin-top: 1%;
                          background-color: #f6b329;">
-            Logout
+            <v-icon icon="$close"></v-icon>Logout
           </v-btn>
           <v-dialog
               v-model="this.dialog"
@@ -92,7 +92,7 @@
               <td><model-viewer :src="item.path"></model-viewer></td>
               <td>
                 <v-btn color="red" @click="deleteModel(item.id)" text>
-                  Delete
+                  <v-icon icon="$delete"></v-icon>Delete
                 </v-btn>
               </td>
             </tr>
@@ -143,7 +143,11 @@ export default {
       this.loading = false
       this.selectedFile = ''
     },
-    ...mapActions(["GET_MODELS", "DELETE_MODELS", "CREATE_MODELS"]),
+    async logout() {
+      await this.LOGOUT()
+      this.$router.push('/logout')
+    },
+    ...mapActions(["GET_MODELS", "DELETE_MODELS", "CREATE_MODELS", "LOGOUT"]),
   },
   async mounted() {
     await this.GET_MODELS()

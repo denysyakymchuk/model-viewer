@@ -20,6 +20,9 @@ const actions = {
     await context.commit("SET_LOGIN", data.data);
     return data.status
   },
+  LOGOUT: async () => {
+    await api.post(`/auth/jwt/logout`);
+  },
 };
 
 export default {
