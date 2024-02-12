@@ -17,10 +17,10 @@
 <script>
 import '@google/model-viewer'
 import 'vue3-carousel/dist/carousel.css';
-import { mapActions, mapGetters } from "vuex";
+import {mapActions, mapGetters} from "vuex";
 
 
-import { Carousel, Slide, Pagination, Navigation } from 'vue3-carousel';
+import {Carousel, Slide, Pagination, Navigation} from 'vue3-carousel';
 
 export default {
   name: 'VCarousel',
@@ -57,11 +57,13 @@ export default {
     height: 150px;
   }
 }
+
 model-viewer {
   width: 100%; /* Занимает всю ширину слайда */
   height: 100%;
   background-image: url('../assets/bg.png');
 }
+
 .slide {
   height: 250px; /* Задайте нужную высоту для слайдов */
   margin: 1%;

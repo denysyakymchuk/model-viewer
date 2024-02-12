@@ -38,7 +38,7 @@ export default {
           return 'Pole nie może być puste.'
         },
       ],
-      passwordRules:  [
+      passwordRules: [
         value => {
           if (value) return true
           return 'Pole nie może być puste.'
@@ -55,7 +55,7 @@ export default {
         });
 
         if (response === 200) {
-          this.$router.push({ name: 'admin' });
+          this.$router.push({name: 'admin'});
         } else {
           console.error('Login failed:', response.status);
         }

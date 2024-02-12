@@ -16,11 +16,11 @@ export default {
     layout() {
       return this.$route.meta.layout === 'admin' ? AdminLayout : MainLayout;
     },
-  components: {
-    AdminLayout,
-    MainLayout,
+    components: {
+      AdminLayout,
+      MainLayout,
+    }
   }
-}
 }
 </script>
 
