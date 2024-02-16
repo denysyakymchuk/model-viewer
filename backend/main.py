@@ -70,7 +70,7 @@ def get_db():
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     response = await call_next(request)
-    logger.info(f'{request.url, request.headers}')
+    logger.info(f'{request.url}')
     return response
 
 

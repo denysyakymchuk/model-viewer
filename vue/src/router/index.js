@@ -3,6 +3,7 @@ import MainModelView from "@/views/MainModelView.vue";
 import AdminView from "@/views/AdminView.vue";
 import LoginView from "@/views/LoginView.vue";
 import store from "@/store";
+import NotFoundView from "@/views/error/NotFoundView.vue";
 
 const routes = [
     {
@@ -44,6 +45,11 @@ const routes = [
             localStorage.removeItem('token');
             next({ name: 'home' });
         },
+    },
+    {
+        path: '/:pathMatch(.*)*',
+        name: 'NotFound',
+        component: NotFoundView
     },
 ];
 

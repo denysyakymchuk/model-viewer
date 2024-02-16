@@ -12,15 +12,11 @@ COPY package*.json ./
 # install project dependencies
 RUN npm install
 
-# copy project files and folders to the current working directory (i.e., 'app' folder)
+# copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
 # build app for production with minification
-
 RUN npm run build
 
-# expose port 8080
-EXPOSE 8080
-
-# specify the command to run on container start
-CMD [ "npm", "run", "serve" ]
+EXPOSE 80
+CMD [ "npm", "run", "serve",  "--port 80"]
