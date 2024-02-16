@@ -22,13 +22,13 @@ services:
   backend-fast-api:
     build:
       context: backend
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.prod
     depends_on:
       - mysql-viewer
     container_name: backend-fast-api
     restart: unless-stopped
     ports:
-      - "8081:8081"
+      - "80:80"
     tty: true
     volumes:
       - ./backend:/fastapi
@@ -40,12 +40,7 @@ services:
     container_name: frontend-vue-js
     build:
       context: ./vue
-      dockerfile: Dockerfile
-    ports:
-      - "80:80"
-    volumes:
-      - ./vue:/app
-      - /app/node_modules
+      dockerfile: Dockerfile.prod
     networks:
       - app-network
 
