@@ -158,7 +158,7 @@ export default {
 <style scoped>
 .tblp {
   z-index: 1000;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   height: 100%;
