@@ -93,7 +93,7 @@ async def upload_file(request: Request, file: UploadFile = File(...),  db: Sessi
 
     from database.crud_path import create_path
 
-    url = f"{str(request.url)[:-len(request.url.path)]}/{file_location}"
+    url = f"{str(request.url)[:-len(request.url.path)]}:90/{file_location}"
 
     create_path(db=db, schem_path=url)
     logger.info(f"Create new model with path {url}")
