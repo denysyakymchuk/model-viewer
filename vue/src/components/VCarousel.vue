@@ -1,6 +1,6 @@
 <template>
   <div class="pos">
-    <carousel :items-to-show="4">
+    <carousel :items-to-show="6">
 
       <slide v-for="slide in MODELS" :key="slide.path" class="slide">
         <model-viewer class="ww" @click="setMainModel(slide.path)" :src="slide.path"></model-viewer>
@@ -61,11 +61,12 @@ export default {
 model-viewer {
   width: 100%; /* Занимает всю ширину слайда */
   height: 100%;
-  background-image: url('../assets/bg.png');
+  /*background-image: url('../assets/bg.png');*/
 }
 
 .slide {
-  height: 250px; /* Задайте нужную высоту для слайдов */
+  height: 150px; /* Задайте нужную высоту для слайдов */
+  width: 150px;
   margin: 1%;
 }
 
