@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
-    <div class="model-viewer-container">
+    <div class="">
       <model-viewer  :src="this.MAIN_MODEL"
                      :shadow-intensity="this.shadowIntensity"
                      :shadow-softness="this.shadowSoftness"
@@ -28,7 +28,7 @@
             v-model="menu"
             :close-on-content-click="false"
             location="center"
-            max-width="300"
+            max-width="350"
         >
           <template v-slot:activator="{ props }">
             <v-btn
@@ -39,7 +39,11 @@
             </v-btn>
           </template>
 
-          <v-card min-width="300" color="black">
+          <v-card
+              min-width="300"
+              color="black"
+              style="border-radius: 20px"
+          >
             <v-row>
               <v-col cols="12">
                 <v-checkbox label="Pixelem" v-model="this.pixar"></v-checkbox>
@@ -173,27 +177,30 @@ export default {
   right: 0;
 }
 model-viewer {
-  margin-bottom: 60%;
-  max-width: 600px;
+  margin-bottom: 20%;
+  max-width: 1500px;
   width: 100%;
-  height: 450px;
+  height: 850px;
   aspect-ratio: 16/9;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  background-image: url('../assets/bg.png');
-  background-size: cover;
+  /*background-image: url('../assets/bg.png');*/
+  /*background-size: cover;*/
 }
 .wd-all {
   width: 270px;
 }
 
-
+.v-row {
+  display: flex;
+  flex-wrap: wrap;
+  flex: 1 1 auto;
+  margin: 0;
+}
 @media only screen and (max-width: 672px) {
   model-viewer {
     width: 700px;
     height: 350px;
   }
-
-
 }
 </style>
