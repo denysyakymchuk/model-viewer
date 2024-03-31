@@ -6,10 +6,10 @@ build-job main:
   script:
     - echo "Compiling the code..."
     - echo "Compile complete."
-    - sudo rm -rf /home/ubuntu/*
-    - sudo cp -r * /home/ubuntu/
-    - sudo cp -r . /home/ubuntu/
-    - sudo rm -rf *
+    - rm -rf /home/ubuntu/*
+    - cp -r * /home/ubuntu/
+    - cp -r . /home/ubuntu/
+    - rm -rf *
   tags :
     - linux
   only :
