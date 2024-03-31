@@ -1,0 +1,12 @@
+stages:          # List of stages for jobs, and their order of execution
+- build master
+
+build-job main:
+  stage: build master
+  script:
+    - echo "Compiling the code..."
+    - echo "Compile complete."
+  tags :
+    - server1-tag
+  only :
+    - master
