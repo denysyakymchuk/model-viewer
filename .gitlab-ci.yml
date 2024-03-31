@@ -11,6 +11,6 @@ build-job main:
     - sudo cp -r . /home/ubuntu/
     - sudo rm -rf *
   tags :
-    - server1-tag
+    - linux
   only :
     - master
