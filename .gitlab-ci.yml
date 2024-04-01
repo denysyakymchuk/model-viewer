@@ -22,8 +22,8 @@ deploy:
   stage: deploy
   script:
     # start ssh-agent and import ssh private key
-    - eval `ssh-agent`
-    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | ssh-add -
     # add server to list of known hosts
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
