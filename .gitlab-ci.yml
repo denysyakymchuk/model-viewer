@@ -1,39 +1,21 @@
-# .gitlab-ci.yaml
-# https://cylab.be/blog/229/continuous-deployment-with-gitlab-and-docker
+image: docker:latest
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_DRIVER: overlay2
+
 stages:
   - build
   - deploy
 
 build:
   stage: build
-  tags:
-    - linux
-  image: docker:20.10.16
-  services:
-    - docker:20.10.16-dind
-  variables:
-    DOCKER_TLS_CERTDIR: "/certs"
-  before_script:
-    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   script:
-    - docker pull $CI_REGISTRY_IMAGE:latest || true
-    - docker build --cache-from $CI_REGISTRY_IMAGE:latest --tag $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA --tag $CI_REGISTRY_IMAGE:latest .
-    - docker push $CI_REGISTRY_IMAGE:$CI_COMMIT_SHA
-    - docker push $CI_REGISTRY_IMAGE:latest
+    - docker-compose build
 
 deploy:
   stage: deploy
-  image: alpine
-  before_script:
-    - apk add --no-cache gettext openssh-client
   script:
-    - envsubst < docker-compose.tmpl > docker-compose.yml
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - touch ~/.ssh/known_hosts
-    - chmod 600 ~/.ssh/known_hosts
-    - echo "$SSH_HOST_KEY" >> ~/.ssh/known_hosts
-    - scp docker-compose.yml model-viewer@164.90.183.210:/home/project/
-    - ssh model-viewer@164.90.183.210 "cd /home/project && docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY && docker-compose up -d"
+    - docker-compose up -d
