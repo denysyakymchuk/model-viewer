@@ -14,9 +14,26 @@ build:
   stage: build
   script:
     - docker-compose build
+  before_script:
+    # install envsubst and ssh-add
+    - apk add gettext openssh-client
 
 deploy:
   stage: deploy
   script:
-    - docker volume create mysql-viewer
-    - docker-compose up -d
+    # start ssh-agent and import ssh private key
+    - eval `ssh-agent`
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
+    # add server to list of known hosts
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - touch ~/.ssh/known_hosts
+    - chmod 600 ~/.ssh/known_hosts
+    - echo $SSH_HOST_KEY >> ~/.ssh/known_hosts
+    # upload docker-compose to the server
+    - scp docker-compose.yml model-viewer@164.90.183.210:/home/project/
+    # docker login and restart services
+    - ssh model-viewer@164.90.183.210 "cd /home/project; 
+        docker login -u $CI_REGISTRY_USER 
+          -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
+        docker compose up -d"
