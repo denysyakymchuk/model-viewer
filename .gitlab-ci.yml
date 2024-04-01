@@ -18,4 +18,5 @@ build:
 deploy:
   stage: deploy
   script:
+    - docker volume create mysql-viewer
     - docker-compose up -d
