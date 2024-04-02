@@ -6,6 +6,7 @@ stages:
 test-job:
   stage: test
   script:
+    - apt install snapd
     - snap install docker
     - ls
     - docker-compose -f docker-compose.yaml down
