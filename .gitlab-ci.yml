@@ -12,9 +12,8 @@ delivery-job:
   stage: delivery
   only:
     - master
-  tags:
-    - linux
   script:
+    - apt-get install docker
     - docker login -p $DOCKER_REGISTRY_KEY -u $DOCKER_REGISTRY_USER  registry.gitlab.com
     - docker tag linux $CI_REGISTRY_IMAGE
     - docker push $CI_REGISTRY_IMAGE
