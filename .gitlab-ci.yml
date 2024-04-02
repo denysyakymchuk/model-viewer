@@ -6,7 +6,7 @@ stages:
 test-job:
   stage: test
   script:
-    - docker --version
+    - sudo snap install docker
     - ls
     - docker-compose -f docker-compose.yaml down
     - docker-compose -f docker-compose.yaml build .
