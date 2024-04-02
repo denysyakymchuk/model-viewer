@@ -2,19 +2,19 @@ stages:
   - test
   - delivery
 
-
 test-job:
   stage: test
   script:
-    - docker-compose down
-    - docker-compose build .
-    - docker-compose up --build
+    - docker compose -f docker-compose.yml down
+    - docker compose -f docker-compose.yml build model-viewer
+    - docker compose -f docker-compose.yml up  --abort-on-container-exit
 
 delivery-job:
   stage: delivery
   only:
-    - master
+    - main
   script:
-    - docker login -p $DOCKER_REGISTRY_KEY -u $DOCKER_REGISTRY_USER  registry.gitlab.com
+    - docker login -p $DOCKER_REGISTRY_KEY -u $DOCKER_REGISTRY_USER registry.gitlab.com
     - docker tag linux $CI_REGISTRY_IMAGE
     - docker push $CI_REGISTRY_IMAGE
+
