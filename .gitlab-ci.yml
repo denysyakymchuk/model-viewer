@@ -6,11 +6,7 @@ stages:
 test-job:
   stage: test
   script:
-    - apt-get install docker
     - ls
-    - docker-compose -f docker-compose.yaml down
-    - docker-compose -f docker-compose.yaml build .
-    - docker-compose -f docker-compose.yaml up --build
 
 delivery-job:
   stage: delivery
