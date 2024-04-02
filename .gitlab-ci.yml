@@ -1,39 +1,42 @@
-image: docker:latest
+image: docker:stable
 
-services:
-  - docker:dind
-
-variables:
-  DOCKER_DRIVER: overlay2
+cache:
+  paths:
+    - node_modules/
 
 stages:
   - build
   - deploy
 
+variables:
+  TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
+  TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
+
 build:
+  image: docker:latest
   stage: build
+  services:
+    - docker:dind
   script:
-    - docker-compose build
-  before_script:
-    # install envsubst and ssh-add
-    - apk add gettext openssh-client
+    - echo "Starting to build"
+    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker push $TAG_COMMIT
+    - docker push $TAG_LATEST
 
 deploy:
+  image: alpine:latest
   stage: deploy
   script:
-    # start ssh-agent and import ssh private key
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | ssh-add -
-    # add server to list of known hosts
-    - mkdir -p ~/.ssh
-    - chmod 700 ~/.ssh
-    - touch ~/.ssh/known_hosts
-    - chmod 600 ~/.ssh/known_hosts
-    - echo $SSH_HOST_KEY >> ~/.ssh/known_hosts
-    # upload docker-compose to the server
-    - scp docker-compose.yml model-viewer@164.90.183.210:/home/project/
-    # docker login and restart services
-    - ssh model-viewer@164.90.183.210 "cd /home/project; 
-        docker login -u $CI_REGISTRY_USER 
-          -p $CI_REGISTRY_PASSWORD $CI_REGISTRY;
-        docker compose up -d"
+    - echo "Starting to deploy"
+    - chmod og= $SSH_PRIVATE_KEY
+    - apk update && apk add openssh-client
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY"
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f model-viewer || true"
+    - ssh -i $SSH_PRIVATE_KEY -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -i -p 3000:3000 --name model-viewer $TAG_COMMIT"
+  environment:
+    name: production
+    url: http://$SERVER_IP
+  only:
+    - main
