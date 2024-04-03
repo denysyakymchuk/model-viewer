@@ -13,6 +13,10 @@ publish:
     - docker:dind
   script:
     - cd backend
+    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - docker push $TAG_COMMIT
+    - docker push $TAG_LATEST
 
 deploy:
   image: alpine:latest
