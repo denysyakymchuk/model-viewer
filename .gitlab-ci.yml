@@ -12,7 +12,6 @@ publish:
   services:
     - docker:dind
   script:
-    - cd backend
     - docker build -t $TAG_COMMIT -t $TAG_LATEST .
     - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
     - docker push $TAG_COMMIT
