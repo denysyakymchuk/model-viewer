@@ -9,7 +9,6 @@ variables:
 
 publish:
   stage: publish
-   Official docker compose image.
   image:
     name: docker/compose:latest
   script:
