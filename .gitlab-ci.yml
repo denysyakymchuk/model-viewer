@@ -12,7 +12,6 @@ publish:
   image:
     name: docker/compose:latest
   script:
-    - ls
     - docker-compose build
     - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
     - docker-compose push
