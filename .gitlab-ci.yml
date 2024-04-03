@@ -1,4 +1,5 @@
 stages:
+  - build
   - publish
   - deploy
 
@@ -6,29 +7,32 @@ variables:
   TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
   TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
 
-publish:
-  image: docker:latest
-  stage: publish
-  services:
-    - docker:dind
+services:
+  - docker:dind
+
+before_script:
+  - docker login -u $USERNAME -p $PASSWORD
+
+build:
+  stage: build
   script:
-    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
-    - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
-    - docker push $TAG_COMMIT
-    - docker push $TAG_LATEST
+    - docker-compose build
+
+publish:
+  stage: publish
+  script:
+    - docker-compose push
 
 deploy:
-  image: alpine:latest
   stage: deploy
+  image: alpine:latest
   tags:
     - deployment
   script:
-    - chmod og= $ID_RSA
     - apk update && apk add openssh-client
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login registry.gitlab.com -u $USERNAME -p $PASSWORD"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app || true"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 80:80 --name my-app $TAG_COMMIT"
+    - chmod og= $ID_RSA
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose pull"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose up -d"
   environment:
     name: production
     url: http://161.35.222.79
