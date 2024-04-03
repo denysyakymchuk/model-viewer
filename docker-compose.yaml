@@ -5,8 +5,6 @@ services:
     container_name: databaseMysql
     restart: unless-stopped
     tty: true
-    env_file:
-      - env
     ports:
       - "33062:3306"
     environment:
