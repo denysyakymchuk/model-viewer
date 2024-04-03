@@ -12,9 +12,10 @@ publish:
   image:
     name: docker/compose:latest
   script:
-    - docker-compose -f docker-compose.yml build
+    - ls
+    - docker-compose build
     - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
-    - docker-compose -f docker-compose.yml push
+    - docker-compose push
 
 deploy:
   stage: deploy
