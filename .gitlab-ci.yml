@@ -26,8 +26,8 @@ deploy:
     - apk update && apk add openssh-client
     - chmod og= $ID_RSA
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login registry.gitlab.com -u $USERNAME -p $PASSWORD"    
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose pull"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose up -d"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SERVER_USER@$SERVER_IP "docker-compose pull"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SERVER_USER@$SERVER_IP "docker-compose up -d"
   environment:
     name: production
     url: http://161.35.222.79
