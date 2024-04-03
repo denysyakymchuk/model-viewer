@@ -18,6 +18,8 @@ publish:
 
 deploy:
   stage: deploy
+  image:
+    name: docker/compose:latest
   script:
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client
