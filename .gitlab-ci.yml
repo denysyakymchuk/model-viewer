@@ -11,7 +11,7 @@ services:
   - docker:dind
 
 before_script:
-  - docker login -u $USERNAME -p $PASSWORD
+  - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
 
 build:
   stage: build
