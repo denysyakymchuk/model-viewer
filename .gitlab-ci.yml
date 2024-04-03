@@ -14,9 +14,8 @@ publish:
     - docker:dind  
   script:
     - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD 
-    - docker-compose build -t $TAG_COMMIT -t $TAG_LATEST 
-    - docker-compose build -t registry.gitlab.com/name8160148/model-viewer 
-    - docker-compose push -t registry.gitlab.com/name8160148/model-viewer
+    - docker-compose build registry.gitlab.com/name8160148/model-viewer:latest
+    - docker-compose push registry.gitlab.com/name8160148/model-viewer:latest
 
 deploy:
   stage: deploy
