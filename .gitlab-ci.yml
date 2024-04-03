@@ -14,7 +14,7 @@ publish:
     - docker:dind  
   script:
     - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD 
-    - docker create volume mysql-viewer
+    - docker volume create mysql-viewer
     - docker-compose build 
     - docker-compose up
 
