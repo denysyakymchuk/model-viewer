@@ -10,12 +10,10 @@ variables:
 services:
   - docker:dind
 
-before_script:
-  - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
-
 build:
   stage: build
   script:
+    - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
     - docker-compose build
 
 publish:
