@@ -15,7 +15,7 @@ publish:
   script:
     - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
     - docker-compose build
-    - docker-compose push
+    - docker-compose push $TAG_COMMIT$TAG_LATEST
 
 deploy:
   stage: deploy
@@ -27,7 +27,7 @@ deploy:
     - chmod og= $ID_RSA
     - ls
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login registry.gitlab.com -u $USERNAME -p $PASSWORD"    
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SERVER_USER@$SERVER_IP "docker-compose pull"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no -o $SERVER_USER@$SERVER_IP "docker-compose pull $TAG_COMMIT$TAG_LATEST"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SERVER_USER@$SERVER_IP "docker-compose up -d"
   environment:
     name: production
