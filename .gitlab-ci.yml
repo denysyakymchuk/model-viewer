@@ -14,8 +14,8 @@ publish:
     - docker:dind  
   script:
     - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD 
-    - docker-compose build registry.gitlab.com/name8160148/model-viewer:latest
-    - docker-compose push registry.gitlab.com/name8160148/model-viewer:latest
+    - docker-compose build 
+    - docker-compose up
 
 deploy:
   stage: deploy
@@ -23,12 +23,12 @@ deploy:
   tags:
     - deployment
   script:
-    - apk update && apk add openssh-client
     - chmod og= $ID_RSA
-    - ls
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login registry.gitlab.com -u $USERNAME -p $PASSWORD"    
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no -o $SERVER_USER@$SERVER_IP "docker-compose pull $TAG_COMMIT$TAG_LATEST"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null $SERVER_USER@$SERVER_IP "docker-compose up -d"
+    - apk update && apk add openssh-client
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login registry.gitlab.com -u $USERNAME -p $PASSWORD"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull $TAG_COMMIT"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-app || true"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 80:80 --name my-app $TAG_COMMIT"
   environment:
     name: production
     url: http://161.35.222.79
