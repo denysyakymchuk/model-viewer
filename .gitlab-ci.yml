@@ -15,7 +15,7 @@ publish:
   script:
     - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
     - docker-compose build
-    - docker-compose push $TAG_COMMIT$TAG_LATEST
+    - docker-compose push registry.gitlab.com
 
 deploy:
   stage: deploy
