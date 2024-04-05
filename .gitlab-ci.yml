@@ -6,34 +6,26 @@ variables:
   TAG_LATEST: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:latest
   TAG_COMMIT: $CI_REGISTRY_IMAGE/$CI_COMMIT_REF_NAME:$CI_COMMIT_SHORT_SHA
 
-
 publish:
+  image: docker:latest
   stage: publish
-  image:
-    name: docker/compose:latest
+  services:
+    - docker:dind
   script:
     - ls
- 
+
+
 deploy:
+  image: alpine:latest
   stage: deploy
-  image:
-    name: docker/compose:latest
+  tags:
+    - deployment
   script:
-    - ls
-    - docker --version
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login registry.gitlab.com -u $USERNAME -p $PASSWORD"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose  pull registry.gitlab.com/name8160148/model-viewer"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose  up -d"
-
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose build up --build"
   environment:
     name: production
-    url: http://139.59.130.72
-
+    url: http://138.68.64.207
   only:
     - master
-
-services:
-  - docker:19.03.12-dind
-
