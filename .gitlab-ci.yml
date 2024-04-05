@@ -12,9 +12,7 @@ publish:
   image:
     name: docker/compose:latest
   script:
-    - docker-compose build
-    - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
-    - docker-compose push registry.gitlab.com/name8160148/model-viewer
+    - ls
 
 deploy:
   stage: deploy
