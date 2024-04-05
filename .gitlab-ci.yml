@@ -30,5 +30,5 @@ deploy:
   environment:
     name: production
     url: http://138.68.64.207
-  only: 
+  only:  
     - master  
