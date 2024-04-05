@@ -13,11 +13,7 @@ publish:
   services:
     - docker:dind
   script:
-    - cd backend
-    - docker build -t $TAG_COMMIT -t $TAG_LATEST .
-    - docker login registry.gitlab.com -u $USERNAME -p $PASSWORD
-    - docker push $TAG_COMMIT
-    - docker push $TAG_LATEST
+    - ls
 
 
 deploy:
@@ -28,7 +24,8 @@ deploy:
   script:
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose build up --build"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "ls"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose build"
   environment:
     name: production
     url: http://138.68.64.207
