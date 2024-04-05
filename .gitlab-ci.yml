@@ -12,7 +12,7 @@ publish:
   stage: publish 
   services:
     - docker:dind
-  script:
+  script:   
     - ls
 
 
