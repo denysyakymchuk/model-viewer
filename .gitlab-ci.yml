@@ -24,7 +24,7 @@ deploy:
   script:
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client 
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "dockerdocker volume create --name=mysql-viewer"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker volume create --name=mysql-viewer"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose -f model-viewer/docker-compose.yaml  up --build"
 
   environment:
