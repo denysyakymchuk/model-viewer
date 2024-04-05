@@ -9,7 +9,7 @@ variables:
 
 publish:
   image: docker:latest
-  stage: publish
+  stage: publish 
   services:
     - docker:dind
   script:
