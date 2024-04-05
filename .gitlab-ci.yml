@@ -22,7 +22,7 @@ publish:
 
 deploy:
   image: alpine:latest
-  stage: deploy
+  stage: deploy 
   tags:
     - deployment
   script:
