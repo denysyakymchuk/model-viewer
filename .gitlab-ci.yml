@@ -29,7 +29,7 @@ deploy:
 
   environment:
     name: production
-    url: http://161.35.222.79
+    url: http://139.59.130.72
 
   only:
     - master
