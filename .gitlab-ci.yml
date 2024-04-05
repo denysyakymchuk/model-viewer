@@ -12,7 +12,7 @@ deploy:
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && docker-compose down"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && git pull"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && docker-compose -f docker-compose.prod.yaml build"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && docker-compose -f docker-compose.prod.yaml up"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && docker-compose -f docker-compose.prod.yaml up --detach"
 
 
   environment:
