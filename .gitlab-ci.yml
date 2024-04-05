@@ -13,7 +13,7 @@ publish:
     name: docker/compose:latest
   script:
     - ls
-
+ 
 deploy:
   stage: deploy
   image:
