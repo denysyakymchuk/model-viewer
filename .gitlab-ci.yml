@@ -1,6 +1,7 @@
 stages:
   - deploy
 
+
 deploy:
   image: alpine:latest
   stage: deploy
