@@ -13,7 +13,7 @@ publish:
   services:
     - docker:dind
   script:     
-    - ls
+    - ls 
 
 
 deploy:
