@@ -25,8 +25,6 @@ deploy:
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client
     - ls
-    - cd mod*
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose down"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "git pull"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker-compose up --build"
 
