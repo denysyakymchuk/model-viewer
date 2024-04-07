@@ -10,11 +10,9 @@ deploy:
   script:
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && docker-compose down"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && git reset --hard HEAD"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && git pull"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && docker-compose -f docker-compose.prod.yaml build"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && docker-compose -f docker-compose.prod.yaml up --detach"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "cd model-viewer && docker-compose -f docker-compose.prod.yaml up --build --detach"
 
 
   environment:
