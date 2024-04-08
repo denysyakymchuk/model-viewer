@@ -24,10 +24,10 @@ app = FastAPI(docs_url="/api/docs", openapi_url='/api/openapi.json')
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost", "http://localhost:90"],
+    allow_origins=["*"],
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
+    allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Authorization"],
 )
 
 app.mount("/storage", StaticFiles(directory="storage"), name="storage")
