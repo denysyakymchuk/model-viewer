@@ -1,7 +1,7 @@
 import axios from "axios";
 import store from "@/store";
 const api = axios.create({
-    baseURL: `http://localhost:90/api`,
+    baseURL: `https://modelviewer.pl/api`,
 });
 
 api.interceptors.request.use(

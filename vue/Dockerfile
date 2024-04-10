@@ -18,5 +18,5 @@ COPY . .
 # build app for production with minification
 RUN npm run build
 
-EXPOSE 80
-CMD [ "npm", "run", "serve",  "--port 80"]
+EXPOSE 8083
+CMD [ "npm", "run", "serve",  "--port 8083"]
