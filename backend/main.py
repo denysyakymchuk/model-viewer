@@ -24,7 +24,7 @@ app = FastAPI(docs_url="/api/docs", openapi_url='/api/openapi.json')
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["https://modelviewer.pl/", "http://192.168.0.4/20", "http://frontend-vue-js", "http://modelviewer.pl/"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
     allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Authorization"],
@@ -110,11 +110,16 @@ async def upload_file(request: Request,
             env_image
         )
 
-    url = f"{str(request.url)[:-len(request.url.path)]}:90/storage/{file.filename}"
+        # url = f"{str(request.url)[:-len(request.url.path)]}/storage/{file.filename}"
+    url =  f'https://modelviewer.pl/storage/{file.filename}'
 
-    url_skybox_image = f"{str(request.url)[:-len(request.url.path)]}:90/storage/{skybox_image.filename}" if skybox_image else None
+	# url_skybox_image = f"{str(request.url)[:-len(request.url.path)]}/storage/{skybox_image.filename}" if skybox_image else None
+    url_skybox_image = f"https://modelviewer.pl/storage/{skybox_image.filename}" if skybox_image else None
 
-    url_env_image = f"{str(request.url)[:-len(request.url.path)]}:90/storage/{env_image.filename}" if env_image else None
+
+    url_env_image = f"https://modelviewer.pl/storage/{env_image.filename}" if env_image else None
+	#url_env_image = f"{str(request.url)[:-len(request.url.path)]}/storage/{env_image.filename}" if env_image else None
+
 
     path_data = schemas.Path(
         path_model=url,

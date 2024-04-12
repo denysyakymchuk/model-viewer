@@ -54,7 +54,7 @@ export default {
           password: this.password
         });
 
-        if (response === 200) {
+        if (response == 200) {
           this.$router.push({name: 'admin'});
         } else {
           console.error('Login failed:', response.status);
