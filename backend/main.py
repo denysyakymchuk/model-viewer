@@ -110,12 +110,16 @@ async def upload_file(request: Request,
             env_image
         )
 
-   # url = f"{str(request.url)[:-len(request.url.path)]}/storage/{file.filename}"
+        # url = f"{str(request.url)[:-len(request.url.path)]}/storage/{file.filename}"
     url =  f'https://modelviewer.pl/storage/{file.filename}'
 
-    url_skybox_image = f"{str(request.url)[:-len(request.url.path)]}/storage/{skybox_image.filename}" if skybox_image else None
+	# url_skybox_image = f"{str(request.url)[:-len(request.url.path)]}/storage/{skybox_image.filename}" if skybox_image else None
+    url_skybox_image = f"https://modelviewer.pl/storage/{skybox_image.filename}" if skybox_image else None
 
-    url_env_image = f"{str(request.url)[:-len(request.url.path)]}/storage/{env_image.filename}" if env_image else None
+
+    url_env_image = f"https://modelviewer.pl/storage/{env_image.filename}" if env_image else None
+	#url_env_image = f"{str(request.url)[:-len(request.url.path)]}/storage/{env_image.filename}" if env_image else None
+
 
     path_data = schemas.Path(
         path_model=url,
