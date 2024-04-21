@@ -31,5 +31,8 @@ pnpm-debug.log*
 /backend/storage
 warning.txt
 __pycache__
+backend/database/__pycache__
+backend/users/__pycache__
+backend/users/
 backend/tests/.pytest_cache
 backend/tests/.env

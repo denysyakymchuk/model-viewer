@@ -106,8 +106,8 @@
               <td>
                 <model-viewer
                     :src="item.path"
-                    :environment-image="item.path_skybox_image"
-                    :skybox-image="item.path_env_image"
+                    :environment-image="item.path_env_image"
+                    :skybox-image="item.path_skybox_image"
                 >
                 </model-viewer>
               </td>

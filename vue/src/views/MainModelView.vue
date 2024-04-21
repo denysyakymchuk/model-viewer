@@ -1,25 +1,25 @@
 <template>
   <div>
     <!--  LEFT PANEL  -->
-    <div class="openLeft" @animationend="onAnimationEnd('left')">
-      <img src="../assets/panel-left.png" class="panelImage">
-    </div>
+<!--    <div class="openLeft" @animationend="onAnimationEnd('left')">-->
+<!--      <img src="../assets/panel-left.png" class="panelImage">-->
+<!--    </div>-->
 
     <!--  RIGHT PANEL  -->
-    <div class="openRight" @animationend="onAnimationEnd('right')">
-      <img src="../assets/panel-right.png" class="panelImageR">
-    </div>
+<!--    <div class="openRight" @animationend="onAnimationEnd('right')">-->
+<!--      <img src="../assets/panel-right.png" class="panelImageR">-->
+<!--    </div>-->
 
     <!--  COMPONENTS  -->
     <div>
-      <MainView v-if="allAnimationsDone" />
-      <VCarousel v-if="allAnimationsDone" />
+      <MainView />
+      <VCarousel />
     </div>
 
     <!--  BOTTOM PANEL  -->
-    <div class="openBottom" @animationend="onAnimationEnd('bottom')">
-      <img src="../assets/panel-bottom.png">
-    </div>
+<!--    <div class="openBottom" @animationend="onAnimationEnd('bottom')">-->
+<!--      <img src="../assets/panel-bottom.png">-->
+<!--    </div>-->
   </div>
 </template>
 
@@ -41,20 +41,20 @@ export default {
     };
   },
   computed: {
-    allAnimationsDone() {
-      return this.animationLeftDone && this.animationRightDone && this.animationBottomDone;
-    }
+    // allAnimationsDone() {
+    //   return this.animationLeftDone && this.animationRightDone && this.animationBottomDone;
+    // }
   },
   methods: {
-    onAnimationEnd(position) {
-      if (position === 'left') {
-        this.animationLeftDone = true;
-      } else if (position === 'right') {
-        this.animationRightDone = true;
-      } else if (position === 'bottom') {
-        this.animationBottomDone = true;
-      }
-    }
+    // onAnimationEnd(position) {
+    //   if (position === 'left') {
+    //     this.animationLeftDone = true;
+    //   } else if (position === 'right') {
+    //     this.animationRightDone = true;
+    //   } else if (position === 'bottom') {
+    //     this.animationBottomDone = true;
+    //   }
+    // }
   }
 }
 </script>
@@ -70,57 +70,57 @@ MainView {
 }
 
 /* Animowana lewa panel */
-.openLeft {
-  top: 0;
-  left: -200px;
-  position: fixed;
-  z-index: 110;
-  animation: slideLeft 2s ease-in-out forwards;
-}
+/*.openLeft {*/
+/*  top: 0;*/
+/*  left: -200px;*/
+/*  position: fixed;*/
+/*  z-index: 110;*/
+/*  animation: slideLeft 2s ease-in-out forwards;*/
+/*}*/
 
-@keyframes slideLeft {
-  from {
-    left: -200px;
-  }
-  to {
-    left: 0px;
-  }
-}
+/*@keyframes slideLeft {*/
+/*  from {*/
+/*    left: -200px;*/
+/*  }*/
+/*  to {*/
+/*    left: 0px;*/
+/*  }*/
+/*}*/
 
-/* Animowana prawa panel */
-.openRight {
-  top: 0;
-  right: -200px;
-  position: fixed;
-  z-index: 110;
-  animation: slideRight 2s ease-in-out forwards;
-}
+/*!* Animowana prawa panel *!*/
+/*.openRight {*/
+/*  top: 0;*/
+/*  right: -200px;*/
+/*  position: fixed;*/
+/*  z-index: 110;*/
+/*  animation: slideRight 2s ease-in-out forwards;*/
+/*}*/
 
-@keyframes slideRight {
-  from {
-    right: -200px;
-  }
-  to {
-    right: 0px;
-  }
-}
+/*@keyframes slideRight {*/
+/*  from {*/
+/*    right: -200px;*/
+/*  }*/
+/*  to {*/
+/*    right: 0px;*/
+/*  }*/
+/*}*/
 
-/* Animowana dolna panel */
-.openBottom {
-  left: 0;
-  bottom: -200px;
-  position: fixed;
-  animation: slideUp 2s ease-in-out forwards;
-}
+/*!* Animowana dolna panel *!*/
+/*.openBottom {*/
+/*  left: 0;*/
+/*  bottom: -200px;*/
+/*  position: fixed;*/
+/*  animation: slideUp 2s ease-in-out forwards;*/
+/*}*/
 
-@keyframes slideUp {
-  from {
-    bottom: -200px;
-  }
-  to {
-    bottom: -10px;
-  }
-}
+/*@keyframes slideUp {*/
+/*  from {*/
+/*    bottom: -200px;*/
+/*  }*/
+/*  to {*/
+/*    bottom: -10px;*/
+/*  }*/
+/*}*/
 
 /* Media query for screens with a minimum width of 672px */
 @media only screen and (max-width: 672px) {
