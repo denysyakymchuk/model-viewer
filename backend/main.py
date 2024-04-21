@@ -24,7 +24,7 @@ app = FastAPI(docs_url="/api/docs", openapi_url='/api/openapi.json')
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["https://modelviewer.pl/", "http://192.168.0.4/20", "http://frontend-vue-js", "http://modelviewer.pl/"],
+    allow_origins=["https://modelviewer.pl/"],
     allow_credentials=True,
     allow_methods=["GET", "POST", "OPTIONS", "DELETE", "PATCH", "PUT"],
     allow_headers=["Content-Type", "Set-Cookie", "Access-Control-Allow-Headers", "Access-Control-Allow-Origin", "Authorization"],
