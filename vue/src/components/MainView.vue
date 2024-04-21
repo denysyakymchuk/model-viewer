@@ -1,13 +1,15 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
-    <div :id="this.MAIN_MODEL">
+    <div>
       <model-viewer  :src="this.MAIN_MODEL"
                      :skybox-image="this.MAIN_SKY_BOX_IMAGE"
                      :environment-image="this.MAIN_ENV_IMAGE"
                      :shadow-intensity="this.shadowIntensity"
                      :shadow-softness="this.shadowSoftness"
                      camera-controls
-                     touch-action="pan-y">
+                     touch-action="pan-y"
+                     :id="this.MAIN_MODEL"
+                      >
 
         <effect-composer render-mode="quality" msaa="8">
 
