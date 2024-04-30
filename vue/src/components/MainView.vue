@@ -58,10 +58,10 @@
               </v-tabs>
 
               <v-card-text style="background-color: #0e0e0e">
-                <v-window v-model="tab" style="background-color: #ffffff">
+                <v-window v-model="tab">
                   <v-window-item id="windowFilter" value="one">
                     <div id="filterFrame">
-                      <v-row>
+                      <v-row class="color-white">
                         <v-col cols="12">
                           <v-checkbox label="Pixelem" v-model="this.pixar"></v-checkbox>
                         </v-col>
@@ -138,13 +138,29 @@
                     </div>
                   </v-window-item>
 
-                  <v-window-item value="three">
-                    {{ makeLink() }}
+                  <v-window-item
+                      value="three"
+                      class="color-white"
+                      style="text-align: justify"
+                  >
+                    <v-alert
+                        class="mb-5"
+                        text="The code was copied!"
+                        type="success"
+                        v-if="this.showIsCopiedLink"
+                    >
+                    </v-alert>
+                    <v-textarea
+                        label=""
+                        prepend-icon="mdi-content-copy"
+                        :value="makeLink()"
+                        variant="solo-filled"
+                        @click:prepend="this.copyLink()"
+                    ></v-textarea>
                   </v-window-item>
                 </v-window>
               </v-card-text>
             </v-card>
-
           </v-card>
         </v-menu>
       </div>
@@ -163,30 +179,30 @@ export default {
   name: "MainView",
   data() {
     return {
-      pixar: false,
-      opacity: 1,
       shadowIntensity: 0,
       shadowSoftness: 0,
       brightness: 0,
-      contrast: 0,
-      blendMode: 'skip',
-      fav: true,
-      menu: false,
-      message: false,
-      hints: true,
-      tab: null,
       activeTab: 1,
-    }
-  },
-  watch: {
-    MAIN_MODEL() {
-      this.makeLink()
+      contrast: 0,
+      opacity: 1,
+      blendMode: 'skip',
+      showIsCopiedLink: false,
+      message: false,
+      pixar: false,
+      hints: true,
+      menu: false,
+      fav: true,
+      tab: null,
     }
   },
   methods: {
     ...mapActions(["GET_MAIN_MODEL"]),
     makeLink() {
       return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}"></iframe>`
+    },
+    copyLink() {
+      navigator.clipboard.writeText(this.makeLink());
+      this.showIsCopiedLink = true;
     }
   },
   computed: {
@@ -227,5 +243,7 @@ model-viewer {
   flex: 1 1 auto;
   margin: 0;
 }
-
+.color-white {
+  color: white
+}
 </style>

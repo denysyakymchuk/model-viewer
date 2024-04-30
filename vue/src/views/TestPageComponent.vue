@@ -1,7 +1,7 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
 
-    <iframe src="http://localhost/model/2"></iframe>
+    <iframe src="http://localhost/model/3"></iframe>
 
   </div>
 </template>
