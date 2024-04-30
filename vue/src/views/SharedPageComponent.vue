@@ -1,15 +1,11 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
-    <div>
-      <model-viewer  :src="this.MAIN_MODEL_IFRAME"
-                     :skybox-image="this.MAIN_MODEL_IFRAME_SBI"
-                     :environment-image="this.MAIN_MODEL_IFRAME_EI"
-                     camera-controls
-                     touch-action="pan-y">
-
-
-      </model-viewer>
-    </div>
+    <model-viewer  :src="this.MAIN_MODEL_IFRAME"
+                   :skybox-image="this.MAIN_MODEL_IFRAME_SBI"
+                   :environment-image="this.MAIN_MODEL_IFRAME_EI"
+                   camera-controls
+                   touch-action="pan-y">
+    </model-viewer>
   </div>
 </template>
 
@@ -31,7 +27,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-
-</style>

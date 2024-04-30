@@ -57,13 +57,16 @@
                 <v-tab value="three">Get code</v-tab>
               </v-tabs>
 
-              <v-card-text style="background-color: #0e0e0e">
+              <v-card-text
+                  style="background-color: #0e0e0e">
                 <v-window v-model="tab">
-                  <v-window-item id="windowFilter" value="one">
+                  <v-window-item
+                      id="windowFilter"
+                      value="one">
                     <div id="filterFrame">
                       <v-row class="color-white">
                         <v-col cols="12">
-                          <v-checkbox label="Pixelem" v-model="this.pixar"></v-checkbox>
+                          <v-checkbox label="Pixel" v-model="this.pixar"></v-checkbox>
                         </v-col>
 
                         <v-col cols="12">
@@ -198,7 +201,7 @@ export default {
   methods: {
     ...mapActions(["GET_MAIN_MODEL"]),
     makeLink() {
-      return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}"></iframe>`
+      return `<iframe src="https://modelviewer.pl/api/model/${this.MAIN_MODEL_ID}"></iframe>`
     },
     copyLink() {
       navigator.clipboard.writeText(this.makeLink());
