@@ -4,7 +4,7 @@
 
       <slide v-for="slide in MODELS" :key="slide.path" class="slide">
         <model-viewer class="ww"
-                      @click="setMainModel(slide.path, slide.path_skybox_image, slide.path_env_image);"
+                      @click="setMainModel(slide.path, slide.path_skybox_image, slide.path_env_image, slide.id);"
                       :src="slide.path">
 
         </model-viewer>
@@ -42,8 +42,8 @@ export default {
     };
   },
   methods: {
-    setMainModel(path, skyBoxImage, envImage) {
-      this.GET_MAIN_MODEL({path, skyBoxImage, envImage})
+    setMainModel(path, skyBoxImage, envImage, id) {
+      this.GET_MAIN_MODEL({path, skyBoxImage, envImage, id})
     },
     ...mapActions(["GET_MODELS", "GET_MAIN_MODEL"]),
   },
@@ -56,6 +56,7 @@ export default {
 
     const baseModel = {
       path: this.MODELS[0].path,
+      id: this.MODELS[0].id,
       skyBoxImage: this.MODELS[0].path_skybox_image,
       envImage: this.MODELS[0].path_env_image
     }
