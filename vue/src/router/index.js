@@ -4,6 +4,8 @@ import AdminView from "@/views/AdminView.vue";
 import LoginView from "@/views/LoginView.vue";
 import store from "@/store";
 import NotFoundView from "@/views/error/NotFoundView.vue";
+import SharedPageComponent from "@/views/SharedPageComponent.vue";
+import TestPageComponent from "@/views/TestPageComponent.vue";
 
 const routes = [
     {
@@ -11,6 +13,19 @@ const routes = [
         name: "home",
         meta: { layout: "main" },
         component: MainModelView,
+    },
+    {
+        path: "/model/:id",
+        name: "model",
+        meta: { layout: "main" },
+        props:true,
+        component: SharedPageComponent,
+    },
+    {
+        path: "/test",
+        name: "test",
+        meta: { layout: "main" },
+        component: TestPageComponent,
     },
     {
         path: "/admin",

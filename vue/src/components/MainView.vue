@@ -44,82 +44,107 @@
           <v-card
               min-width="300"
               color="black"
-              style="border-radius: 20px"
+              style="border-radius: 20px;"
           >
-            <v-row>
-              <v-col cols="12">
-                <v-checkbox label="Pixelem" v-model="this.pixar"></v-checkbox>
-              </v-col>
 
-              <v-col cols="12">
-                <v-slider
-                    class="wd-all"
-                    v-model="this.brightness"
-                    label="Brightness"
-                    color="orange"
-                    min="-1"
-                    max="1"
-                    step="0.01"
-                    thumb-label="true"></v-slider>
-              </v-col>
+            <v-card>
+              <v-tabs
+                  align-tabs="center"
+                  v-model="tab"
+                  bg-color="black"
+              >
+                <v-tab value="one">Filters</v-tab>
+                <v-tab value="three">Get code</v-tab>
+              </v-tabs>
 
-              <v-col cols="12">
-                <v-slider
-                    class="wd-all"
-                    v-model="this.opacity"
-                    label="Opacity"
-                    color="orange"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    thumb-label="true"></v-slider>
-              </v-col>
+              <v-card-text style="background-color: #0e0e0e">
+                <v-window v-model="tab" style="background-color: #ffffff">
+                  <v-window-item id="windowFilter" value="one">
+                    <div id="filterFrame">
+                      <v-row>
+                        <v-col cols="12">
+                          <v-checkbox label="Pixelem" v-model="this.pixar"></v-checkbox>
+                        </v-col>
 
-              <v-col cols="12">
-                <v-slider
-                    class="wd-all"
-                    v-model="this.contrast"
-                    label="Contrast"
-                    color="orange"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    thumb-label="true"></v-slider>
-              </v-col>
+                        <v-col cols="12">
+                          <v-slider
+                              class="wd-all"
+                              v-model="this.brightness"
+                              label="Brightness"
+                              color="orange"
+                              min="-1"
+                              max="1"
+                              step="0.01"
+                              thumb-label="true"></v-slider>
+                        </v-col>
 
-              <v-col cols="12">
-                <v-slider
-                    v-model="this.shadowSoftness"
-                    class="wd-all"
-                    label="Shadow softness"
-                    color="orange"
-                    min="0"
-                    max="1"
-                    step="0.01"
-                    thumb-label="true"></v-slider>
-              </v-col>
+                        <v-col cols="12">
+                          <v-slider
+                              class="wd-all"
+                              v-model="this.opacity"
+                              label="Opacity"
+                              color="orange"
+                              min="0"
+                              max="1"
+                              step="0.01"
+                              thumb-label="true"></v-slider>
+                        </v-col>
 
-              <v-col cols="12">
-                <v-slider
-                    class="wd-all"
-                    v-model="this.shadowIntensity"
-                    label="Shadow intensity"
-                    min="0"
-                    max="4"
-                    step="0.01"
-                    color="orange"
-                    thumb-label="true"></v-slider>
-              </v-col>
+                        <v-col cols="12">
+                          <v-slider
+                              class="wd-all"
+                              v-model="this.contrast"
+                              label="Contrast"
+                              color="orange"
+                              min="0"
+                              max="1"
+                              step="0.01"
+                              thumb-label="true"></v-slider>
+                        </v-col>
 
-              <v-col cols="12">
-                <v-select
-                    v-model="this.blendMode"
-                    :items="['Default', 'Skip', 'Add', 'Subtract', 'Divide', 'Negation']"
-                    variant="primary"
-                ></v-select>
-              </v-col>
+                        <v-col cols="12">
+                          <v-slider
+                              v-model="this.shadowSoftness"
+                              class="wd-all"
+                              label="Shadow softness"
+                              color="orange"
+                              min="0"
+                              max="1"
+                              step="0.01"
+                              thumb-label="true"></v-slider>
+                        </v-col>
 
-            </v-row>
+                        <v-col cols="12">
+                          <v-slider
+                              class="wd-all"
+                              v-model="this.shadowIntensity"
+                              label="Shadow intensity"
+                              min="0"
+                              max="4"
+                              step="0.01"
+                              color="orange"
+                              thumb-label="true"></v-slider>
+                        </v-col>
+
+                        <v-col cols="12">
+                          <v-select
+                              v-model="this.blendMode"
+                              :items="['Default', 'Skip', 'Add', 'Subtract', 'Divide', 'Negation']"
+                              variant="primary"
+                          ></v-select>
+                        </v-col>
+
+                      </v-row>
+                    </div>
+                  </v-window-item>
+
+                  <v-window-item value="three">
+                    {{ makeLink() }}
+                  </v-window-item>
+                </v-window>
+              </v-card-text>
+            </v-card>
+
           </v-card>
         </v-menu>
       </div>
@@ -149,13 +174,23 @@ export default {
       menu: false,
       message: false,
       hints: true,
+      tab: null,
+      activeTab: 1,
+    }
+  },
+  watch: {
+    MAIN_MODEL() {
+      this.makeLink()
     }
   },
   methods: {
     ...mapActions(["GET_MAIN_MODEL"]),
+    makeLink() {
+      return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}"></iframe>`
+    }
   },
   computed: {
-    ...mapGetters(["MAIN_MODEL", "MAIN_SKY_BOX_IMAGE", "MAIN_ENV_IMAGE"]),
+    ...mapGetters(["MAIN_MODEL", "MAIN_SKY_BOX_IMAGE", "MAIN_ENV_IMAGE", "MAIN_MODEL_ID"]),
   },
 }
 </script>
