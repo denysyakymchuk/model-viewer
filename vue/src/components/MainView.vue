@@ -44,9 +44,9 @@
           <v-card
               min-width="300"
               color="black"
+              :style="{ opacity: this.blockOpacity }"
               style="border-radius: 20px;"
           >
-
             <v-card>
               <v-tabs
                   align-tabs="center"
@@ -189,6 +189,7 @@ export default {
       contrast: 0,
       opacity: 1,
       blendMode: 'skip',
+      blockOpacity: 1,
       showIsCopiedLink: false,
       message: false,
       pixar: false,
@@ -201,12 +202,12 @@ export default {
   methods: {
     ...mapActions(["GET_MAIN_MODEL"]),
     makeLink() {
-      return `<iframe src="https://modelviewer.pl/api/model/${this.MAIN_MODEL_ID}"></iframe>`
+      return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}"></iframe>`
     },
     copyLink() {
       navigator.clipboard.writeText(this.makeLink());
       this.showIsCopiedLink = true;
-    }
+    },
   },
   computed: {
     ...mapGetters(["MAIN_MODEL", "MAIN_SKY_BOX_IMAGE", "MAIN_ENV_IMAGE", "MAIN_MODEL_ID"]),
@@ -215,7 +216,6 @@ export default {
 </script>
 
 <style scoped>
-
 .btn {
   margin-top: 1%;
   margin-right: 2%;
