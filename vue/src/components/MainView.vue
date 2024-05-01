@@ -202,7 +202,7 @@ export default {
   methods: {
     ...mapActions(["GET_MAIN_MODEL"]),
     makeLink() {
-      return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}"></iframe>`
+      return `<iframe src="https://modelviewer.pl/model/${this.MAIN_MODEL_ID}"></iframe>`
     },
     copyLink() {
       navigator.clipboard.writeText(this.makeLink());
