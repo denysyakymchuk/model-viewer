@@ -21,10 +21,10 @@ const mutations = {
         state.mainModelIframe = payload;
     },
     SET_MAIN_MODEL_IFRAME_SBI: (state, payload) => {
-        state.skyBoxImage = payload;
+        state.mainModelIframeSBI = payload;
     },
     SET_MAIN_MODEL_IFRAME_EI: (state, payload) => {
-        state.envImage = payload;
+        state.mainModelIframeEI = payload;
     },
 
 };
