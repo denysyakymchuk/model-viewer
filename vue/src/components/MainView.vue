@@ -184,25 +184,25 @@ export default {
     return {
       shadowIntensity: 0,
       shadowSoftness: 0,
+      blockOpacity: 1,
       brightness: 0,
       activeTab: 1,
       contrast: 0,
       opacity: 1,
-      blendMode: 'skip',
-      blockOpacity: 1,
+      pixar: 0,
       showIsCopiedLink: false,
       message: false,
-      pixar: false,
-      hints: true,
       menu: false,
+      hints: true,
       fav: true,
       tab: null,
+      blendMode: 'skip',
     }
   },
   methods: {
     ...mapActions(["GET_MAIN_MODEL"]),
     makeLink() {
-      return `<iframe src="https://modelviewer.pl/model/${this.MAIN_MODEL_ID}"></iframe>`
+      return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}"></iframe>`
     },
     copyLink() {
       navigator.clipboard.writeText(this.makeLink());
@@ -231,9 +231,9 @@ model-viewer {
   width: 100vw;
   height: 100vh;
   aspect-ratio: 16/9;
-  border-radius: 0; /* убрать скругление углов, если не нужно */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* тень, если нужно */
-  z-index: 0; /* установить необходимый z-index */
+  border-radius: 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 0;
 }
 
 .wd-all {
