@@ -1,8 +1,8 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
     <model-viewer  :src="this.MAIN_MODEL_IFRAME"
-                   :skybox-image="this.MAIN_MODEL_IFRAME_SBI"
-                   :environment-image="this.MAIN_MODEL_IFRAME_EI"
+                   :skybox-image="this.isSkyBoxImage ? this.MAIN_MODEL_IFRAME_SBI : ''"
+                   :environment-image="this.isEnvImage ? this.MAIN_MODEL_IFRAME_EI : ''"
                    :shadow-intensity="this.shadowIntensity"
                    :shadow-softness="this.shadowSoftness"
                    camera-controls
@@ -31,15 +31,17 @@ export default {
   name: "MainView",
   data() {
     return {
-      env_image: null,
       shadowIntensity: 0,
       shadowSoftness: 0,
+      blockOpacity: 1,
       brightness: 0,
       contrast: 0,
-      pixar: false,
       opacity: 1,
       blendMode: 'skip',
-      blockOpacity: 1,
+      pixar: false,
+      isSkyBoxImage: null,
+      env_image: null,
+      isEnvImage: null,
     }
   },
   computed: {
@@ -58,6 +60,8 @@ export default {
     this.blendMode = this.$route.query.blendMode;
     this.blockOpacity = this.$route.query.blockOpacity;
     this.pixar = Number(this.$route.query.pixar);
+    this.isEnvImage = Number(this.$route.query.isEnvImage);
+    this.isSkyBoxImage = Number(this.$route.query.isSkyBoxImage);
   }
 }
 </script>

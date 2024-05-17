@@ -49,10 +49,11 @@
           >
             <v-card>
               <v-tabs
-                  align-tabs="center"
+                  align-tabs="left"
                   v-model="tab"
                   bg-color="black"
               >
+                <a  @click="this.menu=false" style="cursor: pointer"><v-tab disabled style="opacity: 1"><v-icon color="white" icon="mdi-close" size="x-large"></v-icon></v-tab></a>
                 <v-tab value="one">Filters</v-tab>
                 <v-tab value="three">Get code</v-tab>
               </v-tabs>
@@ -146,6 +147,10 @@
                       class="color-white"
                       style="text-align: justify"
                   >
+                    <div class="d-flex">
+                      <v-checkbox label="Environment image" v-model="this.isEnvImage"></v-checkbox>
+                      <v-checkbox label="Skybox image" v-model="this.isSkyBoxImage"></v-checkbox>
+                    </div>
                     <v-alert
                         class="mb-5"
                         text="The code was copied!"
@@ -184,7 +189,9 @@ export default {
     return {
       shadowIntensity: 0,
       shadowSoftness: 0,
+      isSkyBoxImage: 0,
       blockOpacity: 1,
+      isEnvImage: 0,
       brightness: 0,
       activeTab: 1,
       contrast: 0,
@@ -202,7 +209,8 @@ export default {
   methods: {
     ...mapActions(["GET_MAIN_MODEL"]),
     makeLink() {
-      return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}"></iframe>`
+      // return `<!--<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>-->`
+      return `<iframe src="http://modelviewer/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
     },
     copyLink() {
       navigator.clipboard.writeText(this.makeLink());
