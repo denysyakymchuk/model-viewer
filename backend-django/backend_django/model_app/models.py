@@ -3,9 +3,9 @@ from django.db import models
 
 
 class ThreeDModel(models.Model):
-    path = models.CharField(max_length=100)
-    path_skybox_image = models.CharField(max_length=100)
-    path_env_image = models.CharField(max_length=100)
+    path = models.FileField(upload_to='3d_models/', null=False)
+    path_skybox_image = models.FileField(upload_to='skybox_images/', null=True)
+    path_env_image = models.FileField(upload_to='env_images/', null=True)
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
 
@@ -18,4 +18,3 @@ class ThreeDModel(models.Model):
         verbose_name = "ThreeDModel"
         verbose_name_plural = "ThreeDModels"
         ordering = ("-time_create",)
-

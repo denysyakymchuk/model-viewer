@@ -43,3 +43,5 @@ uritemplate==4.1.1
 urllib3==2.2.1
 voluptuous==0.14.2
 mysqlclient
+django-storages==1.14.3
+boto3
