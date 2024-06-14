@@ -24,8 +24,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework.authtoken',
     'storages',
     'drf_yasg',
+    'djoser',
     'rest_framework',
     'model_app',
 ]
@@ -121,3 +123,22 @@ AWS_DEFAULT_ACL = None if os.environ.get('AWS_DEFAULT_ACL') == 'None' else os.en
 AWS_S3_CUSTOM_DOMAIN = os.environ.get('AWS_S3_CUSTOM_DOMAIN')
 AWS_S3_REGION_NAME = os.environ.get('AWS_S3_REGION_NAME')
 DEFAULT_FILE_STORAGE = os.environ.get('DEFAULT_FILE_STORAGE')
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+}
+# settings.py
