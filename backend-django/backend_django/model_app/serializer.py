@@ -18,9 +18,3 @@ class ThreeDModelSerializer(serializers.ModelSerializer):
                 data['path_env_image'] = None
 
             return data
-
-        def to_representation(self, instance):
-            representation = super().to_representation(instance)
-            if instance.path:
-                representation['path'] = f'https://{settings.AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com/{instance.path}'
-            return representation
