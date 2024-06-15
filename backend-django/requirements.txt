@@ -45,3 +45,4 @@ voluptuous==0.14.2
 mysqlclient
 django-storages==1.14.3
 boto3
+django-cors-headers
