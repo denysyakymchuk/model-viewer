@@ -4,7 +4,7 @@
 
       <slide v-for="slide in MODELS" :key="slide.path" class="slide">
         <model-viewer class="ww"
-                      @click="setMainModel(slide.path, slide.path_skybox_image, slide.path_env_image, slide.id);"
+                      @click="setMainModel(slide.path, slide.path_skybox_image, slide.path_env_image, slide.id); console.log(slide.path); console.log(slide.path_skybox_image); console.log(slide.path_env_image)"
                       :src="slide.path">
 
         </model-viewer>

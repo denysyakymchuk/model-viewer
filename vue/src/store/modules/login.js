@@ -10,18 +10,22 @@ const getters = {
 };
 const mutations = {
   SET_LOGIN: (state, payload) => {
-    localStorage.setItem('token', payload.access_token)
-    state.token = payload.access_token
+    localStorage.setItem('token', payload.auth_token)
+    console.log(payload);
+    console.log(payload);
+    console.log(payload);
+    console.log(payload);
+    state.token = payload.auth_token
   },
 };
 const actions = {
   GET_LOGIN: async (context, payload) => {
-    const data = await api.post(`/auth/jwt/login`, payload);
+    const data = await api.post(`/auth/token/login/`, payload);
     await context.commit("SET_LOGIN", data.data);
     return data.status
   },
   LOGOUT: async () => {
-    await api.post(`/auth/jwt/logout`);
+    await api.post(`/auth/token/logout/`);
   },
 };
 
