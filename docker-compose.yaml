@@ -6,11 +6,8 @@ services:
     tty: true
     ports:
       - "33062:3306"
-    environment:
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
+    env_file:
+      - .env
     command: --init-file /docker-entrypoint-initdb.d/init.sql
     volumes:
       - mysql-viewer:/var/lib/mysql-viewer

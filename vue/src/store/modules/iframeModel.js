@@ -30,7 +30,7 @@ const mutations = {
 };
 const actions = {
     GET_MAIN_MODEL_IFRAME: async (context, id) => {
-        const data = await api.get(`/model?path_id=${id}`);
+        const data = await api.get(`/models/${id}`);
         await context.commit("SET_MAIN_MODEL_IFRAME", data?.data?.path);
         await context.commit("SET_MAIN_MODEL_IFRAME_SBI", data?.data?.path_skybox_image)
         await context.commit("SET_MAIN_MODEL_IFRAME_EI", data?.data?.path_env_image);

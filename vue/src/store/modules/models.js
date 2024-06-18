@@ -34,7 +34,7 @@ const actions = {
         if (payload.selectedEnvImage !== null) {
             formData.append('path_env_image', payload.selectedEnvImage[0]);
         }
-
+        // default user
         formData.append('owner', 1);
 
         const data = await api.post(`/models/`, formData, {'Content-Type': 'multipart/form-data'});
