@@ -21,8 +21,13 @@ services:
     restart: always
     container_name: django-backend-modelviewer
     command: >
-      sh -c "cd backend-django && ls && cd backend_django && ls && python manage.py migrate &&
-            python manage.py runserver 0.0.0.0:8000"
+      sh -c "cd backend-django && 
+      ls &&
+      cd backend_django &&
+      ls &&
+      python manage.py migrate &&
+      python manage.py makesuperuser &&
+      python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     env_file:
