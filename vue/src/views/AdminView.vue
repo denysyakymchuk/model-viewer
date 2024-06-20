@@ -173,8 +173,8 @@ export default {
       }
     },
     async logout() {
-      await this.LOGOUT()
-      await this.$router.push('/logout')
+      await this.LOGOUT();
+      await this.$router.push('/logout');
     },
     ...mapActions(["GET_MODELS", "DELETE_MODELS", "CREATE_MODELS", "LOGOUT"]),
   },

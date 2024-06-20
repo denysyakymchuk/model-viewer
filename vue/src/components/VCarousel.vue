@@ -51,7 +51,6 @@ export default {
     ...mapGetters(["MODELS"]),
   },
   async mounted() {
-
     await this.GET_MODELS()
 
     const baseModel = {
