@@ -16,7 +16,6 @@ const mutations = {
 const actions = {
     GET_MODELS: async (context) => {
         const data = await api.get(`/models`);
-        console.log(data.data)
         await context.commit("SET_MODELS", data.data);
     },
     DELETE_MODELS: async (context, payload) => {
