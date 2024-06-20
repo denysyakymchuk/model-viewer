@@ -57,7 +57,6 @@ const routes = [
         path: "/logout",
         name: "logout",
         beforeEnter: (to, from, next) => {
-            localStorage.removeItem('token');
             next({ name: 'home' });
         },
     },
