@@ -36,3 +36,4 @@ backend/users/__pycache__
 backend/users/
 backend/tests/.pytest_cache
 backend/tests/.env
+backend-django/venv
