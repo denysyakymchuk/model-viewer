@@ -1,12 +1,9 @@
-### Jak uruchomić?
- 1. Pobierz docker i docker-compose.
- 2. W terminalu: wejdź w dyrektorię główną projektu
- 3. Za pomocą polecenia w terminalu `docker-compose build` utworz docker kontenery
- 4. `docker-compose up` uruchomi kontenery.
+# About application
 
----
+The application was created for viewing 3D models. Each user can get selected model for own site, for every model generates code iframe.   
 
-- frontend jest dostępny po `http://localhost:90/`
-- backend jest dostępny po `http://localhost:90/api/`
+> Link:  https://modelviewer.pl/
 
+## Main page
+![img.png](readme-images/main-page-readme.png)
 
