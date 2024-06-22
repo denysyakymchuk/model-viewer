@@ -47,18 +47,6 @@ services:
     networks:
       - app-network
 
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    container_name: phpMyAdmin-viewer
-    environment:
-      PMA_HOST: mysql-viewer
-      PMA_PORT: 3306
-    ports:
-      - "1111:80"
-    networks:
-      - app-network
-
-
   nginx:
     image: nginx:latest
     container_name: nginx-viewer
@@ -70,7 +58,6 @@ services:
     depends_on:
       - django-backend-modelviewer
       - frontend-vue-js
-      - phpmyadmin
       - mysql-viewer
     networks:
       - app-network
