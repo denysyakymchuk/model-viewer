@@ -1,5 +1,14 @@
 <template>
   <v-sheet class="mx-auto form">
+    <v-alert
+        style="margin-bottom: 1%"
+        v-if="this.error_alert"
+        title="Failed login"
+        :text="this.error_alert_text"
+        type="error"
+        variant="outlined"
+    ></v-alert>
+
     <v-form ref="form" v-model="this.valid" fast-fail @submit.prevent>
       <v-text-field
           v-model="this.username"
@@ -32,16 +41,18 @@ export default {
       valid: false,
       password: '',
       username: '',
+      error_alert: false,
+      error_alert_text: '',
       usernameRules:  [
         value => {
           if (value) return true
-          return 'Pole nie może być puste.'
+          return 'The field can not be empty.'
         },
       ],
       passwordRules: [
         value => {
           if (value) return true
-          return 'Pole nie może być puste.'
+          return 'The field can not be empty.'
         },
       ],
     }
@@ -54,15 +65,21 @@ export default {
           password: this.password
         });
 
-        if (response == 200) {
-          this.$router.push({name: 'admin'});
-        } else {
-          console.error('Login failed:', response.status);
+        if (response === 200) {
+          this.$router.push({ name: 'admin' });
         }
       } catch (error) {
-        console.error('Error sending credentials');
-      }
-    },
+        if (error.response && error.response.status === 400) {
+          this.error_alert_text = error.response.data.non_field_errors[0] || 'Invalid Credentials';
+          this.error_alert = true;
+        } else if (error.response && error.response.status === 404) {
+          this.error_alert_text = 'The requested resource was not found.';
+          this.error_alert = true;
+        } else {
+          this.error_alert_text = 'An error occurred while trying to log in. Please try again later.';
+          this.error_alert = true;
+        }
+      }},
     ...mapActions(["GET_LOGIN"]),
   },
 }

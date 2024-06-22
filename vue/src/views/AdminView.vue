@@ -6,9 +6,9 @@
           <v-toolbar-title>Models</v-toolbar-title>
           <v-btn
               @click="this.dialog = !this.dialog"
-              style="   margin-right: 2%;
-                         margin-top: 1%;
-                         background-color: #2bc0d5;">
+              style="margin-right: 2%;
+                     margin-top: 1%;
+                     background-color: #2bc0d5;">
             <v-icon icon="mdi-plus"></v-icon>New model
           </v-btn>
           <v-btn
@@ -36,6 +36,15 @@
                         sm="12"
                         md="12"
                     >
+                      <v-alert
+                          style="margin-bottom: 1%"
+                          v-if="this.errorAlertPath"
+                          title="Validation error"
+                          :text="this.errorAlertPathText"
+                          type="error"
+                          variant="outlined"
+                      ></v-alert>
+
                       <v-file-input
                           accept=".glb"
                           placeholder="Pick a 3D model file"
@@ -44,6 +53,15 @@
                           @change="(e) => {this.dataObject.selectedFileModel = e.target.files}"
                           label="Model .glb"
                       ></v-file-input>
+
+                      <v-alert
+                          style="margin-bottom: 1%"
+                          v-if="this.errorAlertSkyBoxImage"
+                          title="Validation error"
+                          :text="this.errorAlertPathSkyBoxImageText"
+                          type="error"
+                          variant="outlined"
+                      ></v-alert>
                       <v-file-input
                           accept=".hdr,.jpg"
                           prepend-inner-icon="mdi-camera"
@@ -51,6 +69,15 @@
                           @change="(e) => {this.dataObject.selectedSkyBoxImage = e.target.files}"
                           label="Skybox image .hdr .jpg"
                       ></v-file-input>
+
+                      <v-alert
+                          style="margin-bottom: 1%"
+                          v-if="this.errorAlertEnvImage"
+                          title="Validation error"
+                          :text="this.errorAlertEnvImageText"
+                          type="error"
+                          variant="outlined"
+                      ></v-alert>
                       <v-file-input
                           accept=".jpg"
                           prepend-inner-icon="mdi-camera"
@@ -141,11 +168,17 @@ export default {
         { title: 'Model', key: 'path'},
         { title: 'Action', key: 'path'},
       ],
+      errorAlertSkyBoxImage: false,
+      errorAlertEnvImage: false,
+      errorAlertPath: false,
       loading: false,
       dialog: false,
+      errorAlertPathSkyBoxImageText: '',
+      errorAlertEnvImageText: '',
+      errorAlertPathText: '',
       dataObject: {
-        selectedFileModel: null,
         selectedSkyBoxImage: null,
+        selectedFileModel: null,
         selectedEnvImage: null,
       }
     }
@@ -162,14 +195,31 @@ export default {
     },
     async sendModel() {
       this.loading = true
-      await this.CREATE_MODELS(this.dataObject)
-      await this.GET_MODELS()
-      this.dialog = false
-      this.loading = false
-      this.dataObject = {
-        selectedFileModel: null,
-        selectedSkyBoxImage: null,
-        selectedEnvImage: null,
+      try {
+        await this.CREATE_MODELS(this.dataObject)
+        await this.GET_MODELS()
+        this.dialog = false
+        this.loading = false
+        this.dataObject = {
+          selectedSkyBoxImage: null,
+          selectedFileModel: null,
+          selectedEnvImage: null,
+        }
+      } catch (error){
+        this.loading = false
+        if (error.response.data.path && error.response.status === 400) {
+          this.errorAlertPath = true;
+          this.errorAlertPathText = error.response.data.path[0] || 'Error! Try again later!';
+        } else if (error.response.data.path_skybox_image && error.response.status === 400) {
+          this.errorAlertSkyBoxImage = true;
+          this.errorAlertPathSkyBoxImageText = error.response.data.path_skybox_image[0] || 'Error! Try again later!';
+        } else if (error.response.data.path_env_image && error.response.status === 400) {
+          this.errorAlertEnvImage = true;
+          this.errorAlertEnvImageText = error.response.data.path_env_image[0] || 'Error! Try again later!';
+        } else {
+          this.errorAlertPath = true;
+          this.errorAlertPathText = 'Occurred error while trying to send a file.';
+        }
       }
     },
     async logout() {
