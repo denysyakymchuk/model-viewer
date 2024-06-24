@@ -8,15 +8,15 @@
               @click="this.dialog = !this.dialog"
               style="margin-right: 2%;
                      margin-top: 1%;
-                     background-color: #2bc0d5;">
-            <v-icon icon="mdi-plus"></v-icon>New model
+                     background-color: black;">
+            <v-icon icon="mdi mdi-image-plus"></v-icon>
           </v-btn>
           <v-btn
               @click="logout()"
               style="margin-right: 2%;
                          margin-top: 1%;
-                         background-color: #f6b329;">
-            <v-icon icon="$close"></v-icon>Logout
+                         background-color: black;">
+            <v-icon icon="mdi mdi-logout"></v-icon>
           </v-btn>
           <v-dialog
               v-model="this.dialog"
@@ -139,9 +139,16 @@
                 </model-viewer>
               </td>
               <td>
-                <v-btn color="red" @click="deleteModel(item.id)" text>
-                  <v-icon icon="$delete"></v-icon>Delete
+                <v-btn color="red" @click="deleteModel(item.id)">
+                  <v-icon icon="mdi mdi-delete-outline"></v-icon>
                 </v-btn>
+              </td>
+              <td>
+                <v-checkbox v-model="item.is_active"
+                            label="Visible for each"
+                            @change="() => changeItemVisible(item.id, item.is_active)"
+                >
+                </v-checkbox>
               </td>
             </tr>
           </template>
@@ -165,8 +172,9 @@ export default {
       headers: [
         { title: 'Id', key: 'id'},
         { title: 'Path', key: 'path'},
-        { title: 'Model', key: 'path'},
-        { title: 'Action', key: 'path'},
+        { title: 'Model', key: 'model'},
+        { title: 'Actions', key: 'actions'},
+        { title: 'Visible', key: 'visible'},
       ],
       errorAlertSkyBoxImage: false,
       errorAlertEnvImage: false,
@@ -226,7 +234,10 @@ export default {
       await this.LOGOUT();
       await this.$router.push('/logout');
     },
-    ...mapActions(["GET_MODELS_ADMIN", "DELETE_MODELS", "CREATE_MODELS", "LOGOUT"]),
+    async changeItemVisible(itemId, itemIsVisible) {
+      await this.UPDATE_VISIBLE_MODEL({ id: itemId, isVisible: itemIsVisible })
+    },
+    ...mapActions(["GET_MODELS_ADMIN", "DELETE_MODELS", "CREATE_MODELS", "LOGOUT", "UPDATE_VISIBLE_MODEL"]),
   },
   async mounted() {
     await this.GET_MODELS_ADMIN()

@@ -22,10 +22,15 @@ const actions = {
         const data = await api.get(`/models/get-models/`);
         await context.commit("SET_MODELS", data.data);
     },
-    GET_MODELS: async (context) => {
-        const data = await api.get(`/models/`);
-        await context.commit("SET_MODELS", data.data);
+    UPDATE_VISIBLE_MODEL: async (context, payload) => {
+        const formData = new FormData();
+        formData.append('is_active', payload.isVisible);
+        await api.patch(`/models/${payload.id}/`, formData);
     },
+    // GET_MODELS: async (context) => {
+    //     const data = await api.get(`/models/`);
+    //     await context.commit("SET_MODELS", data.data);
+    // },
     DELETE_MODELS: async (context, payload) => {
         const data = await api.delete(`/models/${payload}`);
         await context.commit("SET_MODELS", data.data.models);

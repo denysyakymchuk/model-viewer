@@ -58,6 +58,7 @@
                 <a  @click="this.menu=false" style="cursor: pointer"><v-tab disabled style="opacity: 1"><v-icon color="white" icon="mdi-close" size="x-large"></v-icon></v-tab></a>
                 <v-tab value="one">Filters</v-tab>
                 <v-tab value="three">Get code</v-tab>
+                <a  style="cursor: pointer"><v-tab disabled style="opacity: 1"><v-icon color="white" icon="mdi mdi-login" size="x-large"></v-icon></v-tab></a>
               </v-tabs>
 
               <v-card-text
