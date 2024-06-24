@@ -190,14 +190,14 @@ export default {
     async deleteModel(id) {
       this.loading = true
       await this.DELETE_MODELS(id)
-      await this.GET_MODELS()
+      await this.GET_MODELS_ADMIN()
       this.loading = false
     },
     async sendModel() {
       this.loading = true
       try {
         await this.CREATE_MODELS(this.dataObject)
-        await this.GET_MODELS()
+        await this.GET_MODELS_ADMIN()
         this.dialog = false
         this.loading = false
         this.dataObject = {
@@ -226,10 +226,10 @@ export default {
       await this.LOGOUT();
       await this.$router.push('/logout');
     },
-    ...mapActions(["GET_MODELS", "DELETE_MODELS", "CREATE_MODELS", "LOGOUT"]),
+    ...mapActions(["GET_MODELS_ADMIN", "DELETE_MODELS", "CREATE_MODELS", "LOGOUT"]),
   },
   async mounted() {
-    await this.GET_MODELS()
+    await this.GET_MODELS_ADMIN()
   }
 };
 </script>

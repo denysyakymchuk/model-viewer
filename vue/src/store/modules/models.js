@@ -14,8 +14,12 @@ const mutations = {
     },
 };
 const actions = {
+    GET_MODELS_ADMIN: async (context) => {
+        const data = await api.get(`/models/users-models/`);
+        await context.commit("SET_MODELS", data.data);
+    },
     GET_MODELS: async (context) => {
-        const data = await api.get(`/models`);
+        const data = await api.get(`/models/`);
         await context.commit("SET_MODELS", data.data);
     },
     DELETE_MODELS: async (context, payload) => {
@@ -33,8 +37,6 @@ const actions = {
         if (payload.selectedEnvImage !== null) {
             formData.append('path_env_image', payload.selectedEnvImage[0]);
         }
-        // default user
-        formData.append('owner', 1);
 
         const data = await api.post(`/models/`, formData, {'Content-Type': 'multipart/form-data'});
         await context.commit("SET_MODELS", data.data.models);
