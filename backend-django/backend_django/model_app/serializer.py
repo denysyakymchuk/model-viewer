@@ -9,7 +9,7 @@ class ThreeDModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ThreeDModel
-        fields = ['id', 'path', 'path_skybox_image', 'path_env_image', 'time_create', 'time_update', 'owner']
+        fields = ['id', 'path', 'path_skybox_image', 'is_active', 'path_env_image', 'time_create', 'time_update', 'owner']
 
     def validate_path(self, path):
         if str(path).split('.')[-1] != 'glb':

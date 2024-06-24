@@ -15,7 +15,11 @@ const mutations = {
 };
 const actions = {
     GET_MODELS_ADMIN: async (context) => {
-        const data = await api.get(`/models/users-models/`);
+        const data = await api.get(`/models/admin-models/`);
+        await context.commit("SET_MODELS", data.data);
+    },
+    GET_ACTIVE_MODELS: async (context) => {
+        const data = await api.get(`/models/get-models/`);
         await context.commit("SET_MODELS", data.data);
     },
     GET_MODELS: async (context) => {
