@@ -1,11 +1,7 @@
 <template>
-  <div>
     <!--  COMPONENTS  -->
-    <div>
       <MainView />
       <VCarousel />
-    </div>
-  </div>
 </template>
 
 <script>

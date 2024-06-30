@@ -19,7 +19,17 @@ DJANGO_SUPERUSER_EMAIL = os.environ.get('DJANGO_SUPERUSER_EMAIL')
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'modelviewer.pl']
 APPEND_SLASH = True
-# Application definition
+
+#GMAIL
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_USE_SSL = False
+EMAIL_HOST_USER = 'modelviewerpl@gmail.com'
+EMAIL_HOST_PASSWORD = 'nsjc udpq gcmv byvr'
+
+# Application definition nsjc udpq gcmv byvr
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -175,3 +185,8 @@ REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 }
 
+DJOSER = {
+    'ACTIVATION_URL': 'login/{uid}/{token}',
+    'SEND_ACTIVATION_EMAIL': True,
+    'SEND_CONFIRMATION_EMAIL':True,
+}

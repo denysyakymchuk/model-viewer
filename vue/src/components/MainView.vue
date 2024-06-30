@@ -55,10 +55,23 @@
                   v-model="tab"
                   bg-color="black"
               >
-                <a  @click="this.menu=false" style="cursor: pointer"><v-tab disabled style="opacity: 1"><v-icon color="white" icon="mdi-close" size="x-large"></v-icon></v-tab></a>
+                <a  @click="this.menu=false" style="cursor: pointer; width: 70px"><v-tab disabled style="opacity: 1"><v-icon color="white" icon="mdi-close" size="x-large"></v-icon></v-tab></a>
                 <v-tab value="one">Filters</v-tab>
                 <v-tab value="three">Get code</v-tab>
-                <a  style="cursor: pointer"><v-tab disabled style="opacity: 1"><v-icon color="white" icon="mdi mdi-login" size="x-large"></v-icon></v-tab></a>
+                <a  style="cursor: pointer;
+                    width: 30px"
+                    @click="goToLogin()"
+                >
+                  <v-tab style="opacity: 1"
+                  >
+                    <v-icon color="white"
+                            icon="mdi mdi-login"
+                            size="x-large"
+                    >
+
+                    </v-icon>
+                  </v-tab>
+                </a>
               </v-tabs>
 
               <v-card-text
@@ -219,6 +232,10 @@ export default {
       navigator.clipboard.writeText(this.makeLink());
       this.showIsCopiedLink = true;
     },
+    goToLogin() {
+      console.log('test')
+      this.$router.push({ name: "login" });
+    }
   },
   computed: {
     ...mapGetters(["MAIN_MODEL", "MAIN_SKY_BOX_IMAGE", "MAIN_ENV_IMAGE", "MAIN_MODEL_ID"]),
