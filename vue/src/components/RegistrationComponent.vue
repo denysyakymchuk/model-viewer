@@ -76,6 +76,7 @@ export default {
         this.text_error = 'Check your email address.';
         this.error_type = 'success'
         this.error_alert = true;
+        this.valid = false //disabled button, that user can not send request again
       } catch (error) {
         this.text_error = error.response.data.username || error.response.data.email || error.response.data.password;
         this.error_alert = true;

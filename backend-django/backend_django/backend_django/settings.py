@@ -21,15 +21,15 @@ ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'modelviewer.pl']
 APPEND_SLASH = True
 
 #GMAIL
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT'))
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = False
-EMAIL_HOST_USER = 'modelviewerpl@gmail.com'
-EMAIL_HOST_PASSWORD = 'nsjc udpq gcmv byvr'
+EMAIL_USE_TLS = True
 
-# Application definition nsjc udpq gcmv byvr
+# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'djoser',
     'rest_framework',
     'model_app',
+    'user',
 ]
 
 MIDDLEWARE = [
