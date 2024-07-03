@@ -45,13 +45,13 @@ export default {
     setMainModel(path, skyBoxImage, envImage, id) {
       this.GET_MAIN_MODEL({path, skyBoxImage, envImage, id})
     },
-    ...mapActions(["GET_MODELS", "GET_MAIN_MODEL"]),
+    ...mapActions(["GET_ACTIVE_MODELS", "GET_MAIN_MODEL"]),
   },
   computed: {
     ...mapGetters(["MODELS"]),
   },
   async mounted() {
-    await this.GET_MODELS()
+    await this.GET_ACTIVE_MODELS()
 
     const baseModel = {
       path: this.MODELS[0].path,

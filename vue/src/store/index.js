@@ -3,6 +3,7 @@ import models from "@/store/modules/models";
 import MainModel from "@/store/modules/MainModel";
 import login from "@/store/modules/login";
 import iframeModel from "@/store/modules/iframeModel";
+import registration from "@/store/modules/registration";
 
 export default createStore({
     state: {},
@@ -10,6 +11,7 @@ export default createStore({
     mutations: {},
     actions: {},
     modules: {
+        registration,
         iframeModel,
         MainModel,
         models,
