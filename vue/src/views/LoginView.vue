@@ -1,87 +1,53 @@
 <template>
-  <v-sheet class="mx-auto form">
-    <v-alert
-        style="margin-bottom: 1%"
-        v-if="this.error_alert"
-        title="Failed login"
-        :text="this.error_alert_text"
-        type="error"
-        variant="outlined"
-    ></v-alert>
+  <v-col
+      class="py-2"
+      cols="12"
+  >
+    <v-btn-toggle
+        v-model="option"
+        color="black"
+        rounded="1"
+        group
+    >
+      <v-btn value="login">
+        Login
+      </v-btn>
 
-    <v-form ref="form" v-model="this.valid" fast-fail @submit.prevent>
-      <v-text-field
-          v-model="this.username"
-          label="Username"
-          :rules="usernameRules"
-          class="field"
-      ></v-text-field>
+      <v-btn value="registartion">
+        Registartion
+      </v-btn>
 
-      <v-text-field
-          v-model="this.password"
-          label="Password"
-          type="password"
-          :rules="passwordRules"
-          class="field"
-      ></v-text-field>
+    </v-btn-toggle>
+    <div>
+      <LoginComponent v-if="this.option === 'login'" />
+      <RegistrationComponent v-if="this.option === 'registartion'" />
+    </div>
+  </v-col>
 
-      <v-btn @click="sendCredentials" :disabled="!this.valid" block class="submit-btn mt-2">Submit</v-btn>
-    </v-form>
-  </v-sheet>
 </template>
 
 
 <script>
-import {mapActions} from "vuex";
+import LoginComponent from "@/components/LoginComponent.vue";
+import RegistrationComponent from "@/components/RegistrationComponent.vue";
 
 export default {
   name: "LoginView",
   data() {
     return {
+      option: 'login',
+      icon: 'justify',
+      toggle_none: null,
+      toggle_one: 0,
+      toggle_exclusive: 2,
+      toggle_multiple: [0, 1, 2],
       valid: false,
-      password: '',
-      username: '',
-      error_alert: false,
-      error_alert_text: '',
-      usernameRules:  [
-        value => {
-          if (value) return true
-          return 'The field can not be empty.'
-        },
-      ],
-      passwordRules: [
-        value => {
-          if (value) return true
-          return 'The field can not be empty.'
-        },
-      ],
     }
   },
-  methods: {
-    async sendCredentials() {
-      try {
-        const response = await this.GET_LOGIN({
-          username: this.username,
-          password: this.password
-        });
-
-        if (response === 200) {
-          this.$router.push({ name: 'admin' });
-        }
-      } catch (error) {
-        if (error.response && error.response.status === 400) {
-          this.error_alert_text = error.response.data.non_field_errors[0] || 'Invalid Credentials';
-          this.error_alert = true;
-        } else if (error.response && error.response.status === 404) {
-          this.error_alert_text = 'The requested resource was not found.';
-          this.error_alert = true;
-        } else {
-          this.error_alert_text = 'An error occurred while trying to log in. Please try again later.';
-          this.error_alert = true;
-        }
-      }},
-    ...mapActions(["GET_LOGIN"]),
-  },
+  components: {
+    LoginComponent,
+    RegistrationComponent,
+  }
 }
 </script>
 

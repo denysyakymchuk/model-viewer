@@ -41,6 +41,18 @@ const routes = [
         },
     },
     {
+        path: '/login/:uid/:token',
+        name: 'activateAccount',
+        component: LoginView,
+        beforeEnter: (to, from, next) => {
+            if (!store.getters.TOKEN) {
+                next();
+            } else {
+                next({ name: 'admin' });
+            }
+        },
+    },
+    {
         path: "/login",
         name: "login",
         meta: { layout: "main" },
