@@ -9,7 +9,11 @@
         variant="outlined"
     ></v-alert>
 
-    <v-form ref="form" v-model="this.valid" fast-fail @submit.prevent>
+    <div class="d-flex justify-center align-center">
+      <v-progress-circular v-if="isLoaded"  indeterminate color="white" :size="53" :width="4"></v-progress-circular>
+    </div>
+
+    <v-form v-if="!isLoaded" ref="form" v-model="this.valid" fast-fail @submit.prevent>
       <v-text-field
           v-model="this.username"
           label="Username"
@@ -39,6 +43,7 @@ export default {
   data() {
     return {
       valid: false,
+      isLoaded: false,
       password: '',
       username: '',
       error_alert: false,
@@ -59,6 +64,7 @@ export default {
   },
   methods: {
     async sendCredentials() {
+      this.isLoaded = true
       try {
         const response = await this.GET_LOGIN({
           username: this.username,
@@ -78,7 +84,9 @@ export default {
           this.error_alert_text = 'An error occurred while trying to log in. Please try again later.';
           this.error_alert = true;
         }
-      }},
+      }
+      this.isLoaded = false
+    },
     ...mapActions(["GET_LOGIN", "ACTIVATE_ACCOUNT"]),
   },
   async mounted() {

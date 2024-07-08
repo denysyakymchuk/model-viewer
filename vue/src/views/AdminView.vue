@@ -102,7 +102,7 @@
                 <v-btn
                     color="blue-darken-1"
                     variant="text"
-                    @click="this.dialog = false"
+                    @click="this.dialog = false; this.loading = false"
                 >
                   Cancel
                 </v-btn>

@@ -9,6 +9,10 @@
         variant="outlined"
     ></v-alert>
 
+    <div class="d-flex justify-center align-center">
+      <v-progress-circular v-if="isLoaded"  indeterminate color="white" :size="53" :width="4"></v-progress-circular>
+    </div>
+
     <v-form ref="form" v-model="valid" @submit.prevent="sendData">
       <v-text-field
           v-model="username"
@@ -50,6 +54,7 @@ export default {
       error_type: 'error',
       error_alert: false,
       valid: false,
+      isLoaded: false,
       password: '',
       username: '',
       email: '',
@@ -66,6 +71,7 @@ export default {
   },
   methods: {
     async sendData() {
+      this.isLoaded = true
       try {
         await this.REGISTRATION_NEW_USER({
           username: this.username,
@@ -76,11 +82,12 @@ export default {
         this.text_error = 'Check your email address.';
         this.error_type = 'success'
         this.error_alert = true;
-        this.valid = false //disabled button, that user can not send request again
+        this.valid = false //disable button, that user can not send request again
       } catch (error) {
         this.text_error = error.response.data.username || error.response.data.email || error.response.data.password;
         this.error_alert = true;
       }
+      this.isLoaded = false
     },
     ...mapActions(["REGISTRATION_NEW_USER"]),
   },

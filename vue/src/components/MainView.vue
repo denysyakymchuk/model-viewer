@@ -277,4 +277,10 @@ model-viewer {
 .color-white {
   color: white
 }
+model-viewer::part(default-progress-bar) {
+  background-color: black; /* Change background color */
+  border-radius: 20px;
+  height: 8px; /* Change height */
+  width: 100%; /* Change width */
+}
 </style>

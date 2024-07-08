@@ -36,7 +36,7 @@ class ThreeDModelViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(models, many=True)
         return Response(serializer.data)
 
-    #get filtering models for main page
+    #get filtering active=true models for main page
     @action(detail=False, methods=['get'], url_path='get-models', permission_classes=[AllowAny])
     def get_active_models(self, request):
         models = ThreeDModel.objects.filter(is_active=True)

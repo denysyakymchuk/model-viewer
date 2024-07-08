@@ -147,6 +147,7 @@ CORS_ALLOW_HEADERS = [
     "x-csrftoken",
     "x-requested-with",
 ]
+CSRF_TRUSTED_ORIGINS = ['https://*.modelviewer.pl','https://*.127.0.0.1']
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
