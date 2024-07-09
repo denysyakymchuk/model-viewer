@@ -260,4 +260,7 @@ export default {
 .ma-0 {
   margin: 0 !important;
 }
+
+
+
 </style>
