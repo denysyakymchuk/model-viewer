@@ -11,7 +11,7 @@ services:
       - .env
     command: --init-file /docker-entrypoint-initdb.d/init.sql
     volumes:
-      - mysql-viewer:/var/lib/mysql-viewer
+      - mysql-viewer:/var/lib/mysql
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - app-network
