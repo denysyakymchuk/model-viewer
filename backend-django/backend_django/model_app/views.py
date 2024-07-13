@@ -10,6 +10,7 @@ from rest_framework.decorators import action
 from .serializer import ThreeDModelSerializer
 from .models import ThreeDModel
 from .filters import ThreeDModelFilter
+from .pagination import ModelMainPagePagination
 
 
 class ThreeDModelViewSet(viewsets.ModelViewSet):
@@ -37,8 +38,13 @@ class ThreeDModelViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     #get filtering active=true models for main page
-    @action(detail=False, methods=['get'], url_path='get-models', permission_classes=[AllowAny])
+    @action(detail=False, methods=['get'], url_path='get-models', permission_classes=[AllowAny], pagination_class=ModelMainPagePagination)
     def get_active_models(self, request):
         models = ThreeDModel.objects.filter(is_active=True)
+        page = self.paginate_queryset(models)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
         serializer = self.get_serializer(models, many=True)
         return Response(serializer.data)
