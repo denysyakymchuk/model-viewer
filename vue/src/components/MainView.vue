@@ -226,7 +226,7 @@ export default {
     ...mapActions(["GET_MAIN_MODEL"]),
     makeLink() {
       // return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
-      return `<iframe src="http://modelviewer.pl/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
+      return `<iframe src="https://modelviewer.pl/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
     },
     copyLink() {
       navigator.clipboard.writeText(this.makeLink());
@@ -244,6 +244,15 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'Lexend';
+  src: url('../assets/fonts/Lexend/Lexend-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal; /* or a specific weight */
+  font-style: normal; /* or italic */
+}
+* {
+  font-family: Lexend;
+}
 .btn {
   margin-top: 1%;
   margin-right: 2%;
