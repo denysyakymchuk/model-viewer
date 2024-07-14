@@ -9,7 +9,6 @@ const getters = {
         return state.models;
     },
     NEXT_PAGE: (state) => {
-        console.log(state.nextPage);
         return state.nextPage;
     }
 };
