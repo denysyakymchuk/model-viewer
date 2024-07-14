@@ -244,6 +244,15 @@ export default {
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'Lexend';
+  src: url('../assets/fonts/Lexend/Lexend-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal; /* or a specific weight */
+  font-style: normal; /* or italic */
+}
+* {
+  font-family: Lexend;
+}
 .btn {
   margin-top: 1%;
   margin-right: 2%;
