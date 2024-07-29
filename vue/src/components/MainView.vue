@@ -11,7 +11,7 @@
                      :id="this.MAIN_MODEL"
                       >
 
-        <effect-composer render-mode="quality" msaa="8">
+        <effect-composer id="customComposer" render-mode="quality" msaa="8">
 
           <!--   ВСЕ ДЕЛАЕТ ПИКСЕЛЯМИ   -->
           <pixelate-effect v-if="pixar"></pixelate-effect>
@@ -55,7 +55,22 @@
                   v-model="tab"
                   bg-color="black"
               >
-                <a  @click="this.menu=false" style="cursor: pointer; width: 70px"><v-tab disabled style="opacity: 1"><v-icon color="white" icon="mdi-close" size="x-large"></v-icon></v-tab></a>
+                <a  @click="this.menu=false"
+                    style="cursor: pointer;
+                     width: 70px"
+                >
+                  <v-tab
+                      disabled
+                      style="opacity: 1"
+                  >
+                    <v-icon color="white"
+                            icon="mdi-close"
+                            size="x-large"
+                    >
+
+                    </v-icon>
+                  </v-tab>
+                </a>
                 <v-tab value="one">Filters</v-tab>
                 <v-tab value="three">Get code</v-tab>
                 <a  style="cursor: pointer;
@@ -147,6 +162,18 @@
                         </v-col>
 
                         <v-col cols="12">
+                          <v-slider
+                              class="wd-all"
+                              v-model="this.grid"
+                              label="Shadow intensity"
+                              min="0"
+                              max="2"
+                              step="0.01"
+                              color="orange"
+                              thumb-label="true"></v-slider>
+                        </v-col>
+
+                        <v-col cols="12">
                           <v-select
                               v-model="this.blendMode"
                               :items="['Default', 'Skip', 'Add', 'Subtract', 'Divide', 'Negation']"
@@ -193,9 +220,11 @@
   </div>
 </template>
 
-<script>
-import '@google/model-viewer'
-import '@google/model-viewer-effects'
+<script lang="ts">
+import * as PostProcessing from 'postprocessing';
+
+import '@google/model-viewer';
+import '@google/model-viewer-effects';
 import { mapActions, mapGetters } from "vuex";
 
 
@@ -213,6 +242,7 @@ export default {
       contrast: 0,
       opacity: 1,
       pixar: 0,
+      grid: 0,
       showIsCopiedLink: false,
       message: false,
       menu: false,
@@ -233,13 +263,28 @@ export default {
       this.showIsCopiedLink = true;
     },
     goToLogin() {
-      console.log('test')
       this.$router.push({ name: "login" });
-    }
+    },
   },
   computed: {
     ...mapGetters(["MAIN_MODEL", "MAIN_SKY_BOX_IMAGE", "MAIN_ENV_IMAGE", "MAIN_MODEL_ID"]),
   },
+  mounted() {
+    const customComposer = document.querySelector("effect-composer#customComposer");
+    console.log(PostProcessing)
+    console.log(new PostProcessing.GridEffect())
+    console.log(new PostProcessing.GridEffect())
+    const grid = new PostProcessing.GridEffect();
+    // The camera is set automatically when added to the <effect-composer>
+    const noisePass = new PostProcessing.EffectPass(undefined, grid);
+    customComposer.addPass(noisePass);
+
+    customComposer.nextElementSibling.addEventListener('input', (e) => {
+      grid.scale = e.target.value;
+      // Request a render frame, to update
+      customComposer.queueRender();
+    });
+  }
 }
 </script>
 
