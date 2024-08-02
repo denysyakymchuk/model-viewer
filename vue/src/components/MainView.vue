@@ -221,17 +221,19 @@
 </template>
 
 <script setup lang="ts">
-// import * as PostProcessing from 'postprocessing/build/index.js'
-// console.log(PostProcessing)
-// console.log(PostProcessing)
-// console.log(new PostProcessing.GridEffect())
+// import { GridEffect } from 'postprocessing';
+// import * as PostProcessing from "postprocessing";
 import '@google/model-viewer';
 import '@google/model-viewer-effects';
+
 
 import {ref} from "vue";
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 
+// console.log(PostProgressing)
+
+// console.log(new PostProcessing.GridEffect())
 // const GridEffect = require('postprocessing')
 const store = useStore();
 const router = useRouter();
