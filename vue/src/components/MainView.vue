@@ -20,6 +20,10 @@
           <color-grade-effect :contrast="contrast" saturation="-1" :opacity="opacity" :blend-mode="blendMode" :brightness="brightness"></color-grade-effect>
 
         </effect-composer>
+        <div class="controls">
+          <label for="scale">Grid Scale</label>
+          <input id="scale" type="range" min="0" max="2" step="0.01" value="1">
+        </div>
 
       </model-viewer>
     </div>
@@ -221,20 +225,21 @@
 </template>
 
 <script setup lang="ts">
-// import { GridEffect } from 'postprocessing';
-// import * as PostProcessing from "postprocessing";
+import * as PostProcessing from "postprocessing";
 import '@google/model-viewer';
 import '@google/model-viewer-effects';
 
 
-import {ref} from "vue";
+import {onMounted, ref} from "vue";
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
 
-// console.log(PostProgressing)
+console.log(PostProcessing.GridEffect)
+console.log(PostProcessing)
+console.log(PostProcessing)
+console.log(PostProcessing)
 
-// console.log(new PostProcessing.GridEffect())
-// const GridEffect = require('postprocessing')
+
 const store = useStore();
 const router = useRouter();
 
@@ -254,35 +259,33 @@ const blendMode =  ref('skip');
 
 function makeLink() {
   // return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
-  return `<iframe src="https://modelviewer.pl/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
+  return `<iframe src="https://modelviewer.pl/model/${store.getters.MAIN_MODEL_ID}?shadowIntensity=${shadowIntensity.value}&brightness=${brightness.value}&contrast=${contrast.value}&opacity=${opacity.value}&blendMode=${blendMode.value}&blockOpacity=${opacity.value}&pixar=${Number(pixar)}&isEnvImage=${Number(isEnvImage.value)}&isSkyBoxImage=${Number(isSkyBoxImage.value)}"></iframe>`
 }
 function copyLink() {
-  navigator.clipboard.writeText(this.makeLink());
-  this.showIsCopiedLink = true;
+  navigator.clipboard.writeText(makeLink());
+  showIsCopiedLink.value = true;
 }
 function goToLogin() {
   router.push({ name: "login" });
 }
 
+onMounted(() => {
+  var customComposer = document.querySelector("effect-composer#customComposer");
+  if (!customComposer) return;
 
-// function addEffect() {
-//     const customComposer = document.querySelector("effect-composer#customComposer");
-//     console.log(PostProcessing)
-//     console.log(new PostProcessing.BloomEffect())
-//     console.log(GridEffect)
-//     console.log(GridEffect)
-//     const gridEffect = new GridEffect();
-//     // The camera is set automatically when added to the <effect-composer>
-//     const noisePass = new PostProcessing.EffectPass(undefined, grid);
-//     customComposer.addPass(noisePass);
-//
-//     customComposer.nextElementSibling.addEventListener('input', (e) => {
-//       grid.scale = e.target.value;
-//       // Request a render frame, to update
-//       customComposer.queueRender();
-//     });
-//
-// }
+  const grid = new PostProcessing.GridEffect();
+  const sepia = new PostProcessing.SepiaEffect();
+  const noisePass = new PostProcessing.EffectPass(undefined, grid, sepia);
+  customComposer.addPass(noisePass);
+
+  const scaleInput = customComposer.nextElementSibling.querySelector('input[type="range"]');
+  if (scaleInput) {
+    scaleInput.addEventListener('input', (e) => {
+      grid.scale = e.target.value;
+      customComposer.queueRender();
+    });
+  }
+});
 </script>
 
 <style scoped>

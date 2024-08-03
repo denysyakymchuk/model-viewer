@@ -4,5 +4,5 @@ module.exports = defineConfig({
   devServer: {
     allowedHosts: "all",
   },
-  con
+  parallel: false,
 })
