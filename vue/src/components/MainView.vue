@@ -152,6 +152,19 @@
 
                         <v-col cols="12">
                           <v-slider
+                              class="wd-all"
+                              v-model="sepia"
+                              :update="changeSepia()"
+                              label="Sepia"
+                              color="orange"
+                              min="0"
+                              max="5"
+                              step="0.01"
+                              thumb-label="true"></v-slider>
+                        </v-col>
+
+                        <v-col cols="12">
+                          <v-slider
                               v-model="shadowSoftness"
                               class="wd-all"
                               label="Shadow softness"
@@ -245,10 +258,15 @@ const contrast =  ref(0);
 const opacity =  ref(1);
 const pixar =  ref(0);
 const grid =  ref(0);
+const sepia =  ref(0);
 const showIsCopiedLink =  ref(false);
 const menu =  ref(false);
 const tab =  ref('one');
 const blendMode =  ref('skip');
+
+// Initialize PostProcessing effects
+let gridEffect: PostProcessing.GridEffect | null = null;
+let sepiaEffect: PostProcessing.SepiaEffect | null = null;
 
 function makeLink(): string {
   // return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
@@ -262,9 +280,12 @@ function goToLogin(): void {
   router.push({ name: "login" });
 }
 
+function changeSepia(): void {
+  const customComposer = document.querySelector('effect-composer#customComposer') as any;
+  sepiaEffect.setIntensity(sepia.value)
+  customComposer.queueRender()
 
-// Initialize PostProcessing effects
-let gridEffect: PostProcessing.GridEffect | null = null;
+}
 
 function changeGrid(): void {
   if (!gridEffect) {
@@ -291,8 +312,10 @@ onMounted(() => {
     return;
   }
 
-  gridEffect = new PostProcessing.GridEffect();
-  const noisePass = new PostProcessing.EffectPass(undefined, gridEffect);
+  gridEffect = new PostProcessing.GridEffect({scale: 0});
+  sepiaEffect = new PostProcessing.SepiaEffect();
+  sepiaEffect.intensity = 0;
+  const noisePass = new PostProcessing.EffectPass(undefined, gridEffect, sepiaEffect);
   customComposer.addPass(noisePass);
 });
 </script>
