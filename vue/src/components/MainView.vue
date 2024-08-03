@@ -20,10 +20,6 @@
           <color-grade-effect :contrast="contrast" saturation="-1" :opacity="opacity" :blend-mode="blendMode" :brightness="brightness"></color-grade-effect>
 
         </effect-composer>
-        <div class="controls">
-          <label for="scale">Grid Scale</label>
-          <input id="scale" type="range" min="0" max="2" step="0.01" value="1">
-        </div>
 
       </model-viewer>
     </div>
@@ -143,6 +139,19 @@
 
                         <v-col cols="12">
                           <v-slider
+                              class="wd-all"
+                              v-model="grid"
+                              :update="changeGrid()"
+                              label="Grid"
+                              color="orange"
+                              min="0"
+                              max="2"
+                              step="0.01"
+                              thumb-label="true"></v-slider>
+                        </v-col>
+
+                        <v-col cols="12">
+                          <v-slider
                               v-model="shadowSoftness"
                               class="wd-all"
                               label="Shadow softness"
@@ -160,18 +169,6 @@
                               label="Shadow intensity"
                               min="0"
                               max="4"
-                              step="0.01"
-                              color="orange"
-                              thumb-label="true"></v-slider>
-                        </v-col>
-
-                        <v-col cols="12">
-                          <v-slider
-                              class="wd-all"
-                              v-model="grid"
-                              label="Shadow intensity"
-                              min="0"
-                              max="2"
                               step="0.01"
                               color="orange"
                               thumb-label="true"></v-slider>
@@ -225,7 +222,7 @@
 </template>
 
 <script setup lang="ts">
-import * as PostProcessing from "postprocessing";
+// import * as PostProcessing from "postprocessing";
 import '@google/model-viewer';
 import '@google/model-viewer-effects';
 
@@ -233,11 +230,7 @@ import '@google/model-viewer-effects';
 import {onMounted, ref} from "vue";
 import {useStore} from "vuex";
 import {useRouter} from "vue-router";
-
-console.log(PostProcessing.GridEffect)
-console.log(PostProcessing)
-console.log(PostProcessing)
-console.log(PostProcessing)
+import * as PostProcessing from "postprocessing";
 
 
 const store = useStore();
@@ -257,34 +250,50 @@ const menu =  ref(false);
 const tab =  ref('one');
 const blendMode =  ref('skip');
 
-function makeLink() {
+function makeLink(): string {
   // return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
   return `<iframe src="https://modelviewer.pl/model/${store.getters.MAIN_MODEL_ID}?shadowIntensity=${shadowIntensity.value}&brightness=${brightness.value}&contrast=${contrast.value}&opacity=${opacity.value}&blendMode=${blendMode.value}&blockOpacity=${opacity.value}&pixar=${Number(pixar)}&isEnvImage=${Number(isEnvImage.value)}&isSkyBoxImage=${Number(isSkyBoxImage.value)}"></iframe>`
 }
-function copyLink() {
+function copyLink(): void {
   navigator.clipboard.writeText(makeLink());
   showIsCopiedLink.value = true;
 }
-function goToLogin() {
+function goToLogin(): void {
   router.push({ name: "login" });
 }
 
-onMounted(() => {
-  var customComposer = document.querySelector("effect-composer#customComposer");
-  if (!customComposer) return;
 
-  const grid = new PostProcessing.GridEffect();
-  const sepia = new PostProcessing.SepiaEffect();
-  const noisePass = new PostProcessing.EffectPass(undefined, grid, sepia);
-  customComposer.addPass(noisePass);
+// Initialize PostProcessing effects
+let gridEffect: PostProcessing.GridEffect | null = null;
 
-  const scaleInput = customComposer.nextElementSibling.querySelector('input[type="range"]');
-  if (scaleInput) {
-    scaleInput.addEventListener('input', (e) => {
-      grid.scale = e.target.value;
-      customComposer.queueRender();
-    });
+function changeGrid(): void {
+  if (!gridEffect) {
+    console.error('GridEffect is not initialized');
+    return;
   }
+
+  gridEffect.scale = grid.value;
+
+  const customComposer = document.querySelector('effect-composer#customComposer') as any;
+  if (!customComposer) {
+    console.error('EffectComposer not found');
+    return;
+  }
+
+  customComposer.queueRender();
+}
+
+// Setup PostProcessing on mount
+onMounted(() => {
+  const customComposer = document.querySelector('effect-composer#customComposer') as any;
+  if (!customComposer) {
+    console.error('EffectComposer not found');
+    return;
+  }
+
+  gridEffect = new PostProcessing.GridEffect();
+  const noisePass = new PostProcessing.EffectPass(undefined, gridEffect);
+  customComposer.addPass(noisePass);
 });
 </script>
 
