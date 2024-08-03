@@ -235,7 +235,6 @@
 </template>
 
 <script setup lang="ts">
-// import * as PostProcessing from "postprocessing";
 import '@google/model-viewer';
 import '@google/model-viewer-effects';
 
@@ -270,7 +269,7 @@ let sepiaEffect: PostProcessing.SepiaEffect | null = null;
 
 function makeLink(): string {
   // return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
-  return `<iframe src="https://modelviewer.pl/model/${store.getters.MAIN_MODEL_ID}?shadowIntensity=${shadowIntensity.value}&brightness=${brightness.value}&contrast=${contrast.value}&opacity=${opacity.value}&blendMode=${blendMode.value}&blockOpacity=${opacity.value}&pixar=${Number(pixar)}&isEnvImage=${Number(isEnvImage.value)}&isSkyBoxImage=${Number(isSkyBoxImage.value)}"></iframe>`
+  return `<iframe src="https://modelviewer.pl/model/${store.getters.MAIN_MODEL_ID}?grid=${grid.value}&sepia=${sepia.value}&shadowIntensity=${shadowIntensity.value}&brightness=${brightness.value}&contrast=${contrast.value}&opacity=${opacity.value}&blendMode=${blendMode.value}&blockOpacity=${opacity.value}&pixar=${Number(pixar)}&isEnvImage=${Number(isEnvImage.value)}&isSkyBoxImage=${Number(isSkyBoxImage.value)}"></iframe>`
 }
 function copyLink(): void {
   navigator.clipboard.writeText(makeLink());
