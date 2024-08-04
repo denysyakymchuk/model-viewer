@@ -32,6 +32,7 @@ services:
       - app-network
 
   frontend-vue-js:
+    tty: true
     stdin_open: true
     container_name: frontend-vue-js
     build:

@@ -1,6 +1,8 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+// @ts-ignore
 import store from "./store";
+// @ts-ignore
 import router from "./router";
 
 import { createVuetify } from 'vuetify'
