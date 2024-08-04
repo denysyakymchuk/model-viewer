@@ -52,7 +52,6 @@ const  sepia = ref( 0);
 const  blendMode = ref( 'skip');
 const  pixar = ref( 0);
 const  isSkyBoxImage = ref( 0);
-// const  env_image = ref( 0);
 const isEnvImage = ref( 0);
 
 onMounted(async () => {
