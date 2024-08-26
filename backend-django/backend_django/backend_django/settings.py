@@ -13,6 +13,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+ACCOUNT_EMAIL_VERIFICATION = "none"
+
 DJANGO_SUPERUSER_PASSWORD = os.environ.get('DJANGO_SUPERUSER_PASSWORD')
 DJANGO_SUPERUSER_USERNAME = os.environ.get('DJANGO_SUPERUSER_USERNAME')
 DJANGO_SUPERUSER_EMAIL = os.environ.get('DJANGO_SUPERUSER_EMAIL')
@@ -48,6 +50,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'model_app',
     'user',
+    'allauth',
+    "allauth.socialaccount",
+    "allauth.socialaccount.providers.google"
 ]
 
 MIDDLEWARE = [
