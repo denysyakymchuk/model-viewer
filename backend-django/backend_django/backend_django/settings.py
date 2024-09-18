@@ -51,10 +51,10 @@ INSTALLED_APPS = [
     'model_app',
     'user',
     'allauth',
+    'allauth.account',
     "allauth.socialaccount",
     "allauth.socialaccount.providers.google"
 ]
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,7 +65,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
 ]
+
 
 ROOT_URLCONF = 'backend_django.urls'
 
@@ -91,13 +93,21 @@ WSGI_APPLICATION = 'backend_django.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': os.environ.get('MYSQL_NAME'),
+    #     'USER': os.environ.get('MYSQL_USER'),
+    #     'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
+    #     'HOST': os.environ.get('MYSQL_HOST'),
+    #     'PORT': os.environ.get('MYSQL_PORT'),
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.environ.get('MYSQL_NAME'),
-        'USER': os.environ.get('MYSQL_USER'),
-        'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
-        'HOST': os.environ.get('MYSQL_HOST'),
-        'PORT': os.environ.get('MYSQL_PORT'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'test',
+        'USER': 'test',
+        'PASSWORD': 'test',
+        'HOST': 'databasePostGres',
+        'PORT': 5432,
     }
 }
 

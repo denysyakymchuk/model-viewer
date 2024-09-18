@@ -1,15 +1,17 @@
 import { createApp } from "vue";
 import App from "./App.vue";
-// @ts-ignore
-import store from "./store";
-// @ts-ignore
-import router from "./router";
-
 import { createVuetify } from 'vuetify'
 import '@mdi/font/css/materialdesignicons.css'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import 'vuetify/styles'
+
+// @ts-ignore
+import store from "./store";
+// @ts-ignoreg
+import router from "./router";
+// @ts-ignore
+import vue3GoogleLogin from "./vue3-google-login" //library located in src/
 
 const vuetify = createVuetify({
     components,
@@ -31,4 +33,4 @@ const app = createApp(App);
 app.config.compilerOptions.isCustomElement = tag =>
     /^(model-viewer|effect-composer|pixelate-effect)$/.test(tag);
 
-app.use(store).use(router).use(vuetify).mount("#app"); // Добавьте Vuetify в цепочку плагинов
+app.use(store).use(router).use(vuetify).use(vue3GoogleLogin, {clientId: '1069284998464-275stb1g0oealt1o2o0kegr6c2e7fhtm.apps.googleusercontent.com'}).mount("#app");

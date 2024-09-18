@@ -46,3 +46,5 @@ mysqlclient
 django-storages==1.14.3
 boto3
 django-cors-headers
+dj-rest-auth
+django-allauth

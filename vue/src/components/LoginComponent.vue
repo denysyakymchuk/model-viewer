@@ -29,7 +29,14 @@
           class="field"
       ></v-text-field>
 
-      <v-btn @click="sendCredentials" :disabled="!this.valid" block class="submit-btn mt-2">Submit</v-btn>
+      <v-btn @click="sendCredentials" :disabled="!this.valid" block class="submit-btn mt-2 mb-2">Submit</v-btn>
+
+      <!--Google auth button-->
+      <div class="d-flex justify-center align-center">
+        <GoogleAuthComponent></GoogleAuthComponent>
+      </div>
+      <!--Google auth button-->
+
     </v-form>
   </v-sheet>
 </template>
@@ -37,9 +44,14 @@
 
 <script>
 import {mapActions} from "vuex";
+import GoogleAuthComponent from "@/components/GoogleAuthComponent.vue";
+
 
 export default {
   name: "LoginComponent",
+  components: {
+    GoogleAuthComponent,
+  },
   data() {
     return {
       valid: false,

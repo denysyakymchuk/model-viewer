@@ -34,7 +34,7 @@ urlpatterns = [
     path('api/swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    path("dj-rest-auth/google/login/", GoogleLoginView.as_view(), name="google_login"),
+    path("api/v1/dj-rest-auth/google/login/", GoogleLoginView.as_view(), name="google_login"),
     path('api/admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
 ]
