@@ -145,7 +145,7 @@
               </td>
               <td>
                 <v-checkbox v-model="item.is_active"
-                            label="Visible for each"
+                            label="Visible"
                             @change="() => changeItemVisible(item.id, item.is_active)"
                 >
                 </v-checkbox>

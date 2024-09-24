@@ -7,7 +7,7 @@ from django.views.generic import RedirectView
 
 class GoogleLoginView(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
-    callback_url = 'http://localhost/api/v1/redirect'
+    callback_url = 'http://localhost/admin/'
     client_class = OAuth2Client
 
 
@@ -20,4 +20,4 @@ class UserRedirectView(LoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
-            return "http://localhost/api/v1/redirect"
+        return "http://localhost/admin/"

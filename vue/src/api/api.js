@@ -1,8 +1,17 @@
 import axios from "axios";
 import store from "@/store";
+
+// MODE
+let baseURL;
+
+if (process.env.NODE_ENV === "production") {
+    baseURL = "https://modelviewer.pl/api/v1";
+} else {
+    baseURL = "http://localhost/api/v1";
+}
+
 const api = axios.create({
-    // baseURL: `https://modelviewer.pl/api/v1`,
-    baseURL: `http://localhost/api/v1`,
+    baseURL: baseURL,
 });
 
 api.interceptors.request.use(

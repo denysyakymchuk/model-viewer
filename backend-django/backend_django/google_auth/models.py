@@ -1,3 +1,8 @@
 from django.db import models
 
-# Create your models here.
+class EmailAddress(models.Model):
+    email = models.EmailField()
+    verified = models.BooleanField(default=False)
+
+    class Meta:
+        unique_together = (('email', 'verified'),)

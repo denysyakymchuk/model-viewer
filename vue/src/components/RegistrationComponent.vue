@@ -37,6 +37,12 @@
           class="field"
       ></v-text-field>
 
+      <!--Google auth button-->
+      <div class="d-flex justify-center align-center">
+        <GoogleAuthComponent></GoogleAuthComponent>
+      </div>
+      <!--Google auth button-->
+
       <v-btn @click="this.sendData()" :disabled="!valid" block class="submit-btn mt-2">Submit</v-btn>
     </v-form>
   </v-sheet>
@@ -44,9 +50,13 @@
 
 <script>
 import { mapActions } from "vuex";
+import GoogleAuthComponent from "@/components/GoogleAuthComponent.vue";
 
 export default {
   name: "RegistrationComponent",
+  components: {
+    GoogleAuthComponent
+  },
   data() {
     return {
       title_error: 'Failed registration new user',

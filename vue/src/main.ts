@@ -11,7 +11,7 @@ import store from "./store";
 // @ts-ignoreg
 import router from "./router";
 // @ts-ignore
-import vue3GoogleLogin from "./vue3-google-login" //library located in src/
+import vue3GoogleLogin from "vue3-google-login" //library located in src/
 
 const vuetify = createVuetify({
     components,
@@ -32,5 +32,8 @@ const app = createApp(App);
 
 app.config.compilerOptions.isCustomElement = tag =>
     /^(model-viewer|effect-composer|pixelate-effect)$/.test(tag);
-
-app.use(store).use(router).use(vuetify).use(vue3GoogleLogin, {clientId: '1069284998464-275stb1g0oealt1o2o0kegr6c2e7fhtm.apps.googleusercontent.com'}).mount("#app");
+console.log(process.env.VUE_APP_CLIENT_ID);
+console.log(process.env.VITE_APP_CLIENT_ID);
+console.log(process.env);
+console.log(process.env);
+app.use(store).use(router).use(vuetify).use(vue3GoogleLogin, {clientId: process.env.VUE_APP_CLIENT_ID}).mount("#app");

@@ -13,13 +13,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ACCOUNT_EMAIL_VERIFICATION = "none"
-
 DJANGO_SUPERUSER_PASSWORD = os.environ.get('DJANGO_SUPERUSER_PASSWORD')
 DJANGO_SUPERUSER_USERNAME = os.environ.get('DJANGO_SUPERUSER_USERNAME')
 DJANGO_SUPERUSER_EMAIL = os.environ.get('DJANGO_SUPERUSER_EMAIL')
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'modelviewer.pl']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'modelviewer.pl', 'frontend-vue-js']
 APPEND_SLASH = True
 
 #GMAIL
@@ -30,6 +28,8 @@ EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_USE_SSL = False
 EMAIL_USE_TLS = True
+
+ACCOUNT_EMAIL_VERIFICATION = "none"
 
 # Application definition
 
@@ -93,14 +93,6 @@ WSGI_APPLICATION = 'backend_django.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'NAME': os.environ.get('MYSQL_NAME'),
-    #     'USER': os.environ.get('MYSQL_USER'),
-    #     'PASSWORD': os.environ.get('MYSQL_PASSWORD'),
-    #     'HOST': os.environ.get('MYSQL_HOST'),
-    #     'PORT': os.environ.get('MYSQL_PORT'),
-    # }
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'test',
@@ -196,7 +188,6 @@ REST_FRAMEWORK = {
 
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
-        'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
