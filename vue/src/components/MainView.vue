@@ -1,23 +1,23 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
     <div>
-      <model-viewer  :src="this.MAIN_MODEL"
-                     :skybox-image="this.MAIN_SKY_BOX_IMAGE"
-                     :environment-image="this.MAIN_ENV_IMAGE"
-                     :shadow-intensity="this.shadowIntensity"
-                     :shadow-softness="this.shadowSoftness"
+      <model-viewer  :src="store.getters.MAIN_MODEL"
+                     :skybox-image="store.getters.MAIN_SKY_BOX_IMAGE"
+                     :environment-image="store.getters.MAIN_ENV_IMAGE"
+                     :shadow-intensity="shadowIntensity"
+                     :shadow-softness="shadowSoftness"
                      camera-controls
                      touch-action="pan-y"
-                     :id="this.MAIN_MODEL"
+                     :id="store.getters.MAIN_MODEL"
                       >
 
-        <effect-composer render-mode="quality" msaa="8">
+        <effect-composer id="customComposer" render-mode="quality" msaa="8">
 
           <!--   ВСЕ ДЕЛАЕТ ПИКСЕЛЯМИ   -->
           <pixelate-effect v-if="pixar"></pixelate-effect>
 
           <!--   OPACITY     -->
-          <color-grade-effect :contrast="this.contrast" saturation="-1" :opacity="this.opacity" :blend-mode="this.blendMode" :brightness="this.brightness"></color-grade-effect>
+          <color-grade-effect :contrast="contrast" saturation="-1" :opacity="opacity" :blend-mode="blendMode" :brightness="brightness"></color-grade-effect>
 
         </effect-composer>
 
@@ -46,7 +46,7 @@
           <v-card
               min-width="300"
               color="black"
-              :style="{ opacity: this.blockOpacity }"
+              :style="{ opacity: blockOpacity }"
               style="border-radius: 20px;"
           >
             <v-card>
@@ -55,7 +55,22 @@
                   v-model="tab"
                   bg-color="black"
               >
-                <a  @click="this.menu=false" style="cursor: pointer; width: 70px"><v-tab disabled style="opacity: 1"><v-icon color="white" icon="mdi-close" size="x-large"></v-icon></v-tab></a>
+                <a  @click="menu=false"
+                    style="cursor: pointer;
+                     width: 70px"
+                >
+                  <v-tab
+                      disabled
+                      style="opacity: 1"
+                  >
+                    <v-icon color="white"
+                            icon="mdi-close"
+                            size="x-large"
+                    >
+
+                    </v-icon>
+                  </v-tab>
+                </a>
                 <v-tab value="one">Filters</v-tab>
                 <v-tab value="three">Get code</v-tab>
                 <a  style="cursor: pointer;
@@ -83,13 +98,13 @@
                     <div id="filterFrame">
                       <v-row class="color-white">
                         <v-col cols="12">
-                          <v-checkbox label="Pixel" v-model="this.pixar"></v-checkbox>
+                          <v-checkbox label="Pixel" v-model="pixar"></v-checkbox>
                         </v-col>
 
                         <v-col cols="12">
                           <v-slider
                               class="wd-all"
-                              v-model="this.brightness"
+                              v-model="brightness"
                               label="Brightness"
                               color="orange"
                               min="-1"
@@ -101,7 +116,7 @@
                         <v-col cols="12">
                           <v-slider
                               class="wd-all"
-                              v-model="this.opacity"
+                              v-model="opacity"
                               label="Opacity"
                               color="orange"
                               min="0"
@@ -113,7 +128,7 @@
                         <v-col cols="12">
                           <v-slider
                               class="wd-all"
-                              v-model="this.contrast"
+                              v-model="contrast"
                               label="Contrast"
                               color="orange"
                               min="0"
@@ -124,7 +139,33 @@
 
                         <v-col cols="12">
                           <v-slider
-                              v-model="this.shadowSoftness"
+                              class="wd-all"
+                              v-model="grid"
+                              :update="changeGrid()"
+                              label="Grid"
+                              color="orange"
+                              min="0"
+                              max="2"
+                              step="0.01"
+                              thumb-label="true"></v-slider>
+                        </v-col>
+
+                        <v-col cols="12">
+                          <v-slider
+                              class="wd-all"
+                              v-model="sepia"
+                              :update="changeSepia()"
+                              label="Sepia"
+                              color="orange"
+                              min="0"
+                              max="5"
+                              step="0.01"
+                              thumb-label="true"></v-slider>
+                        </v-col>
+
+                        <v-col cols="12">
+                          <v-slider
+                              v-model="shadowSoftness"
                               class="wd-all"
                               label="Shadow softness"
                               color="orange"
@@ -137,7 +178,7 @@
                         <v-col cols="12">
                           <v-slider
                               class="wd-all"
-                              v-model="this.shadowIntensity"
+                              v-model="shadowIntensity"
                               label="Shadow intensity"
                               min="0"
                               max="4"
@@ -148,7 +189,7 @@
 
                         <v-col cols="12">
                           <v-select
-                              v-model="this.blendMode"
+                              v-model="blendMode"
                               :items="['Default', 'Skip', 'Add', 'Subtract', 'Divide', 'Negation']"
                               variant="primary"
                           ></v-select>
@@ -164,14 +205,14 @@
                       style="text-align: justify"
                   >
                     <div class="d-flex">
-                      <v-checkbox label="Environment image" v-model="this.isEnvImage"></v-checkbox>
-                      <v-checkbox label="Skybox image" v-model="this.isSkyBoxImage"></v-checkbox>
+                      <v-checkbox label="Environment image" v-model="isEnvImage"></v-checkbox>
+                      <v-checkbox label="Skybox image" v-model="isSkyBoxImage"></v-checkbox>
                     </div>
                     <v-alert
                         class="mb-5"
                         text="The code was copied!"
                         type="success"
-                        v-if="this.showIsCopiedLink"
+                        v-if="showIsCopiedLink"
                     >
                     </v-alert>
                     <v-textarea
@@ -179,7 +220,7 @@
                         prepend-icon="mdi-content-copy"
                         :value="makeLink()"
                         variant="solo-filled"
-                        @click:prepend="this.copyLink()"
+                        @click:prepend="copyLink()"
                     ></v-textarea>
                   </v-window-item>
                 </v-window>
@@ -193,57 +234,101 @@
   </div>
 </template>
 
-<script>
-import '@google/model-viewer'
-import '@google/model-viewer-effects'
-import { mapActions, mapGetters } from "vuex";
+<script setup lang="ts">
+import '@google/model-viewer';
+import '@google/model-viewer-effects';
 
 
-export default {
-  name: "MainView",
-  data() {
-    return {
-      shadowIntensity: 0,
-      shadowSoftness: 0,
-      isSkyBoxImage: 0,
-      blockOpacity: 1,
-      isEnvImage: 0,
-      brightness: 0,
-      activeTab: 1,
-      contrast: 0,
-      opacity: 1,
-      pixar: 0,
-      showIsCopiedLink: false,
-      message: false,
-      menu: false,
-      hints: true,
-      fav: true,
-      tab: null,
-      blendMode: 'skip',
-    }
-  },
-  methods: {
-    ...mapActions(["GET_MAIN_MODEL"]),
-    makeLink() {
-      // return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
-      return `<iframe src="http://modelviewer.pl/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
-    },
-    copyLink() {
-      navigator.clipboard.writeText(this.makeLink());
-      this.showIsCopiedLink = true;
-    },
-    goToLogin() {
-      console.log('test')
-      this.$router.push({ name: "login" });
-    }
-  },
-  computed: {
-    ...mapGetters(["MAIN_MODEL", "MAIN_SKY_BOX_IMAGE", "MAIN_ENV_IMAGE", "MAIN_MODEL_ID"]),
-  },
+import {onMounted, ref} from "vue";
+import {useStore} from "vuex";
+import {useRouter} from "vue-router";
+import * as PostProcessing from "postprocessing";
+
+
+const store = useStore();
+const router = useRouter();
+
+const shadowIntensity =  ref(0);
+const shadowSoftness =  ref(0);
+const isSkyBoxImage =  ref(0);
+const isEnvImage =  ref(0);
+const brightness =  ref(0);
+const contrast =  ref(0);
+const opacity =  ref(1);
+const pixar =  ref(0);
+const grid =  ref(0);
+const sepia =  ref(0);
+const showIsCopiedLink =  ref(false);
+const menu =  ref(false);
+const tab =  ref('one');
+const blendMode =  ref('skip');
+
+// Initialize PostProcessing effects
+let gridEffect: PostProcessing.GridEffect | null = null;
+let sepiaEffect: PostProcessing.SepiaEffect | null = null;
+
+function makeLink(): string {
+  // return `<iframe src="http://localhost/model/${this.MAIN_MODEL_ID}?shadowIntensity=${this.shadowIntensity}&brightness=${this.brightness}&contrast=${this.contrast}&opacity=${this.opacity}&blendMode=${this.blendMode}&blockOpacity=${this.blockOpacity}&pixar=${Number(this.pixar)}&isEnvImage=${Number(this.isEnvImage)}&isSkyBoxImage=${Number(this.isSkyBoxImage)}"></iframe>`
+  return `<iframe src="https://modelviewer.pl/model/${store.getters.MAIN_MODEL_ID}?grid=${grid.value}&sepia=${sepia.value}&shadowIntensity=${shadowIntensity.value}&brightness=${brightness.value}&contrast=${contrast.value}&opacity=${opacity.value}&blendMode=${blendMode.value}&blockOpacity=${opacity.value}&pixar=${Number(pixar)}&isEnvImage=${Number(isEnvImage.value)}&isSkyBoxImage=${Number(isSkyBoxImage.value)}"></iframe>`
 }
+function copyLink(): void {
+  navigator.clipboard.writeText(makeLink());
+  showIsCopiedLink.value = true;
+}
+function goToLogin(): void {
+  router.push({ name: "login" });
+}
+
+function changeSepia(): void {
+  const customComposer = document.querySelector('effect-composer#customComposer') as any;
+  sepiaEffect.setIntensity(sepia.value)
+  customComposer.queueRender()
+
+}
+
+function changeGrid(): void {
+  if (!gridEffect) {
+    console.error('GridEffect is not initialized');
+    return;
+  }
+
+  gridEffect.scale = grid.value;
+
+  const customComposer = document.querySelector('effect-composer#customComposer') as any;
+  if (!customComposer) {
+    console.error('EffectComposer not found');
+    return;
+  }
+
+  customComposer.queueRender();
+}
+
+// Setup PostProcessing on mount
+onMounted(() => {
+  const customComposer = document.querySelector('effect-composer#customComposer') as any;
+  if (!customComposer) {
+    console.error('EffectComposer not found');
+    return;
+  }
+
+  gridEffect = new PostProcessing.GridEffect({scale: 0});
+  sepiaEffect = new PostProcessing.SepiaEffect();
+  sepiaEffect.intensity = 0;
+  const noisePass = new PostProcessing.EffectPass(undefined, gridEffect, sepiaEffect);
+  customComposer.addPass(noisePass);
+});
 </script>
 
 <style scoped>
+@font-face {
+  font-family: 'Lexend';
+  src: url('../assets/fonts/Lexend/Lexend-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal; /* or a specific weight */
+  font-style: normal; /* or italic */
+}
+* {
+  font-family: Lexend;
+}
 .btn {
   margin-top: 1%;
   margin-right: 2%;

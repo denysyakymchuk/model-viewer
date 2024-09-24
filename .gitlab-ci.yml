@@ -12,8 +12,9 @@ deploy:
     - apk update && apk add openssh-client
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p$PORT_RSA "git reset --hard HEAD"
     - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p$PORT_RSA "git pull origin master"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p$PORT_RSA "docker-compose -f docker-compose.prod.yaml up --build --detach"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p$PORT_RSA "docker-compose restart"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p$PORT_RSA "docker compose down"
+    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP -p$PORT_RSA "docker compose -f docker-compose.prod.yaml up --build --detach"
+
 
 
   environment:

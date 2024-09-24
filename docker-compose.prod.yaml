@@ -1,18 +1,16 @@
 version: "2.0"
 services:
-  mysql-viewer:
-    image: mysql
-    container_name: databaseMysql
-    restart: unless-stopped
-    tty: true
+  postgres_db:
+    container_name: databasePostGres
+    image: postgres:14-alpine
     ports:
-      - "33062:3306"
-    env_file:
-      - .env
-    command: --init-file /docker-entrypoint-initdb.d/init.sql
+      - 5432:5432
     volumes:
-      - mysql-viewer:/var/lib/mysql-viewer
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
     networks:
       - app-network
 
@@ -33,7 +31,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - mysql-viewer
+      - postgres_db
     networks:
       - app-network
 
@@ -44,6 +42,10 @@ services:
     build:
       context: ./vue
       dockerfile: Dockerfile.prod
+      args:
+        - VUE_APP_CLIENT_ID=${VUE_APP_CLIENT_ID}
+    environment:
+      - VUE_APP_CLIENT_ID=${VUE_APP_CLIENT_ID}
     networks:
       - app-network
 
@@ -58,7 +60,7 @@ services:
     depends_on:
       - django-backend-modelviewer
       - frontend-vue-js
-      - mysql-viewer
+      - postgres_db
     networks:
       - app-network
 

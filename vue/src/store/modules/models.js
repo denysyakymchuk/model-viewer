@@ -2,15 +2,25 @@ import api from "@/api/api";
 
 const state = {
     models: [],
+    nextPage: '', //link to next page
 };
 const getters = {
     MODELS: (state) => {
         return state.models;
     },
+    NEXT_PAGE: (state) => {
+        return state.nextPage;
+    }
 };
 const mutations = {
     SET_MODELS: (state, payload) => {
         state.models = payload;
+    },
+    EXTEND_MODELS: (state, payload) => {
+        state.models = state.models.concat(payload);
+    },
+    SET_NEXT_PAGE: (state, payload) => {
+        state.nextPage = payload !== null ? payload.split('v1')[1] : null
     },
 };
 const actions = {
@@ -20,7 +30,22 @@ const actions = {
     },
     GET_ACTIVE_MODELS: async (context) => {
         const data = await api.get(`/models/get-models/`);
-        await context.commit("SET_MODELS", data.data);
+        await context.commit("SET_MODELS", data.data.results);
+
+        if (data.data.next) {
+            await context.commit("SET_NEXT_PAGE", data.data.next);
+        } else {
+            await context.commit("SET_NEXT_PAGE", null);
+        }
+    },
+    GET_EXTEND_MODELS: async (context) => {
+        const data = await api.get(context.getters.NEXT_PAGE);
+        context.commit("EXTEND_MODELS", data.data.results);
+        if (data.data.next) {
+            await context.commit("SET_NEXT_PAGE", data.data.next);
+        } else {
+            await context.commit("SET_NEXT_PAGE", null);
+        }
     },
     UPDATE_VISIBLE_MODEL: async (context, payload) => {
         const formData = new FormData();

@@ -1,11 +1,12 @@
 import { createRouter, createWebHistory } from "vue-router";
 import MainModelView from "@/views/MainModelView.vue";
-import AdminView from "@/views/AdminView.vue";
+// import AdminView from "@/views/AdminView.vue";
 import LoginView from "@/views/LoginView.vue";
 import store from "@/store";
 import NotFoundView from "@/views/error/NotFoundView.vue";
 import SharedPageComponent from "@/views/SharedPageComponent.vue";
 import TestPageComponent from "@/views/TestPageComponent.vue";
+import AdminViewNew from "@/views/AdminViewNew.vue";
 
 const routes = [
     {
@@ -31,7 +32,7 @@ const routes = [
         path: "/admin",
         name: "admin",
         meta: { layout: "admin" },
-        component: AdminView,
+        component: AdminViewNew,
         beforeEnter: (to, from, next) => {
             if (store.getters.TOKEN) {
                 next();

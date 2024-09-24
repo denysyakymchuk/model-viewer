@@ -25,12 +25,5 @@ export default {
 </script>
 
 <style>
-body {
-  /*background-image: url("./assets/tlo_cien.png");*/
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-}
+
 </style>

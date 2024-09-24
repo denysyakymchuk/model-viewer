@@ -6,4 +6,8 @@ The application was created for viewing 3D models. Each user can get selected mo
 
 ## Main page
 ![img.png](readme-images/main-page-readme.png)
+## Login page
+![img.png](readme-images/login-page-readmy.png)
+## Admin page
+![img.png](readme-images/admin-page-readme.png)
 
