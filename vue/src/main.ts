@@ -32,8 +32,5 @@ const app = createApp(App);
 
 app.config.compilerOptions.isCustomElement = tag =>
     /^(model-viewer|effect-composer|pixelate-effect)$/.test(tag);
-console.log(process.env.VUE_APP_CLIENT_ID);
-console.log(process.env.VITE_APP_CLIENT_ID);
-console.log(process.env);
-console.log(process.env);
+
 app.use(store).use(router).use(vuetify).use(vue3GoogleLogin, {clientId: process.env.VUE_APP_CLIENT_ID}).mount("#app");
