@@ -1,10 +1,14 @@
+# Build Stage
 FROM node:latest as build-stage
 WORKDIR /app
+ARG VUE_APP_CLIENT_ID
+ENV VUE_APP_CLIENT_ID=${VUE_APP_CLIENT_ID}
 COPY package*.json ./
 RUN npm install
 COPY ./ .
 RUN npm run build
 
+# Production Stage
 FROM nginx as production-stage
 RUN mkdir /app
 COPY --from=build-stage /app/dist /app

@@ -5,6 +5,7 @@ from drf_yasg.views import get_schema_view
 from rest_framework import routers, permissions
 
 from model_app.views import ThreeDModelViewSet
+from google_auth.views import GoogleLoginView, UserRedirectView
 
 
 # Swagger configuration
@@ -27,11 +28,13 @@ router.register(r'models', ThreeDModelViewSet)
 
 
 urlpatterns = [
+    path("api/v1/redirect/", UserRedirectView.as_view(), name="redirect"),
     re_path(r'^api/v1/auth/', include('djoser.urls.authtoken')),
     path('api/v1/auth/', include('djoser.urls')),
     path('api/swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('api/swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('api/redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    path("api/v1/dj-rest-auth/google/login/", GoogleLoginView.as_view(), name="google_login"),
     path('api/admin/', admin.site.urls),
     path('api/v1/', include(router.urls)),
 ]

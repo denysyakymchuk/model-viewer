@@ -1,20 +1,4 @@
 services:
-  mysql-viewer:
-    image: mysql
-    container_name: databaseMysql
-    restart: unless-stopped
-    tty: true
-    ports:
-      - "33062:3306"
-    env_file:
-      - .env
-    command: --init-file /docker-entrypoint-initdb.d/init.sql
-    volumes:
-      - mysql-viewer:/var/lib/mysql-viewer
-      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - app-network
-
   django-backend-modelviewer:
     build: ./backend-django
     restart: always
@@ -27,7 +11,7 @@ services:
     env_file:
       - .env
     depends_on:
-      - mysql-viewer
+      - postgres_db
     networks:
       - app-network
 
@@ -40,6 +24,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8083:8083"
+    env_file:
+      - .env
     volumes:
       - ./vue:/app
       - /app/node_modules
@@ -57,7 +43,21 @@ services:
     depends_on:
       - django-backend-modelviewer
       - frontend-vue-js
-      - mysql-viewer
+      - postgres_db
+    networks:
+      - app-network
+
+  postgres_db:
+    container_name: databasePostGres
+    image: postgres:14-alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ~/apps/postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_USER=test
+      - POSTGRES_DB=test
     networks:
       - app-network
 
