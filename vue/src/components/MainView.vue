@@ -64,10 +64,9 @@
                       style="opacity: 1"
                   >
                     <v-icon color="white"
-                            icon="mdi-close"
                             size="x-large"
                     >
-
+                      mdi-close
                     </v-icon>
                   </v-tab>
                 </a>
@@ -79,12 +78,10 @@
                 >
                   <v-tab style="opacity: 1"
                   >
-                    <v-icon color="white"
-                            icon="mdi mdi-login"
-                            size="x-large"
-                    >
-
+                    <v-icon color="white" size="x-large">
+                      mdi-login
                     </v-icon>
+
                   </v-tab>
                 </a>
               </v-tabs>
@@ -98,7 +95,7 @@
                     <div id="filterFrame">
                       <v-row class="color-white">
                         <v-col cols="12">
-                          <v-checkbox label="Pixel" v-model="pixar"></v-checkbox>
+                          <VCheckbox label="Pixel" v-model="pixar"></VCheckbox>
                         </v-col>
 
                         <v-col cols="12">
@@ -205,8 +202,8 @@
                       style="text-align: justify"
                   >
                     <div class="d-flex">
-                      <v-checkbox label="Environment image" v-model="isEnvImage"></v-checkbox>
-                      <v-checkbox label="Skybox image" v-model="isSkyBoxImage"></v-checkbox>
+                      <VCheckbox label="Environment image" v-model="isEnvImage"></VCheckbox>
+                      <VCheckbox label="Skybox image" v-model="isSkyBoxImage"></VCheckbox>
                     </div>
                     <v-alert
                         class="mb-5"
@@ -237,6 +234,7 @@
 <script setup lang="ts">
 import '@google/model-viewer';
 import '@google/model-viewer-effects';
+import { VCheckbox } from 'vuetify/components';
 
 
 import {onMounted, ref} from "vue";
