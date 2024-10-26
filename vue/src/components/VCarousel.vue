@@ -2,7 +2,7 @@
   <div class="pos">
     <carousel
         @slide-start="handleSlideStart"
-        :items-to-show="3.5"
+        :items-to-show="6"
     >
       <slide
           v-for="slide in MODELS"
@@ -11,7 +11,9 @@
       >
         <model-viewer class="ww"
                       @click="setMainModel(slide.path, slide.path_skybox_image, slide.path_env_image, slide.id);"
-                      :src="slide.path">
+                      :src="slide.path"
+                      :skybox-image="slide.path_skybox_image"
+                      :environment-image="slide.path_env_image">
         </model-viewer>
       </slide>
 
@@ -74,7 +76,10 @@ export default {
 <style scoped>
 @media only screen and (max-width: 672px) {
   .ww {
-    height: 150px;
+    height: 100px;
+  }
+  .pos {
+    bottom: 1%;
   }
 }
 
@@ -84,17 +89,17 @@ model-viewer {
 }
 
 .slide {
-  height: 150px;
+  height: 180px;
   width: 150px;
   margin: 1%;
 }
 
 .pos {
   width: 100%;
-  max-width: 1400px;
+  max-width: 1800px;
   margin: auto;
   position: fixed;
-  bottom: 5%;
+  bottom: 3%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
