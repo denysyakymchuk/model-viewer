@@ -50,7 +50,7 @@ export default {
       this.GET_MAIN_MODEL({ path, skyBoxImage, envImage, id });
     },
     handleSlideStart(data) {
-      if (data.slidesCount - data.currentSlideIndex === 3 && this.NEXT_PAGE){
+      if (data.slidesCount - data.currentSlideIndex === 4 && this.NEXT_PAGE){
         this.GET_EXTEND_MODELS()
       }
     },
@@ -86,6 +86,7 @@ export default {
 model-viewer {
   width: 100%;
   height: 100%;
+  border-radius: 20px;
 }
 
 .slide {

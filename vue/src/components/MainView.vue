@@ -328,7 +328,6 @@ onMounted(() => {
   font-family: Lexend;
 }
 .viewer-container {
-  height: 100vh;
   width: 100vw;
   margin-top: 1%;
   justify-content: center;
@@ -338,12 +337,12 @@ onMounted(() => {
 }
 
 .btn {
-  margin-top: 1%;
-  margin-right: 2%;
   position: absolute;
-  z-index: 1000;
   top: 0;
   right: 0;
+  z-index: 1000;
+  margin-top: 1%;
+  margin-right: 1%;
 }
 model-viewer {
   position: fixed;
