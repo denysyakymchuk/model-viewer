@@ -1,6 +1,6 @@
 <template xmlns:v-slot="http://www.w3.org/1999/XSL/Transform">
   <div>
-    <div>
+    <div class="viewer-container">
       <model-viewer  :src="store.getters.MAIN_MODEL"
                      :skybox-image="store.getters.MAIN_SKY_BOX_IMAGE"
                      :environment-image="store.getters.MAIN_ENV_IMAGE"
@@ -321,28 +321,35 @@ onMounted(() => {
 @font-face {
   font-family: 'Lexend';
   src: url('../assets/fonts/Lexend/Lexend-VariableFont_wght.ttf') format('truetype');
-  font-weight: normal; /* or a specific weight */
-  font-style: normal; /* or italic */
+  font-weight: normal;
+  font-style: normal;
 }
 * {
   font-family: Lexend;
 }
-.btn {
+.viewer-container {
+  width: 100vw;
   margin-top: 1%;
-  margin-right: 2%;
+  justify-content: center;
+  display: flex;
+  position: relative;
+
+}
+
+.btn {
   position: absolute;
-  z-index: 1000;
   top: 0;
   right: 0;
+  z-index: 1000;
+  margin-top: 1%;
+  margin-right: 1%;
 }
 model-viewer {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 95vw;
+  height: 70vh;
   aspect-ratio: 16/9;
-  border-radius: 0;
+  border-radius: 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 0;
 }
@@ -363,7 +370,7 @@ model-viewer {
 model-viewer::part(default-progress-bar) {
   background-color: black; /* Change background color */
   border-radius: 20px;
-  height: 8px; /* Change height */
-  width: 100%; /* Change width */
+  height: 8px;
+  width: 100%;
 }
 </style>
