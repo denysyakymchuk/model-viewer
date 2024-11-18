@@ -20,10 +20,18 @@
       <v-main>
         <v-dialog
             v-model="dialog"
+            persistent
             style="position: fixed;"
             max-width="500px"
         >
-          <v-card>
+
+        <!--    Spinner      -->
+          <div class="d-flex justify-center align-center">
+            <v-progress-circular v-if="!isLoaded"  indeterminate color="white" :size="53" :width="4"></v-progress-circular>
+          </div>
+        <!--    Spinner      -->
+
+          <v-card v-if="isLoaded">
             <v-card-title>
               <span class="text-h5">New model</span>
             </v-card-title>
@@ -169,6 +177,7 @@ const headers = [
 ];
 
 const dialog = ref(false);
+const isLoaded = ref(true);
 const loading = ref(false);
 const errorAlertPath = ref(false);
 const errorAlertSkyBoxImage = ref(false);
@@ -177,6 +186,7 @@ const errorAlertPathSkyBoxImageText = ref('');
 const errorAlertEnvImageText = ref('');
 const errorAlertPathText = ref('');
 
+//models object
 const dataObject = {
   selectedSkyBoxImage: null,
   selectedFileModel: null,
@@ -184,7 +194,7 @@ const dataObject = {
 };
 
 function onClick() {
-  theme.value = theme.value === 'dark' ? 'light' : 'dark';
+  theme.value = theme.value === 'dark' ? 'light' : 'dark'; //change admin theme
 }
 
 async function deleteModel(id) {
@@ -195,19 +205,26 @@ async function deleteModel(id) {
 }
 
 async function sendModel() {
-  loading.value = true;
+  //close all error messages
+  errorAlertPath.value = false;
+  errorAlertSkyBoxImage.value = false;
+  errorAlertEnvImage.value = false;
   try {
+    //check if main model exists
+    if (!dataObject.selectedFileModel) {
+      errorAlertPath.value = true;
+      errorAlertPathText.value = "The model doesn't exists";
+      return false
+    }
+    isLoaded.value = false //mark as start loading
     await store.dispatch('CREATE_MODELS', dataObject);
     await store.dispatch('GET_MODELS_ADMIN');
-    dialog.value = false;
+    dialog.value = false; //close the model
     dataObject.selectedSkyBoxImage = null;
     dataObject.selectedFileModel = null;
     dataObject.selectedEnvImage = null;
+    isLoaded.value = true //mark as loaded
   } catch (error){
-    console.log(error)
-    console.log(error)
-    console.log(error)
-    console.log(error)
     if (error.response.data.path && error.response.status === 400) {
       errorAlertPath.value = true;
       errorAlertPathText.value = error.response.data.path[0] || 'Error! Try again later!';
@@ -222,7 +239,7 @@ async function sendModel() {
       errorAlertPathText.value = 'Occurred error while trying to send a file.';
     }
   } finally {
-    loading.value = false;
+    isLoaded.value = true //mark as loaded
   }
 }
 
