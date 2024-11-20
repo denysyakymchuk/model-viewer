@@ -35,12 +35,16 @@
             max-width="350"
         >
           <template v-slot:activator="{ props }">
-            <v-btn
-                color="indigo"
-                v-bind="props"
-            >
-              Filters
-            </v-btn>
+            <p
+                data-tooltip="Menu">
+              <img
+                  height="30"
+                  width="30"
+                   v-bind="props"
+                   class="changePointer"
+                   src="../../public/menu.svg"
+              >
+            </p>
           </template>
 
           <v-card
@@ -341,8 +345,8 @@ onMounted(() => {
   top: 0;
   right: 0;
   z-index: 1000;
-  margin-top: 1%;
-  margin-right: 1%;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 model-viewer {
   position: fixed;
@@ -357,7 +361,9 @@ model-viewer {
 .wd-all {
   width: 270px;
 }
-
+.changePointer:hover {
+  cursor: pointer;
+}
 .v-row {
   display: flex;
   flex-wrap: wrap;
@@ -372,5 +378,25 @@ model-viewer::part(default-progress-bar) {
   border-radius: 20px;
   height: 8px;
   width: 100%;
+}
+
+[data-tooltip] {
+  position: relative; /* Относительное позиционирование */
+}
+[data-tooltip]::after {
+  content: attr(data-tooltip); /* Выводим текст */
+  position: absolute; /* Абсолютное позиционирование */
+  background: #1d1b1b; /* Синий цвет фона */
+  color: #fff; /* Цвет текста */
+  padding: 0.5em; /* Поля вокруг текста */
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Параметры тени */
+  pointer-events: none; /* Подсказка */
+  opacity: 0; /* Подсказка невидима */
+  transition-duration: 1s; /* Время появления подсказки */
+  right: 2em;
+}
+[data-tooltip]:hover::after {
+  opacity: 1; /* Показываем подсказку */
+  right: 2em; /* Положение подсказки */
 }
 </style>
