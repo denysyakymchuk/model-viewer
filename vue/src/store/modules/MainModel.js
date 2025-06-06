@@ -3,6 +3,7 @@ const state = {
     mainModel: null,
     envImage: null,
     mainModelId: null,
+    mainModelIndex: null,
 };
 const getters = {
     MAIN_MODEL: (state) => {
@@ -17,6 +18,9 @@ const getters = {
     MAIN_ENV_IMAGE: (state) => {
         return state.envImage;
     },
+    MAIN_MODEL_INDEX: (state) => {
+        return state.mainModelIndex;
+    }
 };
 const mutations = {
     SET_MAIN_MODEL: (state, payload) => {
@@ -31,6 +35,9 @@ const mutations = {
     SET_MAIN_MODEL_ID: (state, payload) => {
         state.mainModelId = payload;
     },
+    SET_MAIN_MODEL_INDEX: (state, payload) => {
+        state.mainModelIndex = payload;
+    }
 
 };
 const actions = {
@@ -39,6 +46,7 @@ const actions = {
         await context.commit("SET_MAIN_MODEL_ID", obj?.id);
         await context.commit("SET_MAIN_SKY_BOX_IMAGE", obj?.skyBoxImage)
         await context.commit("SET_MAIN_ENV_IMAGE", obj?.envImage);
+        await context.commit("SET_MAIN_MODEL_INDEX", obj?.mainModelIndex);
     },
 };
 
