@@ -1,18 +1,21 @@
 <template>
     <!--  COMPONENTS  -->
       <MainView />
+      <MenuComponent />
       <VCarousel />
 </template>
 
 <script>
 import VCarousel from '../components/VCarousel.vue';
 import MainView from "@/components/MainView.vue";
+import MenuComponent from "@/components/menu/MenuComponent.vue";
 
 export default {
   name: 'App',
   components: {
     VCarousel,
-    MainView
+    MainView,
+    MenuComponent,
   },
 }
 </script>
@@ -36,7 +39,5 @@ MainView {
     width: 60px;
     height: 950px;
   }
-
-
 }
 </style>
