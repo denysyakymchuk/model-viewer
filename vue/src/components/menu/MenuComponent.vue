@@ -1,8 +1,8 @@
 <script lang="ts">
-import {defineComponent} from 'vue'
+import {computed, defineComponent} from 'vue'
 import MobileMenuComponent from "@/components/menu/menus/MobileMenuComponent.vue";
 import DesktopMenuComponent from "@/components/menu/menus/DesktopMenuComponent.vue";
-import { VueScreenSizeMixin } from 'vue-screen-size';
+import { useWindowSize } from 'vue-window-size';
 
 export default defineComponent({
   name: "MenuComponent",
@@ -10,28 +10,18 @@ export default defineComponent({
     MobileMenuComponent,
     DesktopMenuComponent
   },
-  mixins: [VueScreenSizeMixin],
-  data() {
+  setup() {
+    const { width } = useWindowSize()
+
+    const isDesktop = computed(() => width.value > 1000)
+
     return {
-      isDesktop: true,
+      isDesktop
     }
-  },
-  methods: {
-    //Check size of screen. Need for change a menu from mobile to desktop
-    changeSizeOfScreen() {
-      this.isDesktop = this.$vssWidth >= 1000;
-    }
-  },
-  watch: {
-    $vssWidth() {
-      this.changeSizeOfScreen()
-    }
-  },
-  mounted() {
-    this.changeSizeOfScreen()
   }
 })
 </script>
+
 
 <template>
   <div>
