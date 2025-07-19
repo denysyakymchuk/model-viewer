@@ -1,15 +1,13 @@
-import api from "@/api/api";
-
 const state = {
     Pixel: false,
     Brightness: 0,
-    Opacity: 0,
+    Opacity: 1,
     Contrast: 0,
     Grid: 0,
     Sepia: 0,
     ShadowSoftness: 0,
     ShadowIntensity: 0,
-    BlendMode: 0,
+    BlendMode: 'SKIP',
 };
 const getters = {
     MAIN_MODEL_PIXEL: (state) => {
