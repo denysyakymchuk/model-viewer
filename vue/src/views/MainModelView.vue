@@ -1,8 +1,11 @@
 <template>
-    <!--  COMPONENTS  -->
+  <div class="app-container">
+    <div class="main-content">
       <MainView />
-      <MenuComponent />
       <VCarousel />
+    </div>
+    <MenuComponent class="menu-component" />
+  </div>
 </template>
 
 <script>
@@ -20,24 +23,47 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 img {
   width: 100%;
 }
 
-MainView {
-  width: 100%;
-  height: 100%;
+.app-container {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  overflow: hidden;
 }
 
-@media only screen and (max-width: 672px) {
-  .panelImage {
-    width: 80px;
-    height: 900px;
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 0 1% 0 1%;
+}
+
+.menu-component {
+  width: 350px;
+  height: 100vh;
+  background-color: #f2f2f2;
+}
+
+@media only screen and (max-width: 1000px) {
+  img {
+    width: 100%;
   }
-  .panelImageR {
-    width: 60px;
-    height: 950px;
+
+  MainView {
+    position: static;
+    width: 100%;
+    height: 100%;
+
+  }
+  .menu-component {
+    position: relative;
+    width: 0;
+    height: 100%;
   }
 }
 </style>

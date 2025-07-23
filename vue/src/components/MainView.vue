@@ -23,25 +23,23 @@
 
       </model-viewer>
     </div>
-
-    <!--  BOCZNA PANEL   -->
-    <div>
-      <MenuComponent />
-    </div>
-    <!--  BOCZNA PANEL   -->
   </div>
 </template>
 
 <script setup lang="ts">
 import '@google/model-viewer';
 import '@google/model-viewer-effects';
-import MenuComponent from './menu/MenuComponent.vue';
 import {useStore} from "vuex";
 
 const store = useStore();
 </script>
 
 <style scoped>
+.viewer-container {
+  width: 100%;
+  margin-top: 1%;
+  justify-content: center;
+}
 @font-face {
   font-family: 'Lexend';
   src: url('../assets/fonts/Lexend/Lexend-VariableFont_wght.ttf') format('truetype');
@@ -50,14 +48,6 @@ const store = useStore();
 }
 * {
   font-family: Lexend;
-}
-.viewer-container {
-  width: 100vw;
-  margin-top: 1%;
-  justify-content: center;
-  display: flex;
-  position: relative;
-
 }
 
 .btn {
@@ -68,9 +58,9 @@ const store = useStore();
   margin-top: 10px;
   margin-right: 10px;
 }
+
 model-viewer {
-  position: fixed;
-  width: 95vw;
+  width: 100%;
   height: 70vh;
   aspect-ratio: 16/9;
   border-radius: 30px;
@@ -81,42 +71,48 @@ model-viewer {
 .wd-all {
   width: 270px;
 }
+
 .changePointer:hover {
   cursor: pointer;
 }
-.v-row {
-  display: flex;
-  flex-wrap: wrap;
-  flex: 1 1 auto;
-  margin: 0;
-}
+
 .color-white {
   color: white
 }
+
 model-viewer::part(default-progress-bar) {
-  background-color: black; /* Change background color */
+  background-color: black;
   border-radius: 20px;
   height: 8px;
   width: 100%;
 }
 
 [data-tooltip] {
-  position: relative; /* Относительное позиционирование */
+  position: relative;
 }
+
 [data-tooltip]::after {
-  content: attr(data-tooltip); /* Выводим текст */
-  position: absolute; /* Абсолютное позиционирование */
-  background: #1d1b1b; /* Синий цвет фона */
-  color: #fff; /* Цвет текста */
-  padding: 0.5em; /* Поля вокруг текста */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Параметры тени */
-  pointer-events: none; /* Подсказка */
-  opacity: 0; /* Подсказка невидима */
-  transition-duration: 1s; /* Время появления подсказки */
+  content: attr(data-tooltip);
+  position: absolute;
+  background: #1d1b1b;
+  color: #fff;
+  padding: 0.5em;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  pointer-events: none;
+  opacity: 0;
+  transition-duration: 1s;
   right: 2em;
 }
+
 [data-tooltip]:hover::after {
-  opacity: 1; /* Показываем подсказку */
-  right: 2em; /* Положение подсказки */
+  opacity: 1;
+  right: 2em;
+}
+@media only screen and (max-width: 1000px) {
+  .viewer-container {
+    width: 100vw;
+
+  }
+
 }
 </style>

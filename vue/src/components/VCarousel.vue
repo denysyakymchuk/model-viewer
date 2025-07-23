@@ -19,7 +19,6 @@
 
       <template #addons>
         <div>
-          Model
           {{ this.MAIN_MODEL_INDEX + 1 }}
           of
           {{ this.MODELS.length }}
@@ -89,13 +88,15 @@ export default {
 </script>
 
 <style scoped>
-@media only screen and (max-width: 672px) {
-  .ww {
-    height: 100px;
-  }
-  .pos {
-    bottom: 1%;
-  }
+* {
+  font-family: Lexend;
+}
+
+@font-face {
+  font-family: 'Lexend';
+  src: url('../assets/fonts/Lexend/Lexend-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 model-viewer {
@@ -112,21 +113,36 @@ model-viewer {
 
 .pos {
   width: 100%;
-  max-width: 1800px;
+  max-width: 100%;
   margin: auto;
-  position: fixed;
-  bottom: 3%;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1000;
+  position: relative;
+  bottom: 0;
+  left: 0;
+  transform: none;
+  z-index: 1;
 }
-@font-face {
-  font-family: 'Lexend';
-  src: url('../assets/fonts/Lexend/Lexend-VariableFont_wght.ttf') format('truetype');
-  font-weight: normal; /* or a specific weight */
-  font-style: normal; /* or italic */
+
+@media only screen and (max-width: 1000px) {
+  .pos {
+    position: fixed;
+    bottom: 3%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 1800px;
+    z-index: 1000;
+  }
+
+  .ww {
+    height: 100px;
+  }
 }
-* {
-  font-family: Lexend;
+@media only screen and (max-width: 672px) {
+  .ww {
+    height: 100px;
+  }
+  .pos {
+    bottom: 1%;
+  }
 }
 </style>

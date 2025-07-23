@@ -7,8 +7,8 @@ import { useWindowSize } from 'vue-window-size';
 export default defineComponent({
   name: "MenuComponent",
   components: {
-    MobileMenuComponent,
-    DesktopMenuComponent
+    DesktopMenuComponent,
+    MobileMenuComponent
   },
   setup() {
     const { width } = useWindowSize()
@@ -29,7 +29,3 @@ export default defineComponent({
     <DesktopMenuComponent v-if="isDesktop" />
   </div>
 </template>
-
-<style scoped>
-
-</style>
