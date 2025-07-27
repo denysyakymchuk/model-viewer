@@ -44,7 +44,7 @@ img {
 }
 
 .menu-component {
-  width: 350px;
+  width: 360px;
   height: 100vh;
   background-color: #f2f2f2;
 }

@@ -1,13 +1,14 @@
 const state = {
     Pixel: false,
     Brightness: 0,
-    Opacity: 1,
+    Opacity: 0,
     Contrast: 0,
     Grid: 0,
     Sepia: 0,
     ShadowSoftness: 0,
     ShadowIntensity: 0,
     BlendMode: 'SKIP',
+    Initialized: false,
 };
 const getters = {
     MAIN_MODEL_PIXEL: (state) => {
@@ -36,7 +37,7 @@ const getters = {
     },
     MAIN_MODEL_BLENDMODE: (state) => {
         return state.BlendMode;
-    },
+    }
 
 };
 const mutations = {
@@ -66,13 +67,11 @@ const mutations = {
     },
     MAIN_MODEL_BLENDMODE: (state, payload) => {
         state.BlendMode = payload;
-    },
+    }
 };
-const actions = {};
 
 export default {
     state,
     getters,
     mutations,
-    actions,
 };

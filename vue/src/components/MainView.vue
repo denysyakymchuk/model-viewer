@@ -17,7 +17,7 @@
           <pixelate-effect v-if="store.getters.MAIN_MODEL_PIXEL"></pixelate-effect>
 
           <!--   OPACITY     -->
-          <color-grade-effect :contrast="store.getters.MAIN_MODEL_CONTRAST" saturation="-1" :opacity="store.getters.MAIN_MODEL_OPACITY" :blend-mode="store.getters.MAIN_MODEL_BLENDMODE" :brightness="store.getters.MAIN_MODEL_BRIGHTNESS"></color-grade-effect>
+          <color-grade-effect :contrast="store.getters.MAIN_MODEL_CONTRAST" :opacity="store.getters.MAIN_MODEL_OPACITY" :blend-mode="store.getters.MAIN_MODEL_BLENDMODE" :brightness="store.getters.MAIN_MODEL_BRIGHTNESS"></color-grade-effect>
 
         </effect-composer>
 
