@@ -50,15 +50,6 @@ const store = useStore();
   font-family: Lexend;
 }
 
-.btn {
-  position: absolute;
-  top: 0;
-  right: 0;
-  z-index: 1000;
-  margin-top: 10px;
-  margin-right: 10px;
-}
-
 model-viewer {
   width: 100%;
   height: 70vh;
@@ -66,18 +57,6 @@ model-viewer {
   border-radius: 30px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 0;
-}
-
-.wd-all {
-  width: 270px;
-}
-
-.changePointer:hover {
-  cursor: pointer;
-}
-
-.color-white {
-  color: white
 }
 
 model-viewer::part(default-progress-bar) {

@@ -19,7 +19,6 @@ function copyLink(): void {
   navigator.clipboard.writeText(makeLink());
   showIsCopiedLink.value = true;
 }
-
 </script>
 
 <template>
