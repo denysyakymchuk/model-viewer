@@ -37,3 +37,7 @@ backend/users/
 backend/tests/.pytest_cache
 backend/tests/.env
 backend-django/venv
+backend-django/backend_django/static/
+backend-django/backend_django/static
+
+native-application-expo

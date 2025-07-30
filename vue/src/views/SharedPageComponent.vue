@@ -14,7 +14,7 @@
         <pixelate-effect v-if="pixar"></pixelate-effect>
 
         <!--   OPACITY     -->
-        <color-grade-effect :contrast="contrast" saturation="-1" :opacity="opacity" :blend-mode="blendMode" :brightness="brightness"></color-grade-effect>
+        <color-grade-effect :contrast="contrast" :opacity="opacity" :blend-mode="blendMode" :brightness="brightness"></color-grade-effect>
 
       </effect-composer>
 
