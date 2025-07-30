@@ -1,12 +1,15 @@
-from django_filters import rest_framework as filters
+from django_filters import rest_framework as filters, BaseInFilter, CharFilter
 
 from .models import ThreeDModel
 
+class CharInFilter(BaseInFilter, CharFilter):
+    pass
 
 class ThreeDModelFilter(filters.FilterSet):
     # Define a filter for start time and end time
     time_start = filters.DateTimeFilter(field_name='time_create', lookup_expr='gte')
     time_end = filters.DateTimeFilter(field_name='time_create', lookup_expr='lte')
+    owner = CharInFilter(field_name='owner__username', lookup_expr='in')
 
     # Metaclass to provide metadata to the FilterSet
     class Meta:

@@ -3,6 +3,7 @@ import api from "@/api/api";
 const state = {
     models: [],
     nextPage: '', //link to next page
+    owner_list: []
 };
 const getters = {
     MODELS: (state) => {
@@ -10,6 +11,9 @@ const getters = {
     },
     NEXT_PAGE: (state) => {
         return state.nextPage;
+    },
+    OWNER_LIST: (state) => {
+        return state.owner_list;
     }
 };
 const mutations = {
@@ -22,15 +26,19 @@ const mutations = {
     SET_NEXT_PAGE: (state, payload) => {
         state.nextPage = payload !== null ? payload.split('v1')[1] : null
     },
+    SET_OWNER_LIST: (state, payload) => {
+        state.owner_list = payload;
+    }
 };
 const actions = {
     GET_MODELS_ADMIN: async (context) => {
         const data = await api.get(`/models/admin-models/`);
         await context.commit("SET_MODELS", data.data);
     },
-    GET_ACTIVE_MODELS: async (context) => {
-        const data = await api.get(`/models/get-models/`);
-        await context.commit("SET_MODELS", data.data.results);
+    GET_ACTIVE_MODELS: async (context, payload) => {
+        const data = await api.get(`/models/get-models/${ (payload) ? "?owner=" + payload : "" }`);
+        await context.commit("SET_MODELS", data.data.results.data);
+        await context.commit("SET_OWNER_LIST", data.data.results.usernames);
 
         if (data.data.next) {
             await context.commit("SET_NEXT_PAGE", data.data.next);
@@ -40,7 +48,9 @@ const actions = {
     },
     GET_EXTEND_MODELS: async (context) => {
         const data = await api.get(context.getters.NEXT_PAGE);
-        context.commit("EXTEND_MODELS", data.data.results);
+        context.commit("EXTEND_MODELS", data.data.results.data);
+        context.commit("SET_OWNER_LIST", data.data.results.usernames)
+
         if (data.data.next) {
             await context.commit("SET_NEXT_PAGE", data.data.next);
         } else {
@@ -52,10 +62,6 @@ const actions = {
         formData.append('is_active', payload.isVisible);
         await api.patch(`/models/${payload.id}/`, formData);
     },
-    // GET_MODELS: async (context) => {
-    //     const data = await api.get(`/models/`);
-    //     await context.commit("SET_MODELS", data.data);
-    // },
     DELETE_MODELS: async (context, payload) => {
         const data = await api.delete(`/models/${payload}`);
         await context.commit("SET_MODELS", data.data.models);

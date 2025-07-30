@@ -43,11 +43,6 @@ function changeGrid(value: number): void {
 
 // Setup PostProcessing on mount
 onBeforeMount(() => {
-  //check if filters already initialized then skip this step
-  if (store.getters.INITIALIZED_FILTERS) {
-    return;
-  }
-
   const customComposer = document.querySelector('effect-composer#customComposer') as any;
   if (!customComposer) {
     console.error('EffectComposer not found');
@@ -60,7 +55,6 @@ onBeforeMount(() => {
   sepiaEffect.intensity = 0;
   const noisePass = new PostProcessing.EffectPass(undefined, gridEffect, sepiaEffect);
   customComposer.addPass(noisePass);
-
 });
 </script>
 

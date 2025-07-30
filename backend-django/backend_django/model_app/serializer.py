@@ -1,15 +1,16 @@
 from rest_framework import serializers
 
 from .models import ThreeDModel
-
+from user.serializer import UserSerializer
 
 class ThreeDModelSerializer(serializers.ModelSerializer):
     owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
-
+    owner_details = UserSerializer(source='owner', read_only=True)
 
     class Meta:
         model = ThreeDModel
-        fields = ['id', 'path', 'path_skybox_image', 'is_active', 'path_env_image', 'time_create', 'time_update', 'owner']
+        fields = ['id', 'path', 'path_skybox_image', 'is_active', 'path_env_image', 'time_create', 'time_update', 'owner', 'owner_details']
+        read_only_fields = ['owner_details']
 
     def validate_path(self, path):
         if str(path).split('.')[-1] != 'glb':

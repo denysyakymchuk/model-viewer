@@ -2,12 +2,14 @@
 import {defineComponent, ref} from 'vue'
 import EffectsModelComponent from "@/components/EffectsModelComponent.vue";
 import EmbedCodeMenuComponent from "@/components/EmbedCodeMenuComponent.vue";
+import FilterMenuComponent from "@/components/FilterMenuComponent.vue";
 
 export default defineComponent({
   name: "DesktopMenuComponent",
   components: {
     EffectsModelComponent,
-    EmbedCodeMenuComponent
+    EmbedCodeMenuComponent,
+    FilterMenuComponent,
   },
   data() {
     return {
@@ -66,7 +68,7 @@ export default defineComponent({
         <v-container fluid>
           <v-row>
             <v-col>
-              FILTERS
+              <FilterMenuComponent />
             </v-col>
           </v-row>
         </v-container>
