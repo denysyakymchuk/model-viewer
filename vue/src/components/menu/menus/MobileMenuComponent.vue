@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import EffectsModelComponent from "@/components/EffectsModelComponent.vue";
 import EmbedCodeMenuComponent from "@/components/EmbedCodeMenuComponent.vue";
+import FilterMenuComponent from "@/components/FilterMenuComponent.vue";
 
 import { ref} from "vue";
 
@@ -57,8 +58,9 @@ const menu =  ref(false);
                 </v-icon>
               </v-tab>
             </a>
-            <v-tab value="one">Filters</v-tab>
-            <v-tab value="three">Get code</v-tab>
+            <v-tab value="effects">Effects</v-tab>
+            <v-tab value="embed">Embed</v-tab>
+            <v-tab value="filters">Filters</v-tab>
               <v-tab to="/admin">
                 <v-icon color="white" size="large">
                   mdi-login
@@ -73,7 +75,7 @@ const menu =  ref(false);
             <v-window v-model="tab">
               <v-window-item
                   id="windowFilter"
-                  value="one">
+                  value="effects">
                 <div id="filterFrame">
                   <EffectsModelComponent />
                 </div>
@@ -82,13 +84,23 @@ const menu =  ref(false);
 
               <!--     EMBED       -->
               <v-window-item
-                  value="three"
+                  value="embed"
                   class="color-white"
                   style="text-align: justify"
               >
                 <EmbedCodeMenuComponent />
               </v-window-item>
               <!--     EMBED       -->
+
+              <!--     FILTERS       -->
+              <v-window-item
+                  value="filters"
+                  class="color-white"
+                  style="text-align: justify"
+              >
+                <FilterMenuComponent />
+              </v-window-item>
+              <!--     FILTERS       -->
 
             </v-window>
           </v-card-text>

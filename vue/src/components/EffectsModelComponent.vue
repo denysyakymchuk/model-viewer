@@ -2,24 +2,13 @@
 import '@google/model-viewer';
 import '@google/model-viewer-effects';
 
-import {onBeforeMount} from "vue";
 import {useStore} from "vuex";
-import * as PostProcessing from "postprocessing";
 
 const store = useStore();
 
-// Initialize PostProcessing effects
-let gridEffect: PostProcessing.GridEffect | null = null;
-let sepiaEffect: PostProcessing.SepiaEffect | null = null;
-
 
 function changeSepia(value: number): void {
-  if (!sepiaEffect) {
-    console.warn('sepiaEffect is not initialized yet');
-    return;
-  }
-
-  sepiaEffect.intensity = value;
+  store.commit('MAIN_MODEL_SEPIA_EFFECT', value);
 
   const customComposer = document.querySelector('effect-composer#customComposer') as any;
   if (customComposer) {
@@ -28,34 +17,13 @@ function changeSepia(value: number): void {
 }
 
 function changeGrid(value: number): void {
-  if (!gridEffect) {
-    console.error('GridEffect is not initialized');
-    return;
-  }
-
-  gridEffect.scale = value;
+  store.commit('MAIN_MODEL_GRID_EFFECT', value);
 
   const customComposer = document.querySelector('effect-composer#customComposer') as any;
   if (customComposer) {
     customComposer.queueRender();
   }
 }
-
-// Setup PostProcessing on mount
-onBeforeMount(() => {
-  const customComposer = document.querySelector('effect-composer#customComposer') as any;
-  if (!customComposer) {
-    console.error('EffectComposer not found');
-    return;
-  }
-
-  gridEffect = new PostProcessing.GridEffect({scale: 0});
-
-  sepiaEffect = new PostProcessing.SepiaEffect();
-  sepiaEffect.intensity = 0;
-  const noisePass = new PostProcessing.EffectPass(undefined, gridEffect, sepiaEffect);
-  customComposer.addPass(noisePass);
-});
 </script>
 
 <template>

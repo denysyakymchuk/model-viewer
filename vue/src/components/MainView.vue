@@ -30,8 +30,20 @@
 import '@google/model-viewer';
 import '@google/model-viewer-effects';
 import {useStore} from "vuex";
+import {onMounted} from "vue";
+import {EffectPass} from "postprocessing";
 
 const store = useStore();
+
+onMounted(() => {
+  const customComposer = document.querySelector('effect-composer#customComposer') as any;
+  if (!customComposer) {
+    console.error('EffectComposer not found');
+    return;
+  }
+  const noisePass = new EffectPass(undefined, store.getters.MAIN_MODEL_SEPIA_EFFECT,  store.getters.MAIN_MODEL_GRID_EFFECT);
+  customComposer.addPass(noisePass);
+});
 </script>
 
 <style scoped>
