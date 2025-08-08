@@ -1,3 +1,9 @@
+import {
+    GridEffect,
+    SepiaEffect,
+} from "postprocessing";
+
+
 const state = {
     Pixel: false,
     Brightness: 0,
@@ -7,8 +13,13 @@ const state = {
     Sepia: 0,
     ShadowSoftness: 0,
     ShadowIntensity: 0,
-    BlendMode: 'SKIP',
-    Initialized: false,
+    BlendMode: 'NORMAL',
+    SepiaEffect: (() => {
+        const sepiaEffect = new SepiaEffect();
+        sepiaEffect.intensity = 0;
+        return sepiaEffect;
+    })(),
+    GridEffect: new GridEffect({scale: 0}),
 };
 const getters = {
     MAIN_MODEL_PIXEL: (state) => {
@@ -37,7 +48,13 @@ const getters = {
     },
     MAIN_MODEL_BLENDMODE: (state) => {
         return state.BlendMode;
-    }
+    },
+    MAIN_MODEL_GRID_EFFECT: (state) => {
+        return state.GridEffect;
+    },
+    MAIN_MODEL_SEPIA_EFFECT: (state) => {
+        return state.SepiaEffect;
+    },
 
 };
 const mutations = {
@@ -67,7 +84,13 @@ const mutations = {
     },
     MAIN_MODEL_BLENDMODE: (state, payload) => {
         state.BlendMode = payload;
-    }
+    },
+    MAIN_MODEL_GRID_EFFECT: (state, payload) => {
+        state.GridEffect.scale = payload;
+    },
+    MAIN_MODEL_SEPIA_EFFECT: (state, payload) => {
+        state.SepiaEffect.intensity = payload;
+    },
 };
 
 export default {
