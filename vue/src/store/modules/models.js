@@ -36,7 +36,8 @@ const actions = {
         await context.commit("SET_MODELS", data.data);
     },
     GET_ACTIVE_MODELS: async (context, payload) => {
-        const data = await api.get(`/models/get-models/${ (payload) ? "?owner=" + payload : "" }`);
+        const data = await api.get(
+            `/models/get-models/${ (payload?.owners) ? "?owner=" + payload.owners : "?owner=" }${ (payload?.time_start) ? "&time_start=" + payload.time_start : "" }${ (payload?.time_end) ? "&time_end=" + payload.time_end : "" }`);
         await context.commit("SET_MODELS", data.data.results.data);
         await context.commit("SET_OWNER_LIST", data.data.results.usernames);
 
