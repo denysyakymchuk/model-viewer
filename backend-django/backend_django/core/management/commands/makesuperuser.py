@@ -21,6 +21,8 @@ class Command(BaseCommand):
                 print(f"A superuser '{username}' was created")
                 print(f"===================================")
             else:
+                print(f"===================================")
                 print("Admin user found. Skipping super user creation")
+                print(f"===================================")
         except Exception as e:
             print(f"There was an error: {e}")

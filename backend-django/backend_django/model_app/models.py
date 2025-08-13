@@ -1,6 +1,5 @@
-from django.contrib.auth.models import User
 from django.db import models
-
+from django.conf import settings
 
 class ThreeDModel(models.Model):
     path = models.FileField(upload_to='3d_models/', null=False)
@@ -10,7 +9,7 @@ class ThreeDModel(models.Model):
     time_create = models.DateTimeField(auto_now_add=True)
     time_update = models.DateTimeField(auto_now=True)
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='models')
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='models')
 
     def __str__(self):
         return f'{self.path}'

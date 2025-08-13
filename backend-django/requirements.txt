@@ -22,7 +22,6 @@ jsonschema==4.22.0
 jsonschema-specifications==2023.12.1
 oauthlib==3.2.2
 packaging==24.0
-psycopg2-binary==2.9.9
 psycopg2
 pycparser==2.22
 PyJWT==2.8.0
@@ -43,7 +42,6 @@ typing_extensions==4.12.1
 uritemplate==4.1.1
 urllib3==2.2.1
 voluptuous==0.14.2
-mysqlclient
 django-storages==1.14.3
 boto3
 django-cors-headers
