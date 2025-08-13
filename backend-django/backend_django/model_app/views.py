@@ -43,20 +43,23 @@ class ThreeDModelViewSet(viewsets.ModelViewSet):
     #get filtering active=true models for main page
     @action(detail=False, methods=['get'], url_path='get-models', permission_classes=[AllowAny], pagination_class=ModelMainPagePagination)
     def get_active_models(self, request):
-        queryset = ThreeDModel.objects.filter(is_active=True)
+        try:
+            queryset = ThreeDModel.objects.filter(is_active=True)
 
-        for backend in list(self.filter_backends):
-            queryset = backend().filter_queryset(request, queryset, self)
+            for backend in list(self.filter_backends):
+                queryset = backend().filter_queryset(request, queryset, self)
 
-        page = self.paginate_queryset(queryset)
-        if page is not None:
-            serializer = self.get_serializer(page, many=True)
-            usernames = extract_usernames(serializer.data)
-            return self.get_paginated_response({
-                "data": serializer.data,
-                "usernames": usernames
-        })
+            page = self.paginate_queryset(queryset)
+            if page is not None:
+                serializer = self.get_serializer(page, many=True)
+                usernames = extract_usernames(serializer.data)
+                return self.get_paginated_response({
+                    "data": serializer.data,
+                    "usernames": usernames
+            })
 
 
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({'error': 'Error'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

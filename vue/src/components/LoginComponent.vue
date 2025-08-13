@@ -15,9 +15,9 @@
 
     <v-form v-if="!isLoaded" ref="form" v-model="this.valid" fast-fail @submit.prevent>
       <v-text-field
-          v-model="this.username"
-          label="Username"
-          :rules="usernameRules"
+          v-model="this.email"
+          label="Email"
+          :rules="emailRules"
           class="field"
       ></v-text-field>
 
@@ -57,10 +57,10 @@ export default {
       valid: false,
       isLoaded: false,
       password: '',
-      username: '',
+      email: '',
       error_alert: false,
       error_alert_text: '',
-      usernameRules:  [
+      emailRules:  [
         value => {
           if (value) return true
           return 'The field can not be empty.'
@@ -79,7 +79,7 @@ export default {
       this.isLoaded = true
       try {
         const response = await this.GET_LOGIN({
-          username: this.username,
+          email: this.email,
           password: this.password
         })
         if (response === 200) {

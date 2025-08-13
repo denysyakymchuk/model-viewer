@@ -7,6 +7,7 @@ class CharInFilter(BaseInFilter, CharFilter):
 
 class ThreeDModelFilter(filters.FilterSet):
     # Define a filter for start time and end time
+    created = filters.DateTimeFromToRangeFilter(field_name="time_create")
     time_start = filters.DateTimeFilter(field_name='time_create', lookup_expr='gte')
     time_end = filters.DateTimeFilter(field_name='time_create', lookup_expr='lte')
     owner = CharInFilter(field_name='owner__username', lookup_expr='in')
