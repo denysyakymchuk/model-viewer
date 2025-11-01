@@ -1,7 +1,6 @@
 # About application
 
-The application was created for viewing 3D models. Each user can get selected model for own site, for every model generates code iframe.   
-
+The application created for viewing 3D models.
 > Link:  https://modelviewer.pl/
 
 ## Main page
