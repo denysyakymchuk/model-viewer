@@ -27,12 +27,24 @@
     </div>
   </v-col>
 
+  <!--FACE ANIMATION-->
+  <div class="emoji-face-container">
+    <div class="emoji-face">
+      <div class="eyes">
+        <div class="eye"></div>
+        <div class="eye"></div>
+      </div>
+    </div>
+  </div>
+  <!--FACE ANIMATION-->
+
 </template>
 
 
 <script>
 import LoginComponent from "@/components/LoginComponent.vue";
 import RegistrationComponent from "@/components/RegistrationComponent.vue";
+import {eyeball} from "@/utils/eyes-animation/animation.js"
 
 export default {
   name: "LoginView",
@@ -50,11 +62,20 @@ export default {
   components: {
     LoginComponent,
     RegistrationComponent,
+  },
+  mounted() {
+    document.body.addEventListener('mousemove', eyeball);
+  },
+  beforeUnmount() {
+    document.body.removeEventListener('mousemove', eyeball);
   }
 }
 </script>
 
 <style scoped>
+
+@import '@/utils/eyes-animation/eyes.css';
+
 @font-face {
   font-family: 'Lexend';
   src: url('../assets/fonts/Lexend/Lexend-VariableFont_wght.ttf') format('truetype');
