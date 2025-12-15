@@ -13,8 +13,8 @@
         Login
       </v-btn>
 
-      <v-btn value="registartion">
-        Registartion
+      <v-btn value="registration">
+        Registration
       </v-btn>
       <v-btn value="home" @click="this.$router.push({name: 'home'})">
         Home
@@ -22,20 +22,43 @@
 
     </v-btn-toggle>
     <div>
-      <LoginComponent v-if="this.option === 'login'" />
-      <RegistrationComponent v-if="this.option === 'registartion'" />
+      <LoginComponent
+          v-if="this.option === 'login'"
+          @setAnimationDuration="handleAnimationDuration"
+          @setInputtingPassword="handleInputtingPassword"
+      />
+      <RegistrationComponent
+          v-if="this.option === 'registration'"
+          @setAnimationDuration="handleAnimationDuration"
+          @setInputtingPassword="handleInputtingPassword"
+      />
     </div>
   </v-col>
 
   <!--FACE ANIMATION-->
-  <div class="emoji-face-container">
-    <div class="emoji-face">
-      <div class="eyes">
-        <div class="eye"></div>
-        <div class="eye"></div>
+  <!--LEFT FACE-->
+  <div class="emoji-faces-container">
+    <div class="left-emoji-face-container">
+      <div class="left-emoji-face left-face-jump" :style="{'animation-duration': animationDuration + 's'}">
+        <div class="left-eyes">
+          <div :class="[inputtingPassword ? 'closed-left-eye' : 'eye']"></div>
+          <div :class="[inputtingPassword ? 'closed-left-eye' : 'eye']"></div>
+        </div>
+      </div>
+    </div>
+    <!--LEFT FACE-->
+
+    <!--RIGHT FACE-->
+    <div class="right-emoji-face-container">
+      <div class="right-emoji-face right-face-jump" :style="{'animation-duration': animationDuration + 's'}">
+        <div class="right-eyes">
+          <div :class="[inputtingPassword ? 'closed-right-eye' : 'eye']"></div>
+          <div :class="[inputtingPassword ? 'closed-right-eye' : 'eye']"></div>
+        </div>
       </div>
     </div>
   </div>
+  <!--RIGHT FACE-->
   <!--FACE ANIMATION-->
 
 </template>
@@ -57,11 +80,26 @@ export default {
       toggle_exclusive: 2,
       toggle_multiple: [0, 1, 2],
       valid: false,
+      animationDuration: 0,
+      inputtingPassword: false,
     }
   },
   components: {
     LoginComponent,
     RegistrationComponent,
+  },
+  methods: {
+    handleAnimationDuration(value) {
+      this.animationDuration = value;
+    },
+    handleInputtingPassword(value) {
+      let eyes = document.querySelectorAll('.eye');
+      eyes.forEach(eye => {
+        eye.style.transform = '';
+      })
+
+      this.inputtingPassword = value;
+    }
   },
   mounted() {
     document.body.addEventListener('mousemove', eyeball);
