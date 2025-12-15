@@ -18,6 +18,8 @@
           v-model="username"
           label="Username"
           :rules="usernameRules"
+          @focus="this.$emit('setAnimationDuration', 1);"
+          @blur="this.$emit('setAnimationDuration', 0);"
           class="field"
       ></v-text-field>
 
@@ -26,6 +28,8 @@
           label="Gmail"
           type="email"
           :rules="gmailRules"
+          @focus="this.$emit('setAnimationDuration', 1);"
+          @blur="this.$emit('setAnimationDuration', 0);"
           class="field"
       ></v-text-field>
 
@@ -34,6 +38,11 @@
           label="Password"
           type="password"
           :rules="passwordRules"
+          @focus="this.$emit('setAnimationDuration', 1);"
+          @blur="
+            this.$emit('setAnimationDuration', 0);
+            this.$emit('setInputtingPassword', false);"
+          @input="this.$emit('setInputtingPassword', true);"
           class="field"
       ></v-text-field>
 

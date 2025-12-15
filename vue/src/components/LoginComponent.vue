@@ -16,16 +16,23 @@
     <v-form v-if="!isLoaded" ref="form" v-model="this.valid" fast-fail @submit.prevent>
       <v-text-field
           v-model="this.email"
-          label="Email"
           :rules="emailRules"
+          @focus="this.$emit('setAnimationDuration', 1);"
+          @blur="this.$emit('setAnimationDuration', 0);"
+          label="Email"
           class="field"
       ></v-text-field>
 
       <v-text-field
           v-model="this.password"
+          :rules="passwordRules"
+          @focus="this.$emit('setAnimationDuration', 1);"
+          @blur="
+            this.$emit('setAnimationDuration', 0);
+            this.$emit('setInputtingPassword', false);"
+          @input="this.$emit('setInputtingPassword', true);"
           label="Password"
           type="password"
-          :rules="passwordRules"
           class="field"
       ></v-text-field>
 
