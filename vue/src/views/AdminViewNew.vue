@@ -130,26 +130,61 @@
             <template v-slot:item="{ item }">
               <tr>
                 <td>{{ item.id }}</td>
-                <td>{{ item.path }}</td>
+                <td class="text-center">{{ item.path.toString().split('/').at(-1) }}</td>
                 <td>
                   <model-viewer
                       :src="item.path"
                       :environment-image="item.path_env_image"
                       :skybox-image="item.path_skybox_image"
-                  />
+                  ></model-viewer>
                 </td>
-                <td>
-                  <v-btn color="red" @click="deleteModel(item.id)">
-                    <v-icon icon="mdi mdi-delete-outline"></v-icon>
-                  </v-btn>
+                <td class="text-center">
+                  <v-row>
+
+                    <!--         Download button           -->
+                    <v-col cols="12">
+                      <v-tooltip text="Download">
+                        <template v-slot:activator="{ props }">
+                          <v-btn v-bind="props" color="blue" @click="DownloadModel(item.path)">
+                            <v-icon icon="mdi mdi-file-download"></v-icon>
+                          </v-btn>
+                        </template>
+                      </v-tooltip>
+                    </v-col>
+                    <!--         Download button           -->
+
+                    <!--         Delete button           -->
+                    <v-col cols="12">
+                      <v-tooltip text="Delete">
+                        <template v-slot:activator="{ props }">
+                          <v-btn
+                              color="red"
+                              v-bind="props"
+                              @click="deleteModel(item.id)"
+                          >
+                            <v-icon icon="mdi mdi-delete-outline"></v-icon>
+                          </v-btn>
+                        </template>
+                      </v-tooltip>
+                    </v-col>
+                    <!--         Delete button           -->
+
+                  </v-row>
                 </td>
-                <td>
+
+                <!--         Change visibility button           -->
+                <td class="text-center">
                   <v-checkbox
+                      style="display: flex; justify-content: center; align-items: center;"
                       v-model="item.is_active"
-                      label="Visible"
                       @change="() => changeItemVisible(item.id, item.is_active)"
+                      hide-details
+                      dense
+                      class="mx-auto"
                   />
                 </td>
+                <!--         Change visibility button           -->
+
               </tr>
             </template>
           </v-data-table>
@@ -170,10 +205,10 @@ const router = useRouter();
 
 const headers = [
   { title: 'Id', key: 'id' },
-  { title: 'Path', key: 'path' },
-  { title: 'Model', key: 'model' },
-  { title: 'Actions', key: 'actions' },
-  { title: 'Visible', key: 'visible' },
+  { title: 'Name', key: 'name', align: 'center' },
+  { title: 'Model', key: 'model', align: 'center' },
+  { title: 'Actions', key: 'actions', align: 'center' },
+  { title: 'Visible', key: 'visible', align: 'center' },
 ];
 
 const dialog = ref(false);
@@ -252,6 +287,18 @@ async function changeItemVisible(itemId, itemIsVisible) {
   await store.dispatch('UPDATE_VISIBLE_MODEL', {id: itemId, isVisible: itemIsVisible});
 }
 
+function DownloadModel(modelPath) {
+  let element = document.createElement('a');
+  element.setAttribute('href', modelPath);
+  element.setAttribute('download', modelPath.toString().split('/').at(-1));
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+  document.body.removeChild(element);
+}
+
 onMounted(async () => {
   await store.dispatch('GET_MODELS_ADMIN');
 });
@@ -266,5 +313,10 @@ onMounted(async () => {
 }
 * {
   font-family: Lexend;
+}
+
+model-viewer{
+  height: 300%;
+  width: 100%;
 }
 </style>
