@@ -18,3 +18,11 @@ class ThreeDModel(models.Model):
         verbose_name = "ThreeDModel"
         verbose_name_plural = "ThreeDModels"
         ordering = ("-time_create",)
+
+
+class ThreeDModelHistoryOwner(models.Model):
+    id = models.AutoField(primary_key=True)
+    id_owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    id_model = models.ForeignKey(ThreeDModel, on_delete=models.CASCADE)
+    time_create = models.DateTimeField(auto_now_add=True)
+    time_update = models.DateTimeField(auto_now=True)
