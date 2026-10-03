@@ -54,9 +54,13 @@ function preparedOwners() {
 }
 
 function preparedTime() {
-  const start = dateRangeFilter.value.at(0)
-  const end = dateRangeFilter.value.at(-1)
-  return {created_after: formatDate(start), created_before: formatDate(end)}
+  const start = dateRangeFilter.value?.at(0)
+  const end = dateRangeFilter.value?.at(-1)
+
+  return {
+    created_after: start ? formatDate(start) : null,
+    created_before: end ? formatDate(end) : null
+  }
 }
 
 function formatDate(date) {
