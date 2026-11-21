@@ -24,6 +24,40 @@ class ThreeDModelViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend, drf_filters.SearchFilter, drf_filters.OrderingFilter]
     ordering_fields = ['owner', 'id', 'time_create', 'time_update']
 
+    def partial_update(self, request, *args, **kwargs):
+        if not ThreeDModel.objects.filter(id=kwargs['pk']).exists():
+            return Response({'error': 'ThreeD Model does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        model_owner_object = ThreeDModel.objects.filter(id=kwargs.get('pk')).first()
+
+        if model_owner_object.owner_id != request.user.id:
+            return Response({'error': 'Unauthorized request'}, status=status.HTTP_403_FORBIDDEN)
+
+        return super().partial_update(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        if not ThreeDModel.objects.filter(id=kwargs['pk']).exists():
+            return Response({'error': 'ThreeD Model does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        model_owner_object = ThreeDModel.objects.filter(id=kwargs.get('pk')).first()
+
+        if model_owner_object.owner_id != request.user.id:
+            return Response({'error': 'Unauthorized request'}, status=status.HTTP_403_FORBIDDEN)
+
+        return super().update(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        if not ThreeDModel.objects.filter(id=kwargs['pk']).exists():
+            return Response({'error': 'ThreeD Model does not exist'}, status=status.HTTP_404_NOT_FOUND)
+
+        model_owner_object = ThreeDModel.objects.filter(id=kwargs.get('pk')).first()
+
+        if model_owner_object.owner_id != request.user.id:
+            return Response({'error': 'Unauthorized request'}, status=status.HTTP_403_FORBIDDEN)
+
+        return super().destroy(request, *args, **kwargs)
+
+
     def create(self, request, *args, **kwargs):
         try:
             serializer = self.get_serializer(data=request.data)
